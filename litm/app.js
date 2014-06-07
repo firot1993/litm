@@ -28,6 +28,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.bodyParser({uploadDir:'./uploads'}));
 app.use(express.cookieParser("my secret thing"));
 app.use(express.session());
 app.use(app.router);
@@ -43,8 +44,19 @@ user(app);
 require('./routes/session')(app);
 
 
-//socket.io
+// mongoose
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/litmdatabase');
+var db = mongoose.connection;
 
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+	//yap
+});
+
+
+
+//socket.io
 io.on('connection',function(socket){
 	socket.on('clientMessage',function(content){
 		socket.emit('serverMessage',1,'You said: '+content);

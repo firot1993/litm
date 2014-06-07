@@ -4,7 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Litm' });
-  // req.session.retry=0
-  // res.redirect('/users')
+  res.render('index', { title: 'Litm',session:req.session});
 };

@@ -65,10 +65,10 @@ block content
 			ul(class="informationbar")
 				li
 					p 我的头像
-					img(src="/images/personalphoto.jpg")
+					img(src="/images/"+session.user.pic)
 				li
 					span 用户名:
-						a 撕嘉德
+						a=session.user.username
 				li
 					span 积分:
 						a 999

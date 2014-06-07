@@ -1,10 +1,7 @@
-var users=require('../data/users');
+var User=require('../data/models/user');
 var notLoggedIn=require('./middleware/not_logger_in');
 module.exports=function(app){
 		app.use("/",function(req, res, next){
- //  		// res.locals.title = config['title']
- //  		// res.locals.csrf = req.session ? req.session._csrf : '';
- //  		// res.locals.req = req;
   		res.locals.session = req.session;
   		next();
 	});
@@ -25,18 +22,23 @@ module.exports=function(app){
 		}
 	});
 	app.post('/session',notLoggedIn,function(req,res){
-		if (users[req.body.username]!=undefined && users[req.body.username].password===req.body.password){
-			req.session.user=users[req.body.username];
+		User.findOne({username:req.body.username,password:req.body.password},function(err,user){
+		if (err){
+			return next(err);
+		}
+		if (user){
+			req.session.user=user;
 			req.session.retry=0;
-			res.redirect('/users');
+			res.redirect('/');
 		}else{
 			req.session.retry++;
 			res.redirect('/session/new');
 		}
+		});
 	});
-	app.del('/session',function(req,res,next){
+	app.get('/del',function(req,res,next){
 		retry=0;
 		req.session.user=null;
-		res.redirect('/users');
+		res.redirect('/');
 	})
 };

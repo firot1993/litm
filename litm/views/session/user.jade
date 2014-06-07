@@ -1,13 +1,9 @@
 .user
 	if (session && session.user)
-		p
-			span Hello&nbsp;
-			span=session.user.name
-			span !
-		p
-			form(method="POST",action="/session")
-				input(type="hidden",name="_method",value="DELETE")
-				input(type="submit",value="Log out")
+		//- img(src="/images/"+session.user.pic style="width:50px")
+		a(href="/users/"+session.user.username) My Profile
+		span &nbsp;or&nbsp;
+		a(href="/del") Logout
 	else 
 		a(href="/session/new") Login
 		span &nbsp;or&nbsp;
