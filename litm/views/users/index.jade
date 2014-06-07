@@ -1,0 +1,11 @@
+extends ../layout
+block content
+	h1 Welcome back to Litm
+	p
+		a(href="/users/new") Create new profile
+	ul
+		- for (var username in users){
+			li 
+				a(href="/users/"+encodeURIComponent(username))=users[username].name
+			&nbsp
+		- };

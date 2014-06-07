@@ -1,0 +1,41 @@
+doctype html
+html
+	head
+		title= title
+		meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+		link(rel='stylesheet', href='/stylesheets/style2.css')
+		script(src="/socket.io/socket.io.js")
+		script(src='/javascripts/jquery-2.1.0.js')
+	body
+		| Your message:
+		input(type="text",id="input")
+		#message
+		script.
+			var $messagesElement=$('#message');
+			function addMessage(from,message){
+				$tmp=$("<div></div>");
+				console.log($tmp);
+				$tmp.text(message);
+				if (from===1) $tmp.css("textAlign","right");
+				if (from===3) $tmp.css("color","red");
+				$messagesElement.prepend($tmp);
+			}	
+			var socket=io.connect('http://localhost:3000');
+			socket.on('serverMessage',function(from,content){
+				addMessage(from,content);
+				})			
+			socket.on('login',function(){
+				var username=prompt('What username would you like to use?');
+				socket.emit('login',username);
+				})
+			var inputElement=document.getElementById('input');
+			inputElement.onkeydown=function(keyboardEvent){
+				if (keyboardEvent.keyCode===13){
+						console.log(inputElement.value);
+						socket.emit('clientMessage',inputElement.value);
+						inputElement.value='';
+						return false;
+					}else{
+					return true;
+					}
+			};

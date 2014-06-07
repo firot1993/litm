@@ -1,0 +1,15 @@
+.ice 
+{
+	width:500px;
+	margin:auto;
+	padding:100px;
+	background: #ffc;
+	height: 50%;
+
+}
+
+body
+{
+	background: url('/images/31.jpg');
+	opacity:0.5;
+}

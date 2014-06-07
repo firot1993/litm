@@ -1,0 +1,22 @@
+html
+	head
+		title=title
+		link(rel='stylesheet', href='/stylesheets/login.css')
+	body
+		.ice
+			h1=title
+			if (session.retry!=0)
+				p
+					“wrong password or username"
+			form(method="POST",action="/session")
+				p 
+					label(for="username") User name: &nbsp &nbsp
+					//- 用户: &nbsp
+					input#username(name="username")
+				p
+					label(for="password") Password: &nbsp &nbsp &nbsp
+					input#password(type="password",name="password")
+				br
+				p
+					input(type="submit",value="Log in" style="background: \
+						none repeat scroll 0% 0% rgba(162, 162, 189, 0.71); border-radius: 35px;")

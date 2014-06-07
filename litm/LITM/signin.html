@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>LITM-个人主页</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="default.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="header">
+    <div id="logo">
+      <h1><a href="./index.html">LITM</a></h1>
+      <h2><a href="./index.html">新用户注册</a></h2>
+    </div>
+    
+  </div>
+  <div id="content">
+    <div id="posts">
+		<div class="wrap">
+		  <dl>
+		    <form name="form2" action="index_do.php" method="post" onSubmit="return checkSubmit();">
+              <dd class="item">用户名：&nbsp;&nbsp;&nbsp;</dt><input type="hidden" name="fmdo" value="user"><input type="hidden" name="dopost" value="regok"><input name="userid" type="text" class="log_input2" onchange="TestUserOk()" /> * <span id='testCanReg'><a href="javascript:TestUserOk();">[检测用户名]</a></span></dd>
+			  <dd class="item">密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="userpwd" type="password" class="log_input2" /> *</dd>
+		      <dd class="item">确认密码：<input name="userpwdok" type="password" class="log_input2" /> *</dd>
+			  <dd class="item">昵称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="uname" type="text" class="log_input2" /> *</dd>
+			  <dd class="item">性别：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="sex" value="男" checked>男 <input type="radio" name="sex" value="女">女</dd>
+			  <!-- <dd class="item">验证码&nbsp; <input name="vdcode" type="text" class="log_input2" /> <img src="../include/vdimgck.php" name='img1' id="img1" alt="»»Ò»ÕÅ" onClick="document.getElementById('img1').src='/include/vdimgck.php?rnd=' + Math.random()" style="cursor:hand" /></dd> -->
+			  <dd class="item">个性签名：<br /><textarea name="Name" rows="8" cols="40"></textarea>
+		      <dd class="item"><br /><input type="submit" name="Submit1" value="提交" class="button" />
+			  &nbsp;&nbsp;
+			  <input type="reset" name="Submit2" value="重置" class="button">
+			  <br /><br />
+		      </dd>
+		    </form>
+		  </dl>
+	    </div>
+		
+      
+	  
+	 
+      
+    </div>
+	
+    
+  </div>
+</div>
+<div id="footer">
+  <p id="copy">&copy;2014 LITM. Designed by Zhong. All Rights Reserved</p>
+</div>
+</body>
+</html>
