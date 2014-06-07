@@ -1,8 +1,154 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ 	 padding: 50px;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	line-height: 1.42857;
+	color: #333;
+	font-size: 14px;
+	/*background: url('/images/31.jpg');*/
 }
 
 a {
   color: #00B7FF;
+}
+
+.frame1
+{
+	width: 80%;
+	margin-left: 10%;
+	height: 30px;
+	margin-top: 2%;
+}
+
+.frame2
+{
+	width: 60%;
+	margin-left: 20%;
+	height: 30px;
+	margin-top: 5%;
+}
+
+.contain{
+	height: 30px;
+	border-radius: 10px;
+	
+}
+
+.bar {
+	width:100%;
+	float: left;
+	margin: 0px;
+	list-style: none outside none;
+}
+
+.bar >li {
+	margin-left: 3%;
+	margin-right: 3%;
+	font-size: 160%;
+	float:left;
+	position: relative;
+	display: block;
+}
+
+.user {
+	float:right;
+	margin-bottom: 2%;
+	/*clear :both;*/
+}
+
+
+/*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*//*For index*/
+
+
+
+.content{
+	width: 80%;
+	padding-left:5%;
+	padding-top:1%;
+	padding-bottom: 2%;
+}
+.content > p {
+	font-weight: 500;
+	width: 80%;
+	word-break:break-all;
+}
+.title >p {
+	font-size: 20px;
+	font-weight: bold;
+}
+.time >p {
+	font-size:15px;
+	font-weight: bold;
+	color:#333;
+	float:left;
+}
+
+.time >p >span{
+	font-weight: 500;
+	color: rgba(90, 155, 132, 1);
+	font-size: 90%;
+}
+
+.choosen
+{
+	color:red;
+}
+
+.quest
+{
+	width: 90%;
+	background: rgba(237, 237, 67, 0.3);
+	opacity: 50%;
+	padding: 2%;
+	border-radius: 20px;
+	margin:2%;
+}
+
+.dim
+{
+	border-radius: 20px;
+	width: 20px;
+	height: 20px;
+	float:right;
+	margin:10px;	
+}
+
+
+/*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*//*for profile*/
+.main {
+	background: rgba(237, 237, 67, 0.4);
+	width: 70%;
+	/*height: 200px;*/
+	margin-left: 5%;
+	float:left;
+	border-radius: 3%;
+}
+.information{
+	float:right;
+	/*background: rgba(237, 237, 67, 0.3);*/
+	width:25%;
+	/*height:200px;*/
+}
+
+.information >img {
+}
+
+.information >ul{
+	list-style: none outside none;
+}
+.information >ul >li {
+	margin-top: 10%;
+	font-size:20px;
+	font-weight: bold;
+}
+.information >ul >li >span >a
+{
+	margin-left: 3%;
+	font-size: 15px;
+	/*float:right;*/
+}
+
+.information >ul >li  >img{
+	width: 80%;
+	margin-left: 10%;
 }

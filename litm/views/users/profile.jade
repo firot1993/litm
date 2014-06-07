@@ -1,8 +1,90 @@
 extends ../layout
 block content
-	h1=user.name
-	h2 Bio
-	p=user.bio
-	form(method="POST",action="/users/"+encodeURIComponent(user.username))
-		input(name="_method",type="hidden",value="delete")
-		input(type="submit",value="delete") 
+	div(class="frame1")
+		include ../session/user
+		div(style="clear:both")
+		.contain
+			ul(class='bar')
+				li 
+					span 
+						a(onclick="" class="choosen") My Quest
+				li 
+					span 
+						a(onclick="") My Record
+				li 
+					span 
+						a(onclick="") Setting
+				li 
+					span 
+						a(onclick="") My Profile
+	
+	div(style="clear:both")
+	div(class="frame1")
+		.main
+			.quest
+				.title
+					p 如何放弃治疗
+				.time
+					p 剩余时间
+						span 12小时
+				div(style="clear:both")
+				.content
+					p ljasfkljaskfjlksdjflkjaskfljlkdfjalksdjfljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjasklkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjask
+				.okey
+					a(href="")申请
+				div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="javascript:alert('123')")
+				div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
+			.quest
+				.title
+					p 如何放弃治疗
+				.time
+					p 剩余时间
+						span 12小时
+				div(style="clear:both")
+				.content
+					p ljasfkljaskfjlksdjflkjaskfljlkdfjalksdjfljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjasklkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjask
+				.okey
+					a(href="")申请
+				div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="javascript:alert('123')")
+				div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
+			.quest
+				.title
+					p 如何放弃治疗
+				.time
+					p 剩余时间
+						span 12小时
+				div(style="clear:both")
+				.content
+					p ljasfkljaskfjlksdjflkjaskfljlkdfjalksdjfljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjasklkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjask
+				.okey
+					a(href="")申请
+				div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="javascript:alert('123')")
+				div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
+
+		.information
+			ul(class="informationbar")
+				li
+					p 我的头像
+					img(src="/images/personalphoto.jpg")
+				li
+					span 用户名:
+						a 撕嘉德
+				li
+					span 积分:
+						a 999
+				li
+					span 头衔:
+						a 土豪
+				li
+					span 发布数:
+						a 11
+				li
+					span 回答数:
+						a 20
+				li
+					span 成功率:
+						a 50%
+						
+				
+
+							

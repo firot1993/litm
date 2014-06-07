@@ -1,11 +1,33 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  //- script.
-  //-   var socket=io.connect('http://localhost');
-  //-   socket.on('login',function(){
-  //-     var username=prompt('What username would you like to use?');
-  //-     socket.emit('login',username);
-  //-     })
+	div(class="frame1 head")
+		include ./session/user
+		div(style="clear:both")
+		.contain
+			ul(class='bar')
+				li 
+					span 
+						a(onclick="" class="choosen") Help Me
+				li 
+					span 
+						a(onclick="") Help You
+	div(style="clear:both")
+	div(class="frame2")
+		.quest
+			.title
+				p 如何放弃治疗
+			.time
+				p 申请时间:
+					span 2014/2/21 18:00 &nbsp &nbsp
+				p 截止时间:
+					span 2014/2/21 18:00
+			div(style="clear:both")
+			.content
+				p ljasfkljaskfjlksdjflkjaskfljlkdfjalksdjfljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjaskljasfkljaskfjlksdjflkjaskfljlkdfjalksdjflkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjasklkjasdfkljaskdjflksdjaflksdjflkjaskfljsaasadasdasdasddflkjask
+			.okey
+				a(href="")申请
+			div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="javascript:alert('123')")
+			div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
+						
+	.foot
