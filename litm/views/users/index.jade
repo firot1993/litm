@@ -6,6 +6,7 @@ block content
 	ul
 		- for (var username in users){
 			li 
-				a(href="/users/"+encodeURIComponent(username))=users[username].name
+				a(href="/del/"+users[username].username)=users[username].username
+				p=users[username]
 			&nbsp
 		- };
