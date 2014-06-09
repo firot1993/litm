@@ -16,9 +16,14 @@ block content
 	div(class="frame2")
 		-for (var x=0;x<=Math.min(quest.length-1,6);x++)
 			.quest
+				
 				.title
 					p 标题: &nbsp&nbsp&nbsp
 						span=quest[x].title
+				.author
+					p 来自:&nbsp&nbsp&nbsp
+						span
+							a(href="/users/"+quest[x].from)=quest[x].from
 				.time
 					p 申请时间:&nbsp&nbsp&nbsp
 						//- p=quest[x].stime
@@ -31,8 +36,14 @@ block content
 				.content
 					p=quest[x].content
 				.okey
-					a(href="")申请
+					a(href="/applyfor/"+quest[x]._id)申请
 				div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="")
 				div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
 					
 	.foot
+		if (session.applyfor==1)
+			script.
+				alert("succeed!")
+		else if (session.applyfor==2)
+			script.
+				alert('failed!')	

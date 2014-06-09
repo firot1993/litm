@@ -5,7 +5,7 @@ body {
 	line-height: 1.42857;
 	color: #333;
 	font-size: 14px;
-	/*background: url('/images/31.jpg');*/
+	background: url('/images/31.jpg');
 }
 
 a {
@@ -116,6 +116,12 @@ a {
 	height: 20px;
 	float:right;
 	margin:10px;	
+}
+
+.author>p
+{
+	font-size: 16px;
+	
 }
 
 

@@ -22,8 +22,12 @@ module.exports=function(app){
 			if (err)throw err
 			Quest.findOne(_Quest,function(err,quest){
 		 		if (err) throw err
-		 		var newarray=user.MyQuest.push(quest._id)
-				User.update({username:req.session.user.username},{MyQuest:newarray})
+		 		console.log(quest._id)
+		 		if (user.MyQuest==undefined) user.MyQuest=[];
+		 		user.MyQuest.push(quest._id)
+				User.update({username:user.username},{MyQuest:user.MyQuest},function(err){
+					if (err) next(err)
+				})
 			})
 		})
 		res.redirect('/')
