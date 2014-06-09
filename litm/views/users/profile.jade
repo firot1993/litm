@@ -7,7 +7,7 @@ block content
 			ul(class='bar')
 				li 
 					span 
-						a(href="/users/"+user.username class="choosen myquest") My Quest
+						a(href="/users/"+user.username class="choosen") My Quest
 				li 
 					span 
 						a(href="/users/"+user.username+"/1" ) My Record
@@ -32,8 +32,8 @@ block content
 					.content
 						p=quests[x].content
 					.okey
-						p 来自:
-							a(href="/users/"+quests[x].from)=quests[x].from
+						p 帮助者:
+							a(href="/users/"+quests[x].got)=quests[x].got
 					div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="")
 					div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
 			//- .quest
@@ -88,5 +88,11 @@ block content
 						a 50%
 
 	
-
+		.foot
+			if (session.applyfor==1)
+				script.
+					alert("succeed!")
+			else if (session.applyfor==2)
+				script.
+					alert('You have not access')	
 							

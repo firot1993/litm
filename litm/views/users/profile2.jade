@@ -10,7 +10,7 @@ block content
 						a(href="/users/"+user.username ) My Quest
 				li 
 					span 
-						a(href="/users/"+user.username+"/1" class="choosen myquest") My Record
+						a(href="/users/"+user.username+"/1" class="choosen") My Record
 				li 
 					span 
 						a(href="/users/"+user.username+"/2") Setting
@@ -34,7 +34,7 @@ block content
 						p=quests[x].content
 					.okey
 						p 来自:
-							a(href="/users/"+quests[x].from)=quests[x].from
+							a(href="/users/"+quests[x].got)=quests[x].got
 					div(class="dim" style="background: rgba(203, 57, 57, 0.8);" onmouseover="")
 					div(class="dim" style="background: rgba(237, 237, 67, 0.8);" onmouseover="")
 			//- .quest

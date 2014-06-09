@@ -5,7 +5,7 @@ body {
 	line-height: 1.42857;
 	color: #333;
 	font-size: 14px;
-	background: url('/images/31.jpg');
+	/*background: url('/images/31.jpg');*/
 }
 
 a {
@@ -133,6 +133,10 @@ a {
 	margin-left: 5%;
 	float:left;
 	border-radius: 3%;
+}
+.main >form{
+	margin-left: 5%;
+	margin-top:5%;
 }
 .information{
 	float:right;

@@ -16,7 +16,8 @@ module.exports=function(app){
 		var quests=[]
 		Quest.find({}).where('_id').in(questsid).exec(function(err,quests){
 			if (err) next(err)
-			res.render('users/profile',{title:'User profile',user:req.user,quests:quests})
+			res.render('users/profile',{title:'User profile',user:req.user,quests:quests,session:req.session})
+			req.session.applyfor=0;
 		})
 	})
 
@@ -25,9 +26,17 @@ module.exports=function(app){
 		var quests=[]
 		Quest.find({}).where('_id').in(questsid).exec(function(err,quests){
 			if (err) next(err)
-			res.render('users/profile2',{title:'User profile',user:req.user,quests:quests})
+			res.render('users/profile2',{title:'User profile',user:req.user,quests:quests,session:req.session})
 		})
 
+	})
+	app.get('/users/:name/2',loadUser,LoggedIn,function(req,res,next){
+		if (req.user.username==req.session.user.username){
+			res.render('users/profile3',{title:'User profile',user:req.user,session:req.session})
+		}else{
+			req.session.applyfor=2;
+			res.redirect('/users/'+req.user.username)
+		}
 	})
 
 	app.get('/applyfor/:id',LoggedIn,function(req,res,next){
@@ -40,7 +49,7 @@ module.exports=function(app){
 			User.update({username:user.username},{MyHelp:user.Myhelp},function(err){
 				if (err) next(err)
 				req.session.applyfor=1
-				Quest.update(quest,{state:'U'},function(err){
+				Quest.update(quest,{state:'U',got:req.session.user.username},function(err){
 						if (err) next(err)
 						res.redirect('/')
 				})
@@ -62,8 +71,6 @@ module.exports=function(app){
 	
 	})
 	app.post('/users',function(req,res,next){
-		console.log(req.body)
-		console.log(req.files.pic.name)
 		if (req.files.pic) 
 			req.body.pic=req.files.pic.name
 		User.create(req.body,function(err){
@@ -80,36 +87,10 @@ module.exports=function(app){
 			if (err)
 				throw err
 		})
-		// fs.unlink(req.files.pic.path)
 		})
 		console.log(User)
 	})
 
-	//addfriend..
-	// app.get('/addfriend/:name',LoggedIn,loadUser,function(req,res,next){
-	// 	if (req.user.username!=req.session.user.username){
-	// 		var Usernow=User.findOne({username:req.session.user.username})
-	// 		var f=false
-	// 		if (Usernow.friends==undefined) Usernow.friends=[]
-	// 		console.log(Usernow.friends)
-	// 		for (var i=0 i<Usernow.friends.lengthi++){
-	// 			if (Usernow.friends[i]==req.user.username) 
-	// 			{
-	// 				f=true
-	// 				break
-	// 			}
-	// 		}
-	// 		if (f==false)
-	// 		{
-	// 			Usernow.friends.push(req.user.username)
-	// 		}
-	// 		console.log(Usernow.friends)
-	// 		User.update({username:req.session.user.username},{friends:Usernow.friends},function(err){
-	// 			console.log(err)
-	// 		})
-	// 		res.redirect('/')			
-	// 	}
-	// })
 
 	app.get('/del/:name',loadUser,function(req,res,next){
 		fs.unlink("./public/images/"+req.user.pic,function(err){
@@ -119,6 +100,23 @@ module.exports=function(app){
 			if (err){return next(err)}
 			res.redirect('/')
 
+		})
+	})
+
+	app.post('/edit/:name',loadUser,restrictUserToSelf,function(req,res,next){
+		User.findOne({username:req.user.username}).exec(function(err,user) {
+			fs.unlink('./public/pic/'+user.pic,function(err){
+				User.update({username:req.user.username},{pic:req.files.pic.name},function(err){
+					if (err) next(err)
+					fs.rename(req.files.pic.path,"./public/pic/"+req.files.pic.name,function(err){
+						if (err)
+							throw err
+						fs.unlink(req.files.pic.path,function(err){
+						res.redirect('/users/'+req.user.username)
+					})
+					})
+				})
+			})
 		})
 	})
 }

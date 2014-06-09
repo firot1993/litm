@@ -41,7 +41,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/1',function(req,res){
-	res.render('index1');
+	res.render('index1',{session:req.session});
 })
 user(app);
 require('./routes/session')(app);
