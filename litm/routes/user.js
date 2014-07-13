@@ -9,7 +9,7 @@ var fs=require('fs')
 module.exports=function(app){
 	app.get('/users/new',notLoggedIn,function(req,res){
 		res.locals.session = req.session
-		res.render('users/new',{title:"New User"})
+		res.render('register',{title:"New User"})
 	})
 	app.get('/users/:name',loadUser,function(req,res,next){
 		var questsid=req.user.MyQuest
@@ -71,6 +71,7 @@ module.exports=function(app){
 	
 	})
 	app.post('/users',function(req,res,next){
+		console.log(req.body.username)
 		if (req.files.pic) 
 			req.body.pic=req.files.pic.name
 		User.create(req.body,function(err){
@@ -88,7 +89,6 @@ module.exports=function(app){
 				throw err
 		})
 		})
-		console.log(User)
 	})
 
 

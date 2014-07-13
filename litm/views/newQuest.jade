@@ -1,0 +1,44 @@
+extends layout/layout
+block content
+    div(class="wells")
+        div(class="loginarea")
+            div(class="row")
+                div(class="col-md-11")
+                    h3 Post your Question Here
+                    br
+                    br
+                    form(class="form-horizontal" role="form")
+                        div(class="form-group")
+                            label(class="col-sm-2 control-label") title：
+                            div(class="col-sm-4")
+                                    input(type="test" class="form-control")
+                        div(class="form-group")
+                            label(class="col-sm-2 control-label") deadline:
+                            div(class="col-sm-8")
+                                div(class="col-sm-5 input-group date")
+                                    input(class="form-control" type="text" readonly="" value="12-02-2012") 
+                                    span(class="input-group-addon")
+                                        i(class="glyphicon glyphicon-calendar")
+                        div(class='form-group')
+                            label(class="col-sm-2 control-label") brief:
+                            div(class="col-sm-10")
+                                textarea(class="input-block-level" id="summernote" name="content" row="18")              
+                                //- div(id="summernote") Hello             
+                div(class="col-md-1") 
+                button(type="submit" class="btn btn-default" id="submit") Post it!
+    include layout/foot
+    script(src='/js/summernote.min.js')
+    script.
+        $(function(){
+            var $id = $('.active')
+            $id.attr("class","")
+            $('#summernote').summernote()
+            $('.note-editable').css({'height':'500px'})
+            $("#Post").attr("class","active")
+            $('.input-group.date').datepicker({
+                });
+            $('#submit').click(function(){
+                console.log($('#summernote').code())
+                })
+        })
+

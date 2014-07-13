@@ -1,0 +1,52 @@
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        meta(name="description" content="")
+        meta(name="author" content="")
+        title="Litm office"
+        link(rel="stylesheet",href="/css/bootstrap.min.css")
+        link(rel="stylesheet",href="/css/docs.min.css")
+        link(rel="stylesheet",href="/css/main.css")
+        link(rel="stylesheet",href="/css/datepicker.css")
+        link(rel="stylesheet",href="/css/fileinput.min.css")
+        link(rel="stylesheet",href="/css/summernote.css")
+        link(rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css")
+
+        script(src="/js/ie-emulation-modes-warning.js")
+        script(src="/js/ie10-viewport-bug-workaround.js")
+    body
+        div(class="navbar navbar-default navbar-fixed-top" role="navigation")  
+            div(class="container")
+                div(class="navbar-header")    
+                    button(type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse")    
+                        span(class="sr-only") Toggle navigation
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                     a(class="navbar-brand" href="#") Leave It To Me
+                div(class="collapse navbar-collapse")  
+                    ul(class="nav navbar-nav")
+                        li(class="active" id="Home") 
+                            a(href='/') Home
+                        li(id="Find") 
+                            a(href='') Find
+                        li(id="Post")
+                            a(href='/quest') Post
+                        li(class="dropdown" id="Me")
+                            a(class="dropdown-toggle" data-toggle="dropdown" href="#") Me?
+                                span(class="caret")
+                            ul(class="dropdown-menu" role="menu" disable="true")
+                                li
+                                    a(href='#') My profile
+                                li
+                                    a(href='#') Edit My profile
+                                li(class='divider')
+                                li(class='dropdown-header') Quest
+                                li
+                                    a(href='#') My Quest
+                                li
+                                    a(href='#') My Post
+                    include navbar_btn_login
+        block content

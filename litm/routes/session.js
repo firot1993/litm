@@ -8,16 +8,16 @@ module.exports=function(app){
 	app.get('/session/new',notLoggedIn,function(req,res){
 		if (req.session.retry==0){
 			req.session.retry=0;
-			res.render('session/new',{title:"Log in",session:req.session});
+			res.render('user_login',{title:"Log in",session:req.session});
 		}
 		else{
-			if (req.session.retry ==1)res.render('session/new',{title:"Try again",session:req.session});
+			if (req.session.retry ==1)res.render('user_login',{title:"Try again",session:req.session});
 			else {
-				var su='';
+				var su=''; 
 				for (var i = Math.min(req.session.retry-1,10) - 1; i >= 0; i--) {
 					su=su+'  !  ';
 				};
-				res.render('session/new',{title:"Try again"+su,session:req.session});
+				res.render('user_login',{title:"Try again"+su,session:req.session});
 			}
 		}
 	});

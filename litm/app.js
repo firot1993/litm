@@ -4,19 +4,19 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
+var routes  = require('./routes');
+var user    = require('./routes/user');
+var http    = require('http');
+var path    = require('path');
 
 // var app = express()
 // 		,server = require('http').createServer(app)
 // 		, io = require('socket.io').listen(server) 
 
-
+	
 var app = express()
-	,server=require('http').Server(app)
-	,io=require('socket.io')(server);
+	,server = require('http').Server(app)
+	,io     = require('socket.io')(server);
 server.listen(80);
 
 // all environments
@@ -39,14 +39,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
 app.get('/', routes.index);
-app.get('/1',function(req,res){
-	res.render('index1',{session:req.session});
-})
 user(app);
 require('./routes/session')(app);
 require('./routes/quest')(app);
-
 
 // mongoose
 var mongoose = require('mongoose');

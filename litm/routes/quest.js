@@ -1,9 +1,6 @@
 var User=require('../data/models/user')
 var Quest=require('../data/models/Quest')
-// var notLoggedIn=require('./middleware/not_logger_in')
 var LoggedIn=require('./middleware/logger_in')
-// var loadUser=require('./middleware/load_user')
-// var restrictUserToSelf=require('./middleware/restrict_user_to_self')
 
 module.exports=function(app){
 	app.post('/newQuest',LoggedIn,function(req,res,next){
@@ -32,7 +29,9 @@ module.exports=function(app){
 		})
 		res.redirect('/')
 	})
-
+	app.get('/Quest',function(req,res,next){
+		res.render('newQuest.jade',{session:req.session})
+	})
 	// app.get('/Quest',function(req,res,next){
 	// 	Quest.find({state:"N"}).sort('date').exec(function(err,quests){
 	// 		if (err)

@@ -1,3 +1,10 @@
+/*GLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobeGLobe*/
+
+input:focus,textarea:focus{
+	border:1px solid #f00;
+	background: #fcc;
+}
+
 body {
  	 padding: 50px;
   /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
