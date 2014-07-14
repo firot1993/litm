@@ -50,15 +50,15 @@ block content
                                   username:$('input[type=username]').val(),
                                   password:$('input[type=password]').val(),
                                   email:$('input[type=username]').val(),
-                                  filename:file.attr('alt'),
+                                  pic:file.attr('alt'),
                                   file:file.attr('src')
                             },
                         success:function(data,status,xhr){
-                            console.log('succeed!')
-                            console.log(data)
-                        }
+
+                                    location.href='/'
+                                    console.log(123123)
+                                }
                     })
                 })
-        })
-
+            })
 

@@ -3,6 +3,7 @@ var UserSchema = new mongoose.Schema({
 	username:{type:String,unique:true},
 	name:String,
 	password:String,
+	email:String,
 	pic:String,
 	friends:[String],
 	Message:[{Message:String,form:String,time:Date,readed:Boolean}],

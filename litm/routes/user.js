@@ -72,23 +72,39 @@ module.exports=function(app){
 	})
 	app.post('/users',function(req,res,next){
 		console.log(req.body.username)
-		if (req.files.pic) 
-			req.body.pic=req.files.pic.name
-		User.create(req.body,function(err){
+		var _user=new User({
+			username:req.body.username,
+			password:req.body.password,
+			pic:req.body.pic
+		})
+		User.create(_user,function(err){
 			if (err){
 				if (err.code === 11000){
-					res.send('Conflict',409)
+					res.send('Confilct',409)
 				}else{
 					next(err)
 				}
-				return
 			}
-		res.redirect('/')
-		fs.rename(req.files.pic.path,"./public/pic/"+req.files.pic.name,function(err){
-			if (err)
-				throw err
+			return
 		})
-		})
+		res.send('ok',200)
+		// if (req.files.pic) 
+		// 	req.body.pic=req.files.pic.name
+		// User.create(req.body,function(err){
+		// 	if (err){
+		// 		if (err.code === 11000){
+		// 			res.send('Conflict',409)
+		// 		}else{
+		// 			next(err)
+		// 		}
+		// 		return
+		// 	}
+		// res.redirect('/')
+		// fs.rename(req.files.pic.path,"./public/pic/"+req.files.pic.name,function(err){
+		// 	if (err)
+		// 		throw err
+		// })
+		// })
 	})
 
 
