@@ -33,6 +33,7 @@ block content
                 button(type="submit" class="btn btn-default" id="register") Register it!
     include layout/foot
     script(src="/js/fileinput.min.js")
+    script(src="/js/main.js")
     script.
         $(function(){
             $("#file").fileinput({
@@ -41,9 +42,9 @@ block content
             'showCaption':false
             })
             $('.file-input.file-input-new').attr('class','file-input file-input-new col-md-7')
-
             $('#register').on('click',function(){
                 file=$('.file-preview-image')
+
                 $.ajax({url:"/users",
                         type:'post',
                         data:{
@@ -54,11 +55,11 @@ block content
                                   file:file.attr('src')
                             },
                         success:function(data,status,xhr){
-
+                                    alert("succeed!")
                                     location.href='/'
-                                    console.log(123123)
                                 }
                     })
                 })
             })
+    
 

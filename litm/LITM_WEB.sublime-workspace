@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"us",
+				"using-default"
+			],
+			[
+				"sca",
+				"scale-y"
+			],
+			[
+				"sc",
+				"scale-x"
+			],
+			[
+				"ema",
+				"emailList"
+			],
+			[
+				"em",
+				"emailList"
+			],
+			[
+				"filen",
+				"filenamewithoutdot"
+			],
+			[
+				"image",
+				"imageprocess"
+			],
+			[
+				"im",
+				"imageprocess"
+			],
+			[
+				"filena",
+				"filenamewithoutdot"
+			],
+			[
 				"note-ed",
 				"note-editable"
 			],
@@ -478,52 +514,19 @@
 			[
 				"bal",
 				"ballnum"
-			],
-			[
-				"boy",
-				"bodyHeight"
-			],
-			[
-				"wi",
-				"width"
-			],
-			[
-				"prot",
-				"prototype"
-			],
-			[
-				"set",
-				"setInterval"
-			],
-			[
-				"no",
-				"node"
-			],
-			[
-				"maxn",
-				"maxnode"
-			],
-			[
-				"ri",
-				"right"
-			],
-			[
-				"rig",
-				"right"
-			],
-			[
-				"r",
-				"right"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "views/register.jade",
+			"contents": "\n/**\n * Module dependencies.\n */\n\nvar express = require('express')\nvar routes  = require('./routes')\nvar user    = require('./routes/user')\nvar http    = require('http')\nvar path    = require('path')\n\n// var app = express()\n// 		,server = require('http').createServer(app)\n// 		, io = require('socket.io').listen(server) \n\n	\nvar app = express()\n	,server = require('http').Server(app)\n	,io     = require('socket.io')(server)\nserver.listen(80)\n\n// all environments\napp.set('port', process.env.PORT || 3000)\napp.set('views', path.join(__dirname, 'views'))\napp.set('view engine', 'jade')\napp.use(express.favicon())\napp.use(express.logger('dev'))\napp.use(express.json())\napp.use(express.urlencoded())\napp.use(express.methodOverride())\napp.use(express.bodyParser({uploadDir:'./uploads'}))\napp.use(express.cookieParser(\"my secret thing\"))\napp.use(express.session())\napp.use(app.router)\napp.use(express.static(path.join(__dirname, 'public')))\n\n// development only\nif ('development' == app.get('env')) {\n  app.use(express.errorHandler())\n}\n\n\napp.get('/', routes.index)\nuser(app)\nrequire('./routes/session')(app)\nrequire('./routes/quest')(app)\n\n// mongoose\nvar mongoose = require('mongoose')\nmongoose.connect('mongodb://localhost/litmdatabase')\nvar db = mongoose.connection\n\ndb.on('error', console.error.bind(console, 'connection error:'))\ndb.once('open', function callback () {\n	//yap\n})\n\n\n\n//socket.io\nio.on('connection',function(socket){\n	socket.on('clientMessage',function(content){\n		socket.emit('serverMessage',1,'You said: '+content)\n		socket.get('username',function(err,username){\n			if(!username){\n				username=socket.id\n			}\n			socket.broadcast.emit('serverMessage',2,username+' said: '+ content)	\n		})\n	})\n\n	socket.on('login',function(username){\n		console.log(username)\n		// socket.set('username',username,function(err){\n		// 	if(err){throw err}\n	\n		// })\n		socket.username=username\n		socket.emit('serverMessage',3,'Currently logged in as '+username)\n		socket.broadcast.emit('serverMeassage',3,'User '+username+' logged in')\n	})\n	socket.emit('login')\n})\n\n\n",
+			"file": "app.js",
+			"file_size": 2142,
+			"file_write_time": 130499802124771754,
 			"settings":
 			{
-				"buffer_size": 2638,
+				"buffer_size": 2057,
 				"line_ending": "Windows"
 			}
 		}
@@ -531,9 +534,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				":w",
+				":w - Save"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -541,10 +548,6 @@
 			[
 				"package li",
 				"Package Control: List Packages"
-			],
-			[
-				":w",
-				":w - Save"
 			],
 			[
 				"git add .",
@@ -636,14 +639,25 @@
 	},
 	"file_history":
 	[
-		"/Z/Code/litm/litm/routes/user.js",
-		"/Z/Code/litm/litm/package.json",
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/1_1.tmx",
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/data.json",
 		"/Z/Code/litm/litm/app.js",
+		"/Z/Code/litm/litm/views/register.jade",
+		"/Z/Code/litm/litm/public/js/main.js",
+		"/Z/Code/litm/litm/routes/user.js",
+		"/Z/Code/litm/litm/routes/quest.js",
+		"/Z/Code/litm/litm/views/layout/foot.jade",
+		"/C/Users/pzx/Desktop/Validate/demo/basic.html",
+		"/Z/Code/litm/litm/250px.png",
+		"/Z/Code/litm/litm/routes/imageprocess.js",
+		"/Z/Code/litm/litm/views/newQuest.jade",
+		"/Z/Code/litm/litm/routes/index.js",
+		"/Z/Code/litm/litm/1.png",
+		"/Z/Code/litm/litm/250px-12941077.jpg",
+		"/Z/Code/litm/litm/views/user_login.jade",
+		"/Z/Code/litm/litm/package.json",
 		"/C/Users/pzx/AppData/Roaming/Sublime Text 2/Packages/Terminal/Terminal.sublime-settings",
 		"/C/Users/pzx/AppData/Roaming/Sublime Text 2/Packages/nodejsLauncher/Default (Windows).sublime-keymap",
-		"/Z/Code/litm/litm/routes/quest.js",
-		"/Z/Code/litm/litm/views/register.jade",
-		"/Z/Code/litm/litm/views/newQuest.jade",
 		"/Z/Code/litm/litm/data/schemas/user.js",
 		"/Z/Code/litm/litm/data/models/user.js",
 		"/Z/Code/litm/litm/LITM_WEB.sublime-project",
@@ -673,7 +687,6 @@
 		"/C/Users/pzx/.ssh/id_rsa",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/CanonTrap/CanonTrap.h",
 		"/Z/Code/litm/litm/data/models/Quest.js",
-		"/Z/Code/litm/litm/routes/index.js",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/1.py",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/CanonTrap/CanonTrap.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/cannonstab/cannonstab.h",
@@ -687,11 +700,9 @@
 		"/Z/Code/pybox2d/examples/framework.py",
 		"/C/Users/pzx/Desktop/ttt.cpp",
 		"/C/Users/pzx/Desktop/ttt.h",
-		"/Z/Code/litm/litm/views/layout/foot.jade",
 		"/C/Users/pzx/Desktop/1,py",
 		"/Z/Code/litm/litm/public/css/main.css",
 		"/Z/Code/litm/litm/views/main.jade",
-		"/Z/Code/litm/litm/public/js/main.js",
 		"/Z/Code/litm/litm/public/js/fileinput.js",
 		"/Z/Code/litm/litm/public/js/fileinput.min.js",
 		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
@@ -734,7 +745,6 @@
 		"/Z/index.jade",
 		"/Z/index1.jade",
 		"/C/Users/pzx/Desktop/main.jade",
-		"/Z/Code/litm/litm/views/user_login.jade",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/state/PatrolState.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/state/PatrolState.h",
 		"/C/Users/pzx/Desktop/Classes/game/ai/UnitAIComp.h",
@@ -756,14 +766,7 @@
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/test.tmx",
 		"/Z/Code/litm/litm/public/css/cal.css",
 		"/Z/Code/litm/litm/public/javascripts/main.js",
-		"/C/Users/pzx/Desktop/游戏编程精粹合集 PDF扫描版/AppDelegate.cpp",
-		"/C/Users/pzx/Desktop/游戏编程精粹合集 PDF扫描版/main.cpp",
-		"/C/Users/pzx/Desktop/游戏编程精粹合集 PDF扫描版/AppDelegate.h",
-		"/C/Users/pzx/Desktop/游戏编程精粹合集 PDF扫描版/main.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/main.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_frame/proj.win32/Classes/core/game_component/AnimatorCom.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow/Classes/AppMacros.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_frame/proj.win32/Classes/AppDelegate.cpp"
+		"/C/Users/pzx/Desktop/游戏编程精粹合集 PDF扫描版/AppDelegate.cpp"
 	],
 	"find":
 	{
@@ -782,6 +785,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"gun",
 			";",
 			"'))",
 			"Summernote",
@@ -908,8 +912,7 @@
 			"trangles",
 			"Trangles",
 			"trangles",
-			"Trangles",
-			"trangles"
+			"Trangles"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -970,18 +973,18 @@
 			[
 				{
 					"buffer": 0,
-					"file": "views/register.jade",
+					"file": "app.js",
 					"settings":
 					{
-						"buffer_size": 2638,
+						"buffer_size": 2057,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2544,
-								2544
+								1133,
+								1133
 							]
 						],
 						"settings":
@@ -1035,9 +1038,8 @@
 								"bh_single_quote_close"
 							],
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1204,6 +1206,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 233.0,
+	"side_bar_width": 153.0,
 	"status_bar_visible": true
 }

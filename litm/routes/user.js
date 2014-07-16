@@ -5,6 +5,7 @@ var LoggedIn=require('./middleware/logger_in')
 var loadUser=require('./middleware/load_user')
 var restrictUserToSelf=require('./middleware/restrict_user_to_self')
 var fs=require('fs')
+var imageprocess=require('./imageprocess')
 
 module.exports=function(app){
 	app.get('/users/new',notLoggedIn,function(req,res){
@@ -71,11 +72,14 @@ module.exports=function(app){
 	
 	})
 	app.post('/users',function(req,res,next){
-		console.log(req.body.username)
+		var filename=req.body.pic
+		var parse=/(\w+).\w+/
+		var filenameinpng=parse.exec(filename)[1]+".png"
+		console.log(filenameinpng)
 		var _user=new User({
 			username:req.body.username,
 			password:req.body.password,
-			pic:req.body.pic
+			pic:'./public/pic/'+req.body.username+'/1/'+filenameinpng
 		})
 		User.create(_user,function(err){
 			if (err){
@@ -88,25 +92,8 @@ module.exports=function(app){
 			return
 		})
 		res.send('ok',200)
-		// if (req.files.pic) 
-		// 	req.body.pic=req.files.pic.name
-		// User.create(req.body,function(err){
-		// 	if (err){
-		// 		if (err.code === 11000){
-		// 			res.send('Conflict',409)
-		// 		}else{
-		// 			next(err)
-		// 		}
-		// 		return
-		// 	}
-		// res.redirect('/')
-		// fs.rename(req.files.pic.path,"./public/pic/"+req.files.pic.name,function(err){
-		// 	if (err)
-		// 		throw err
-		// })
-		// })
+		imageprocess.writepic(req.body.file,filenameinpng,req.body.username,1)
 	})
-
 
 	app.get('/del/:name',loadUser,function(req,res,next){
 		fs.unlink("./public/images/"+req.user.pic,function(err){
