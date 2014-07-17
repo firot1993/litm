@@ -2,55 +2,128 @@ extends layout/layout
 block content
     div(class="loginarea ")
         div(class="container row")
-            div(class="col-md-6")
+            div(class="col-md-8")
                 h3 Register
                 br
                 br
-                form(action='/users' method='post' class="form-horizontal " role="form")
-
+                form(class="form-horizontal " role="form" id="registerForm")
                     div(class="form-group row")
-                        label(class="col-md-3 control-label") Username:
-                        div(class="col-md-7")
-                            input(type="username" class="form-control")
+                        label(class="col-md-2 control-label") Username:
+                        div(class="col-md-6 control-group input-append")
+                            input(type="text" class="form-control" data-required="true" 
+                                data-validate="username" data-description="text" data-describedby="textdes")
+                        span(class="col-md-4" id="textdes")
                     br
                     div(class="form-group row")
-                        label(class="col-md-3 control-label") password:
-                        div(class="col-md-7")
-                            input(type="password" class="form-control")
+                        label(class="col-md-2 control-label") password:
+                        div(class="col-md-6 control-group input-append")
+                            input(type="password" class="form-control" data-required="true"
+                            data-validate="password" data-description="password" data-describedby="passworddes")
+                        span(class="col-md-4" id="passworddes")
                     br
                     div(class="form-group row")
-                        label(class="col-md-3 control-label") email:
-                        div(class="col-md-7")
-                            input(type="email" class="form-control")
+                        label(class="col-md-2 control-label") email:
+                        div(class="col-md-6 control-group input-append")
+                            input(type="email" class="form-control" data-required="true"
+                            data-validate="email" data-description="email" data-describedby="emaildes" )
+                        span(class="col-md-4" id="emaildes")
+                    br
                     br
                     div(class="form-group row")
-                        label(class="col-md-3 control-label") Avater:
+                        label(class="col-md-2 control-label") Avater:
                         input(type="file" id="file" data-preview-file-type="image")
+                        br
                     br
                     br
-                    br
+                    div(class="btn-group")
+                        button(type="submit" class="btn btn-default" id="register") Register it!
+                        button(type="reset" class="btn btn-default" ) Reset
             div(class="col-md-4")
-                button(type="submit" class="btn btn-default" id="register") Register it!
     include layout/foot
     script(src="/js/fileinput.min.js")
+    script(src="/js/jquery-validate.min.js")
     script(src="/js/main.js")
     script.
         $(function(){
             $("#file").fileinput({
             'showUpload':false,
             'previewFileType':'image',
-            'showCaption':false
+            'showCaption':true
             })
-            $('.file-input.file-input-new').attr('class','file-input file-input-new col-md-7')
-            $('#register').on('click',function(){
-                file=$('.file-preview-image')
+            $("#registerForm").validate(
+                {
+                    onKeyup : true,
+                    sendForm : false,
+                    valid:function(form){
+                        send()
+                    },
+                    invalid: function(form, validator) {  //不通过回调
+                        return false;
+                    },
+                    eachValidField : function() {
 
+                        $(this).closest('div').removeClass('has-error').addClass('has-success');
+                    },
+                    eachInvalidField : function() {
+
+                        $(this).closest('div').removeClass('has-success').addClass('has-error');
+                    },
+                    description : {
+                    text : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    password : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    email : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    }
+                }
+            })
+
+            $.validateExtend({
+                username : {
+                    required : true,
+                    conditional : function(value) {
+
+                        return value.length>=5
+                    },
+                    pattern : /^[a-zA-Z]+[a-zA-Z0-9_]+$/
+                },
+                email:{
+                    required:true,
+                    conditional:function(value){
+                        return validEmail(value)
+                    },
+                    pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
+                },
+                password:{
+                    required:true,
+                    conditional:function(value){
+                        return value.length>=8
+                    },
+                    pattern: /^[a-zA-Z0-9._]+$/
+                }
+            });
+            function send(){
+                file=$('.file-preview-image')
+                console.log(file.attr('src'))
+                if (file.attr('src')==undefined) return false
                 $.ajax({url:"/users",
                         type:'post',
                         data:{
-                                  username:$('input[type=username]').val(),
+                                  username:$('input[type=text]').val(),
                                   password:$('input[type=password]').val(),
-                                  email:$('input[type=username]').val(),
+                                  email:$('input[type=email]').val(),
                                   pic:file.attr('alt'),
                                   file:file.attr('src')
                             },
@@ -59,7 +132,14 @@ block content
                                     location.href='/'
                                 }
                     })
-                })
-            })
+                }
+            $('.file-input.file-input-new').addClass('col-md-7')
+            $('.file-caption-name').css('font-size','10px')
+            $('.file-caption-name').closest('.div').closest('span').hide() 
+        })
+
+
+
+    
     
 

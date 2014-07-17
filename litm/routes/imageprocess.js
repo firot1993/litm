@@ -15,7 +15,7 @@ exports.writepic=function(file,filename,username,type)
             path='./public/pic/'+username
             if (!fs.existsSync(path))
                  fs.mkdirSync(path);
-            path=path+'/'+type.toString()
+            path=path+'/'+type
             if (!fs.existsSync(path))
                  fs.mkdirSync(path);
             path=path+'/'

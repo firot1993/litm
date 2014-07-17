@@ -7,38 +7,160 @@ block content
                     h3 Post your Question Here
                     br
                     br
-                    form(class="form-horizontal" role="form")
+                    br
+                    form(class="form-horizontal" role="form" id="postForm")
                         div(class="form-group")
-                            label(class="col-sm-2 control-label") title：
+                            label(class="col-sm-2 control-label") Title：
                             div(class="col-sm-4")
-                                    input(type="test" class="form-control")
+                                    input(id="text" type="text" class="form-control" data-required="true" 
+                                data-validate="username" data-description="text" data-describedby="textdes")
+                            span(class="col-md-4" id="textdes")
                         div(class="form-group")
-                            label(class="col-sm-2 control-label") deadline:
+                            label(class="col-sm-2 control-label") Deadline:
                             div(class="col-sm-8")
-                                div(class="col-sm-5 input-group date")
-                                    input(class="form-control" type="text" readonly="" value="12-02-2012") 
+                                div(class="col-sm-5 input-group date" )
+                                    input(class="form-control" type="text" readonly="" id="datetime" data-required="true"
+                                        data-validate="date" data-description="date" data-describedby="datedes"     
+                                        ) 
                                     span(class="input-group-addon")
                                         i(class="glyphicon glyphicon-calendar")
+                                 span(class="col-sm-4" id="datedes")
                         div(class='form-group')
-                            label(class="col-sm-2 control-label") brief:
+                            label(class="col-sm-2 control-label") Brief:
                             div(class="col-sm-10")
-                                textarea(class="input-block-level" id="summernote" name="content" row="18")              
-                                //- div(id="summernote") Hello             
+                                div(class="input-block-level" id="summernote" name="content" row="18")
+                        br
+                        br
+                        div(class='form-group')
+                            label(class="col-sm-2 control-label") 
+                            button(type="submit" class="btn btn-Primary" id="submit") Post it!
                 div(class="col-md-1") 
-                button(type="submit" class="btn btn-default" id="submit") Post it!
     include layout/foot
     script(src='/js/summernote.min.js')
+    script(src="/js/jquery-validate.min.js")
+    script(src="/js/main.js")
     script.
         $(function(){
-            var $id = $('.active')
-            $id.attr("class","")
+            $('.active').removeClass('active')
+            $('#Post').addClass('active')
             $('#summernote').summernote()
             $('.note-editable').css({'height':'500px'})
-            $("#Post").attr("class","active")
             $('.input-group.date').datepicker({
+                 todayBtn: "linked",
+                 forceParse: false,
+                 autoclose: true,
+                todayHighlight: true
                 });
-            $('#submit').click(function(){
-                console.log($('#summernote').code())
-                })
+            var mydate=new Date()
+            var value=(mydate.getMonth()+1)+'/'+mydate.getDate()+'/'+mydate.getFullYear()
+            $('#datetime').attr('value',value)
+            $("#postForm").validate(
+                {
+                    onKeyup : true,
+                    sendForm : false,
+                    valid:function(form){
+                        send()
+                    },
+                    invalid: function(form, validator) {  //不通过回调
+                        return false;
+                    },
+                    eachValidField : function() {
+
+                        $(this).closest('div').removeClass('has-error').addClass('has-success');
+                    },
+                    eachInvalidField : function() {
+
+                        $(this).closest('div').removeClass('has-success').addClass('has-error');
+                    },
+                    description : {
+                    text : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    password : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    email : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    date:{
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">uuuu</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">must after today</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                    }
+                }
+            })
+
+            $.validateExtend({
+                username : {
+                    required : true,
+                    conditional : function(value) {
+
+                        return value.length>=5
+                    },
+                    pattern : /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9_\u4e00-\u9fa5]+$/
+                },
+                email:{
+                    required:true,
+                    conditional:function(value){
+                        return validEmail(value)
+                    },
+                    pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
+                },
+                password:{
+                    required:true,
+                    conditional:function(value){
+                        return value.length>=8
+                    },
+                    pattern: /^[a-zA-Z0-9._]+$/
+                },
+                date:{
+                    required:true,
+                    conditional:function(value){
+                        var parsetime=/([0-9]+)\/([0-9]+)\/([0-9]+)/
+                        var array=parsetime.exec(value)
+                        var date=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
+                        return date>mydate
+                    },
+                    pattern:/^[0-9\/]+$/
+                }
+            });
+
+            function send(){
+                var title=$('text').val()
+                var sHtml=parsesummernote($('#summernote').code(),title)
+                $.ajax({url:"/newQuest",
+                        type:'post',
+                        data:{
+                            title:title,
+                            file:sHtml
+                        },
+                        success:function(date,status,xhr){
+                            alert('succeed!')
+                            location.href='/'
+                        }
+                    })
+
+                //- var sHTML = $('#summernote').code()
+                //-  $.ajax({url:"/writefile",
+                //-         type:'post',
+                //-         data:{
+                //-                 file:sHTML
+                //-             },
+                //-         success:function(data,status,xhr){
+                //-                     alert("succeed!")
+                //-                     location.href='/'
+                //-                 }
+                //-     })
+                }
         })
 

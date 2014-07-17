@@ -1,10 +1,8 @@
 function LoggedIn(req,res,next){
 	if (req.session &&req.session.user){
-		if (req.session.retry==undefined) req.session.retry=0;
 		next();		
 	}else{
-		res.send('You have not logged',401);
-
+		res.render('jump',{problem:"You do not log in"})
 	}
 }
 module.exports=LoggedIn;

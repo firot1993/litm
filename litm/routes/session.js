@@ -6,32 +6,18 @@ module.exports=function(app){
   		next();
 	});
 	app.get('/session/new',notLoggedIn,function(req,res){
-		if (req.session.retry==0){
-			req.session.retry=0;
-			res.render('user_login',{title:"Log in",session:req.session});
-		}
-		else{
-			if (req.session.retry ==1)res.render('user_login',{title:"Try again",session:req.session});
-			else {
-				var su=''; 
-				for (var i = Math.min(req.session.retry-1,10) - 1; i >= 0; i--) {
-					su=su+'  !  ';
-				};
-				res.render('user_login',{title:"Try again"+su,session:req.session});
-			}
-		}
+		res.render('user_login',{title:"Log in",session:req.session});
 	});
 	app.post('/session',notLoggedIn,function(req,res){
+		console.log(req.body)
 		User.findOne({username:req.body.username,password:req.body.password},function(err,user){
 		if (err){
 			return next(err);
 		}
 		if (user){
 			req.session.user=user;
-			req.session.retry=0;
 			res.redirect('/');
 		}else{
-			req.session.retry++;
 			res.redirect('/session/new');
 		}
 		});

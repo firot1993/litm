@@ -1,0 +1,15 @@
+extends layout/layout
+block content
+    div(class="container")
+        div(class="starter-template")
+            div(class="jumbotron")
+                h1 Some wrong happened~
+                p=problem
+                p you will jump in 3s,if no jump automatic,press the button next
+                a(class="btn btn-primary btn-lg" rold="button" href="#") Jump »
+    include layout/foot
+    script.
+        $(function(){
+             $('.active').removeClass('active')     
+             setTimeout(function(){location.href="/";},3000);        
+            })

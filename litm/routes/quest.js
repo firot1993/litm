@@ -1,7 +1,8 @@
-var User=require('../data/models/user')
-var Quest=require('../data/models/Quest')
-var LoggedIn=require('./middleware/logger_in')
-
+var User         = require('../data/models/user')
+var Quest        = require('../data/models/Quest')
+var LoggedIn     = require('./middleware/logger_in')
+var fs           = require('fs')
+var imageprocess = require('./imageprocess')
 module.exports=function(app){
 	app.post('/newQuest',LoggedIn,function(req,res,next){
 		var t=new Date()
@@ -9,7 +10,7 @@ module.exports=function(app){
 			from:req.session.user.username,
 			state:"N",
 			title:req.body.title,
-			content:req.body.content,
+			content:req.body.file,
 			stime:t
 		})		
 		Quest.create(_Quest,function(err){
@@ -27,16 +28,13 @@ module.exports=function(app){
 				})
 			})
 		})
-		res.redirect('/')
+		res.send('ok',200)
 	})
-	app.get('/Quest',function(req,res,next){
+	app.get('/Quest',LoggedIn,function(req,res,next){
 		res.render('newQuest.jade',{session:req.session})
 	})
-	// app.get('/Quest',function(req,res,next){
-	// 	Quest.find({state:"N"}).sort('date').exec(function(err,quests){
-	// 		if (err)
-	// 			return next(err)
-	// 		console.log(quests)
-	// 	})
-	// })
+	app.post('/writefile',LoggedIn,function(req,res,next){
+		imageprocess.writepic(req.body.picture,req.body.filename,req.session.user.username,req.body.title)
+		res.send('ok',200)
+	})
 }
