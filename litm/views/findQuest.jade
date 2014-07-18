@@ -1,7 +1,104 @@
 extends layout/layout
 block content
+    div(class="container")
+        div(class="starter-template")
+            div(class='row')
+                div(class="col-md-4")
+                    div(class='buddle 0') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+                    div(class='buddle 1') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+                    div(class='buddle 2') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+                    div(class='buddle 3')
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief') 
+                    div(class='buddle 4') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+                     div(class='buddle 5') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+                     div(class='buddle 6') 
+                        div(class='title')
+                        div(class='deadline')
+                        div(class='brief')
+             
+    div(class="modal fade " style="display:none" id="my")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content")
+                div(class="modal-header")
+                    button(type='button' class='close' data-dismiss='modal')
+                        span(aria-hidden="true") &times;
+                        span(class="sr-only") Close
+                    h2(class="modal-title")
+                div(class="modal-body")
+                    p(style="font-weight:bold") Time:
+                        strong(class="time" style="font-weight:normal")
+                    p(style="font-weight:bold") From:
+                        strong(class="from" style="font-weight:normal")
+                    p(style="font-weight:bold") Descirption:
+                        div(class="main")
+                div(class="modal-footer")
+                    a(href="#" class="btn btn-success") Sign here
+                    a(href="#" class="btn" data-dismiss="modal") Close
+    //- p
+    //-     a(data-toggle='modal' data-target='#my' class='btn btn-primary') laucher
 
-     include layout/foot
-     script.
-        $('.active').removeClass('active')
-        $('#Find').addClass('active')
+    include layout/foot
+    script.
+        $(function()
+            {
+              
+                var allQuest=[]
+                var nowQuest=[]
+                var nowPage=1
+                $('.active').removeClass('active')
+                $('#Find').addClass('active')
+                $.ajax({
+                        url:'/find',
+                        type:'post',
+                        success:function(data,status,xhr){
+                            allQuest=data
+                            nowQuest=playpage(allQuest,1,5,$('.buddle').css('width'))
+                            render(nowQuest)
+                    }
+                })
+           })
+        function render(value){
+        var length=value.length
+        for (var i = 0;i < value.length;i++){
+                $('.buddle.'+i).find('.title').html(value[i]['title'])
+                var mydate=new Date(value[i]['etime'])
+                var strdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+                $('.buddle.'+i).find('.deadline').html("Deadline:"+strdate)
+                $('.buddle.'+i).find('.brief').html(value[i]['brief'])
+                $('.buddle.'+i).on('click',(function(value){
+                        return function(){
+                            show(value)
+                        }
+                    })(value[i])
+                    )
+            }
+
+        function show(value){
+            var mydate=new Date(value['stime'])
+            var startdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+            mydate=new Date(value['etime'])
+            var enddate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+            $('.modal-header h2').html(value['title'])
+            $('.modal-body .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
+            $('.modal-body .from').html(value['username'])
+            $('.modal-body .main').html(value['content']['content'])
+            $('#my').modal('show')
+        }
+        }

@@ -11,7 +11,9 @@ module.exports=function(app){
 			state:"N",
 			title:req.body.title,
 			content:req.body.file,
-			stime:t
+			stime:t,
+			brief:req.body.brief,
+			etime:req.body.deadline
 		})		
 		Quest.create(_Quest,function(err){
 			if (err)throw err
@@ -32,6 +34,12 @@ module.exports=function(app){
 	})
 	app.get('/find',function(req,res,next){
 		res.render('findQuest.jade',{session:req.session})
+	})
+	app.post('/find',function(req,res,next){
+		var page=req.params.page
+		Quest.find().where('state').in(['N']).exec(function(err,quests){
+			res.send(quests,200)
+		})
 	})
 	app.get('/Quest',LoggedIn,function(req,res,next){
 		res.render('newQuest.jade',{session:req.session})

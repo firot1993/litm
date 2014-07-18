@@ -57,7 +57,7 @@ block content
                     valid:function(form){
                         send()
                     },
-                    invalid: function(form, validator) {  //不通过回调
+                    invalid: function(form, validator) {  
                         return false;
                     },
                     eachValidField : function() {
@@ -97,7 +97,7 @@ block content
 
                         return value.length>=5
                     },
-                    pattern : /^[a-zA-Z]+[a-zA-Z0-9_]+$/
+                    pattern : /^[a-zA-Z]+[a-zA-Z0-9_\s]+$/
                 },
                 email:{
                     required:true,
@@ -118,7 +118,8 @@ block content
                 file=$('.file-preview-image')
                 console.log(file.attr('src'))
                 if (file.attr('src')==undefined) return false
-                $.ajax({url:"/users",
+                $.ajax({
+                        url:"/users",
                         type:'post',
                         data:{
                                   username:$('input[type=text]').val(),

@@ -6,7 +6,8 @@ var QuestSchema=new mongoose.Schema({
 	stime:Date,
 	etime:Date,
 	title:String,
-	content:String
+	content:String,
+    brief:String
 })
 
 module.exports=QuestSchema;

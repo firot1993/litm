@@ -25,8 +25,14 @@ block content
                                     span(class="input-group-addon")
                                         i(class="glyphicon glyphicon-calendar")
                                  span(class="col-sm-4" id="datedes")
-                        div(class='form-group')
+                        div(class="form-group")
                             label(class="col-sm-2 control-label") Brief:
+                            div(class="col-sm-4")
+                                    textarea(id="brief" type="text" class="form-control" data-required="true" 
+                                data-validate="brief" data-description="brief" data-describedby="Briefdes")
+                            span(class="col-md-4" id="Briefdes")
+                        div(class='form-group')
+                            label(class="col-sm-2 control-label") Description:
                             div(class="col-sm-10")
                                 div(class="input-block-level" id="summernote" name="content" row="18")
                         br
@@ -52,6 +58,7 @@ block content
                 todayHighlight: true
                 });
             var mydate=new Date()
+            var deadline=new Date()
             var value=(mydate.getMonth()+1)+'/'+mydate.getDate()+'/'+mydate.getFullYear()
             $('#datetime').attr('value',value)
             $("#postForm").validate(
@@ -61,7 +68,7 @@ block content
                     valid:function(form){
                         send()
                     },
-                    invalid: function(form, validator) {  //不通过回调
+                    invalid: function(form, validator) {  
                         return false;
                     },
                     eachValidField : function() {
@@ -96,6 +103,12 @@ block content
                         pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">uuuu</span></div>',
                         conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">must after today</span></div></div>',
                         valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                    },
+                    brief:{
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px"></span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px"></span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
                     }
                 }
             })
@@ -128,39 +141,37 @@ block content
                     conditional:function(value){
                         var parsetime=/([0-9]+)\/([0-9]+)\/([0-9]+)/
                         var array=parsetime.exec(value)
-                        var date=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
-                        return date>mydate
+                        deadline=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
+                        return deadline>mydate
                     },
                     pattern:/^[0-9\/]+$/
+                },
+                brief:{
+                    required:true,
+                    conditional:function(value){
+                        return value.length>=5
+                    },
+                    pattern:/[^<>\/\\]+/
                 }
             });
 
             function send(){
-                var title=$('text').val()
+                var title=$('#text').val()
+                var brief=$('#brief').val()
                 var sHtml=parsesummernote($('#summernote').code(),title)
                 $.ajax({url:"/newQuest",
                         type:'post',
                         data:{
                             title:title,
-                            file:sHtml
+                            file:sHtml,
+                            brief:brief,
+                            deadline:deadline
                         },
                         success:function(date,status,xhr){
                             alert('succeed!')
                             location.href='/'
                         }
                     })
-
-                //- var sHTML = $('#summernote').code()
-                //-  $.ajax({url:"/writefile",
-                //-         type:'post',
-                //-         data:{
-                //-                 file:sHTML
-                //-             },
-                //-         success:function(data,status,xhr){
-                //-                     alert("succeed!")
-                //-                     location.href='/'
-                //-                 }
-                //-     })
                 }
         })
 
