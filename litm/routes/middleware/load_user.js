@@ -10,9 +10,9 @@ function loadUser(req,res,next){
 		if(err){
 			return next(err);
 		}
-		if (!user){
-			return res.send('Not found',404);
-		}
+		// if (!user){
+		// 	return res.send('fuck you');
+		// }
 		req.user=user;
 		next();
 	});

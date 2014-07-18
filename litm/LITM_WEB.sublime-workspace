@@ -519,6 +519,38 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "views/layout/layout.jade",
+			"settings":
+			{
+				"buffer_size": 2695,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/layout/navbar_btn_login.jade",
+			"settings":
+			{
+				"buffer_size": 2172,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/pzx/Desktop/data.json",
+			"settings":
+			{
+				"buffer_size": 7103,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/data.json",
+			"settings":
+			{
+				"buffer_size": 7384,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -644,27 +676,30 @@
 	},
 	"file_history":
 	[
-		"/Z/Code/litm/litm/views/main.jade",
-		"/Z/Code/litm/litm/views/jump.jade",
-		"/Z/Code/litm/litm/views/newQuest.jade",
-		"/Z/Code/litm/litm/routes/middleware/logger_in.js",
-		"/Z/Code/litm/litm/app.js",
-		"/Z/Code/litm/litm/routes/middleware/load_user.js",
-		"/Z/Code/litm/litm/routes/user.js",
+		"/Z/Code/litm/litm/public/css/main.css",
+		"/C/Users/pzx/Desktop/layout.html",
 		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
-		"/Z/Code/litm/litm/routes/quest.js",
-		"/Z/Code/litm/litm/public/js/main.js",
+		"/Z/Code/litm/litm/views/user_login.jade",
+		"/Z/Code/litm/litm/routes/session.js",
 		"/Z/Code/litm/litm/views/layout/foot.jade",
 		"/Z/Code/litm/litm/views/layout/layout.jade",
-		"/Z/Code/litm/litm/routes/imageprocess.js",
-		"/Z/Code/litm/litm/views/register.jade",
-		"/Z/Code/litm/litm/routes/index.js",
-		"/Z/Code/litm/litm/views/user_login.jade",
+		"/Z/Code/litm/litm/views/jump.jade",
 		"/Z/Code/litm/litm/routes/middleware/not_logger_in.js",
-		"/Z/Code/litm/litm/routes/session.js",
+		"/Z/Code/litm/litm/routes/middleware/logger_in.js",
+		"/Z/Code/litm/litm/routes/middleware/load_user.js",
+		"/Z/Code/litm/litm/views/register.jade",
+		"/Z/Code/litm/litm/routes/user.js",
 		"/Z/Code/litm/litm/1.html",
+		"/Z/Code/litm/litm/app.js",
+		"/Z/Code/litm/litm/views/main.jade",
+		"/Z/Code/litm/litm/views/newQuest.jade",
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/Map.cpp",
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/GameWorld.cpp",
+		"/Z/Code/litm/litm/routes/quest.js",
+		"/Z/Code/litm/litm/routes/index.js",
+		"/Z/Code/litm/litm/public/js/main.js",
+		"/Z/Code/litm/litm/routes/imageprocess.js",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/data.json",
-		"/Z/Code/litm/litm/public/css/main.css",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/1_1.tmx",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/createTrap.py",
 		"/Z/Code/HTML/jiahua2.html",
@@ -691,7 +726,6 @@
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/ui/VisibleRect.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ComponentTypes.h",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/FrameAnimation.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/GameWorld.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/ui/SceneWrapper.h",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/GameScene.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/mummy_animation.plist",
@@ -769,9 +803,7 @@
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/state/PatrolState.h",
 		"/C/Users/pzx/Desktop/Classes/game/ai/UnitAIComp.h",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/utils/FSM/FSM.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/UnitAIComp.h",
-		"/C/Users/pzx/Desktop/Classes/game/ai/FixedTrapAIComp.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Classes/game/ai/state/FIxedTrapState/FixedTrapAttack.h"
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/UnitAIComp.h"
 	],
 	"find":
 	{
@@ -790,6 +822,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"\n                ",
+			";",
 			"datetime",
 			"text",
 			"user_login",
@@ -915,9 +949,7 @@
 			"\n\"y\" ",
 			",\n\"y\" ",
 			"\n\"y\" ",
-			"\"x\" : ",
-			"x",
-			"users"
+			"\"x\" : "
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -975,8 +1007,317 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "views/layout/layout.jade",
+					"settings":
+					{
+						"buffer_size": 2695,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1669,
+								1669
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 296.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "views/layout/navbar_btn_login.jade",
+					"settings":
+					{
+						"buffer_size": 2172,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2014,
+								2014
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/pzx/Desktop/data.json",
+					"settings":
+					{
+						"buffer_size": 7103,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7103,
+								7103
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4000.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/data.json",
+					"settings":
+					{
+						"buffer_size": 7384,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4142,
+								7384
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4537.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1140,6 +1481,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 221.0,
+	"side_bar_width": 184.0,
 	"status_bar_visible": true
 }

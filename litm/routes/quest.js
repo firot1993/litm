@@ -30,6 +30,9 @@ module.exports=function(app){
 		})
 		res.send('ok',200)
 	})
+	app.get('/find',function(req,res,next){
+		res.render('findQuest.jade',{session:req.session})
+	})
 	app.get('/Quest',LoggedIn,function(req,res,next){
 		res.render('newQuest.jade',{session:req.session})
 	})

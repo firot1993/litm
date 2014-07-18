@@ -2,11 +2,14 @@ extends layout/layout
 block content
     div(class="container")
         div(class="starter-template")
-            div(class="jumbotron")
+            div(class="alert alert-danger")
                 h1 Some wrong happened~
                 p=problem
-                p you will jump in 3s,if no jump automatic,press the button next
-                a(class="btn btn-primary btn-lg" rold="button" href="#") Jump »
+                p You will Die in 3 seconds,if no jump automatic,press the button next
+                    p(style="color:black") Fuck off!
+                br
+                br
+                a(class="btn btn-default" rold="button" href="#" style="float:right") Jump »
     include layout/foot
     script.
         $(function(){

@@ -5,6 +5,8 @@ block content
            div(class="col-md-8")
                 h3 Register
                 br
+                div(id="wrong" visable="false" class="alert alert-danger")
+                    p wrong password or username
                 br
                 form(class="form-horizontal" role="form" id="registerForm")
                     div(class="form-group")
@@ -28,6 +30,7 @@ block content
     script.
         $(function(){
             $("#Home").removeClass('active')
+            $('#wrong').hide()
             $("#registerForm").validate(
                 {
                     onKeyup : true,
@@ -100,6 +103,11 @@ block content
                                   password:$('input[type=password]').val(),
                             },
                         success:function(data,status,xhr){
+                                    if (data=='ok')
+                                        location.href='/'
+                                    else{
+                                        $('#wrong').show()
+                                    }
                                 }
                     })
                 }
