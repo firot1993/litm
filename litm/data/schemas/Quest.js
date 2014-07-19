@@ -1,8 +1,8 @@
 var mongoose=require('mongoose');
 var QuestSchema=new mongoose.Schema({
 	from:String,
-	got:String,
-	state:String,//N=new,U=unfinished,D=dead,F=finished
+	got:[String],
+	state:String,//N=new,S=signed,C=confirmed,D=deliberation
 	stime:Date,
 	etime:Date,
 	title:String,

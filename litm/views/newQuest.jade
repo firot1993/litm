@@ -1,46 +1,45 @@
 extends layout/layout
 block content
-    div(class="wells")
-        div(class="loginarea")
-            div(class="row")
-                div(class="col-md-11")
-                    h3 Post your Question Here
+    div(class="loginarea")
+        div(class="row")
+            div(class="col-md-11")
+                h3 Post your Question Here
+                br
+                br
+                br
+                form(class="form-horizontal" role="form" id="postForm")
+                    div(class="form-group")
+                        label(class="col-sm-2 control-label") Title：
+                        div(class="col-sm-4")
+                                input(id="text" type="text" class="form-control" data-required="true" 
+                            data-validate="username" data-description="text" data-describedby="textdes")
+                        span(class="col-md-4" id="textdes")
+                    div(class="form-group")
+                        label(class="col-sm-2 control-label") Deadline:
+                        div(class="col-sm-8")
+                            div(class="col-sm-5 input-group date" )
+                                input(class="form-control" type="text" readonly="" id="datetime" data-required="true"
+                                    data-validate="date" data-description="date" data-describedby="datedes"     
+                                    ) 
+                                span(class="input-group-addon")
+                                    i(class="glyphicon glyphicon-calendar")
+                             span(class="col-sm-4" id="datedes")
+                    div(class="form-group")
+                        label(class="col-sm-2 control-label") Brief:
+                        div(class="col-sm-4")
+                                textarea(id="brief" type="text" class="form-control" data-required="true" 
+                            data-validate="brief" data-description="brief" data-describedby="Briefdes")
+                        span(class="col-md-4" id="Briefdes")
+                    div(class='form-group')
+                        label(class="col-sm-2 control-label") Description:
+                        div(class="col-sm-10")
+                            div(class="input-block-level" id="summernote" name="content" row="18")
                     br
                     br
-                    br
-                    form(class="form-horizontal" role="form" id="postForm")
-                        div(class="form-group")
-                            label(class="col-sm-2 control-label") Title：
-                            div(class="col-sm-4")
-                                    input(id="text" type="text" class="form-control" data-required="true" 
-                                data-validate="username" data-description="text" data-describedby="textdes")
-                            span(class="col-md-4" id="textdes")
-                        div(class="form-group")
-                            label(class="col-sm-2 control-label") Deadline:
-                            div(class="col-sm-8")
-                                div(class="col-sm-5 input-group date" )
-                                    input(class="form-control" type="text" readonly="" id="datetime" data-required="true"
-                                        data-validate="date" data-description="date" data-describedby="datedes"     
-                                        ) 
-                                    span(class="input-group-addon")
-                                        i(class="glyphicon glyphicon-calendar")
-                                 span(class="col-sm-4" id="datedes")
-                        div(class="form-group")
-                            label(class="col-sm-2 control-label") Brief:
-                            div(class="col-sm-4")
-                                    textarea(id="brief" type="text" class="form-control" data-required="true" 
-                                data-validate="brief" data-description="brief" data-describedby="Briefdes")
-                            span(class="col-md-4" id="Briefdes")
-                        div(class='form-group')
-                            label(class="col-sm-2 control-label") Description:
-                            div(class="col-sm-10")
-                                div(class="input-block-level" id="summernote" name="content" row="18")
-                        br
-                        br
-                        div(class='form-group')
-                            label(class="col-sm-2 control-label") 
-                            button(type="submit" class="btn btn-Primary" id="submit") Post it!
-                div(class="col-md-1") 
+                    div(class='form-group')
+                        label(class="col-sm-2 control-label") 
+                        button(type="submit" class="btn btn-Primary" id="submit") Post it!
+            div(class="col-md-1") 
     include layout/foot
     script(src='/js/summernote.min.js')
     script(src="/js/jquery-validate.min.js")

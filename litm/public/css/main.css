@@ -5,7 +5,13 @@ body {
 .starter-template {
   padding: 40px 15px;
 }
-
+.starter{
+    margin: auto;
+    padding: 40px 20%;
+}
+.quests:{
+    margin: auto;
+}
 
 .loginarea {
     font-size: 12px;
@@ -14,6 +20,7 @@ body {
     letter-spacing: 1px;
     max-width: 1000px;
     margin: auto;
+    padding: 5%;
 }
 
 .control-label
@@ -24,13 +31,13 @@ body {
 .buddle
 {
     position:relative;
-    padding:15px;
+    padding:30px;
     margin:1em 0em 3em;
-    max-width:300px;
+    max-width:100%;
     line-height:1.2;
     color:#fff;
-    background:#ccc;
-    border-radius: 10px;
+    background-color: rgba(204, 204, 204, 0.3);
+    border-radius: 25px;
     word-break:break-all;
 }
 .buddle:after{
@@ -43,26 +50,52 @@ body {
     display: block;
     border-style: solid;
     border-width: 15px;
-    border-color: #ccc transparent transparent transparent;
+    border-color: rgba(204, 204, 204, 0.3) transparent transparent transparent;
     position:absolute;
     z-index:-1;
     bottom:-25px;
     left:20px; 
 }
 
+
+
+.avater
+{
+    width: 100px;
+    height: 100px;
+}
 .title{
-    font-size: 20px;
-    color:#ffc;
+    font-size: 35px;
+    color:black;
     font-weight: bold;
     text-align: center;
 }
 
 .deadline{
-
+    color:#e66;
+    padding:2% 5%;
+    font-size: 25px;
+    font-weight: bold;
 }
 .brief{
+    color:black;
+    padding:2% 5%;
+}
+/*.main{
+    padding: 10px 10px;
+} 
+
+.information
+{
+     margin:1em 0em 3em;
+     padding: 30px 30px;
+     background-color: rgba(204, 204, 204, 0.15);
+     border-radius: 20px;
 
 }
-.main{
-    padding: 20px 15px;
+
+.informationmain
+{
+    padding: 30px 30px;
 }
+*/

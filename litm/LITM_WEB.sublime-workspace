@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"data",
+				"data-dismiss"
+			],
+			[
+				"load",
+				"loadUser"
+			],
+			[
+				"user",
+				"userdata"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
 				"str",
 				"strdate"
 			],
@@ -22,10 +46,6 @@
 			[
 				"font",
 				"font-weight"
-			],
-			[
-				"st",
-				"stime"
 			],
 			[
 				"ti",
@@ -150,10 +170,6 @@
 			[
 				"bord",
 				"border-left"
-			],
-			[
-				"border",
-				"border-bottom"
 			],
 			[
 				"bod",
@@ -376,10 +392,6 @@
 				"information	statement"
 			],
 			[
-				"user",
-				"username"
-			],
-			[
 				"Base",
 				"BaseHandler	class"
 			],
@@ -402,10 +414,6 @@
 			[
 				"backgr",
 				"backgroundPosition"
-			],
-			[
-				"back",
-				"background"
 			],
 			[
 				"select_",
@@ -506,33 +514,33 @@
 			[
 				"scr",
 				"script	Tag"
-			],
-			[
-				"co",
-				"count"
-			],
-			[
-				"body",
-				"bodyHeight"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "app.js",
+			"settings":
+			{
+				"buffer_size": 1997,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 81.0,
 		"selected_items":
 		[
 			[
-				":w",
-				":w - Save"
-			],
-			[
 				"install",
 				"Package Control: Install Package"
+			],
+			[
+				":w",
+				":w - Save"
 			],
 			[
 				"git status",
@@ -646,30 +654,33 @@
 	[
 		"/Z/Code/litm/litm/public/js/main.js",
 		"/Z/Code/litm/litm/views/findQuest.jade",
+		"/Z/Code/litm/litm/routes/user.js",
+		"/Z/Code/litm/litm/routes/quest.js",
+		"/Z/Code/litm/litm/app.js",
+		"/Z/Code/litm/litm/routes/middleware/load_user.js",
+		"/Z/Code/litm/litm/public/css/main.css",
+		"/Z/Code/Nodejs/express/app/views/2048.jade",
+		"/Z/Code/Nodejs/express/app/views/layout.jade",
+		"/Z/Code/Nodejs/express/app/views/index.jade",
 		"/Z/Code/litm/litm/views/jump.jade",
 		"/Z/Code/litm/litm/views/main.jade",
 		"/Z/Code/litm/litm/views/newQuest.jade",
-		"/Z/Code/litm/litm/public/css/main.css",
 		"/Z/Code/litm/litm/views/register.jade",
+		"/Z/Code/litm/litm/views/user_login.jade",
 		"/C/Users/pzx/Desktop/upload.html",
 		"/Z/Code/litm/litm/LITM_WEB.sublime-workspace",
 		"/Z/Code/litm/litm/LITM_WEB.sublime-project",
 		"/Z/Code/python/tornado/hw3/skeleton.html",
 		"/Z/Code/HTML/jiahua.html",
-		"/Z/Code/litm/litm/routes/quest.js",
-		"/Z/Code/litm/litm/routes/middleware/load_user.js",
 		"/Z/Code/litm/litm/routes/index.js",
 		"/Z/Code/litm/litm/routes/session.js",
-		"/Z/Code/litm/litm/routes/user.js",
 		"/Z/Code/litm/litm/data/schemas/Quest.js",
 		"/Z/Code/litm/litm/data/models/Quest.js",
 		"/Z/Code/litm/litm/routes/imageprocess.js",
 		"/Z/Code/litm/litm/routes/middleware/logger_in.js",
 		"/Z/Code/litm/litm/routes/middleware/restrict_user_to_self.js",
-		"/Z/Code/litm/litm/views/user_login.jade",
 		"/Z/Code/litm/litm/views/layout/foot.jade",
 		"/Z/Code/litm/litm/views/layout/layout.jade",
-		"/Z/Code/litm/litm/app.js",
 		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/data.json",
 		"/C/Users/pzx/Desktop/data.json",
@@ -768,10 +779,7 @@
 		"/C/Users/pzx/Desktop/bootstrap-datetimepicker/test/test.js",
 		"/C/Users/pzx/Desktop/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
 		"/C/Users/pzx/Desktop/bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.zh-CN.js",
-		"/Z/Code/litm/litm/public/js/cal.js",
-		"/Z/Code/litm/litm/public/js/cal2.js",
-		"/Z/Code/Nodejs/express/app/views/2048.jade",
-		"/Z/index.jade"
+		"/Z/Code/litm/litm/public/js/cal.js"
 	],
 	"find":
 	{
@@ -790,6 +798,13 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"showAjax",
+			" style='padding:5% 10%'",
+			"text-info",
+			"bg-info",
+			"h3",
+			"bg-info",
+			"5px",
 			"console.log",
 			"closest",
 			"\n                ",
@@ -910,14 +925,7 @@
 			"}",
 			"},",
 			"}",
-			"\n},",
-			")",
-			"-",
-			"},",
-			":",
-			",\n\"y\" ",
-			"\n\"y\" ",
-			",\n\"y\" "
+			"\n},"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -925,6 +933,10 @@
 		"regex": true,
 		"replace_history":
 		[
+			"text-muted",
+			"text-info",
+			"h4",
+			"bg-warning",
 			"Icon",
 			"age",
 			"%{class}Trap",
@@ -975,8 +987,85 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app.js",
+					"settings":
+					{
+						"buffer_size": 1997,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1140,6 +1229,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 298.0,
+	"side_bar_width": 231.0,
 	"status_bar_visible": true
 }

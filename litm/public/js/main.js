@@ -1,6 +1,7 @@
 var parseEmail       = /(\w+)@(\w+).com$/
 var parseSummerNote  = /<img src="(\S+)"[^\/<>]*>/g
 var parseSummerNote2 = /^<img src="(\S+)"[^\/<>]*>$/
+var parseHtml        = /^http:\/\/\S+com$/
 // var b               = '<p>asdasdasdasd</p><img src="sad.cas" alt="sad.asd"/>asdsad<img src="sazxccas" alt="sad.asd"/>asdasda<img src="ssdsdf.cas" alt="sad.asd"/>asdasdas'
 var emailList       = ["qq","163","gmail","126"]
 function validEmail(email){
@@ -18,19 +19,21 @@ function parsesummernote(value,title){
     for (var i = 0 ; i < images.length; i++)
     {
         image = parseSummerNote2.exec(images[i]);
+        if (parseHtml.test(image)){
         value=value.replace(image[1],i+".png")
         $.ajax({url:"/writefile",
-                            type:'post',
-                            data:{
-                                    filename:i+'.png',
-                                    title:title,
-                                    picture:image[1]
-                                },
-                            success:function(data,status,xhr){
-                                    }
-                        })
-     
+                type:'post',
+                data:{
+                        filename:i+'.png',
+                        title:title,
+                        picture:image[1]
+                    },
+                success:function(data,status,xhr){
+                        }
+            })
+        }
     }
+    console.log(value)
     return value
 }
 var parsePng=/"[0-9]+.png"/g
@@ -68,16 +71,26 @@ function f_parseContent(content,title,username){
         image     = parsePng2.exec(images[i])
         image2    = parsePng3.exec(images[i])
         content   = content.replace(image[1],'"/pic/'+username+'/'+title+'/'+image2[1]+'" '+'class="good"')
-        images[i] = images[i].replace(image[1],'/pic/'+username+'/'+title+'/'+image[1])
+        images[i] = images[i].replace(image[1],'/pic/'+username+'/'+title+'/'+image2[1])
     }
+    console.log(images)
     return {'content':content,'images':images}
 }
 
-// function render(value){
-//     var length=value.length
-//     for (var i = 0;i < value.length;i++){
-//             $('.buddle').find('.title').html(value['title'])
-//             $('.buddle').find('.deadline').html(value['deadline'])
-//             $('.buddle').find('.brief').html(value['brief'])
-//         }
-// }
+function getUser(username,next){
+    $.ajax({url:'/getUser/'+username,
+            type:'post',
+            success:function(data,status,xhr){
+                next(data)
+            }
+    })
+}
+
+function getQuest(id,next){
+    $.ajax({url:'/getQuest/'+id,
+            type:'post',
+            success:function(data,status,xhr){
+                next(data)
+            }
+    })
+}

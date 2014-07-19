@@ -1,0 +1,63 @@
+extends layout/layout
+block content
+    div(id="wrong" visable="false" class="alert alert-success")
+        p=typeInformation
+    div(class='loginarea')
+        div(class='row')
+            div(class="col-md-11")
+                h3 Write down you information
+                br
+                br
+                form(class="form-horizontal" role="form" id="postForm")
+                    div(class="form-group")
+                        label(class="col-sm-2 control-label") information:
+                        div(class="col-sm-4")
+                            textarea(id="text" type="text" class="form-control" defaule="leave your information here for others who helped u")
+                        span(class="col-md-4" id="textdes")
+            div(class="btn-group")
+                button(type="submit" class="btn btn-default" id="register") Register it!
+                button(type="reset" class="btn btn-default" ) Reset
+            div(class="col-md-1")
+        include layout/foot
+    if(type==1)
+    script.
+        function writeinformation(information){
+            $.ajax({
+                    url:'/information',
+                    type:'post',
+                    data:{
+                        type:1,
+                        information:information
+                    },
+                    success:function(data,status,xhr){
+                        console.log(data)
+                        if (data!='error'){
+                            setTimeout(function(){location.href="/";},3000);
+                            $('#wrong').show()
+                            $('#wrong').addClass('alert-success')
+                            $('#wrong').removeClass('alert-wrong')
+                            $('#wrong p').html('success! will jump in 3 second')
+                        }else{
+                            $('#wrong').show()
+                            $('#wrong').addClass('alert-success')
+                            $('#wrong').removeClass('alert-wrong')
+                            $('#wrong p').html('failed! you can try it again or check the status of the quest and yourself')
+                        }   
+                    }
+
+                })
+        }  
+    script.
+        $(function(){
+                $('#wrong').hide()
+                $('.active').removeClass('active')
+                $('#register').submit(
+                    function(){
+                    return false
+                    })
+                $('#register').on('click',function(){
+                    var l_information = $('#text').val()
+                    writeinformation(l_information)
+                    })
+
+            })

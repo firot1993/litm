@@ -1,47 +1,83 @@
 extends layout/layout
 block content
     div(class="container")
-        div(class="starter-template")
-            div(class='row')
-                div(class="col-md-4")
-                    div(class='buddle 0') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
-                    div(class='buddle 1') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
-                    div(class='buddle 2') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
-                    div(class='buddle 3')
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief') 
-                    div(class='buddle 4') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
-                     div(class='buddle 5') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
-                     div(class='buddle 6') 
-                        div(class='title')
-                        div(class='deadline')
-                        div(class='brief')
+        div(class="starter")
+            div(class='buddle 0 alert-success') 
+                div
+                    p(class='title')
+                br
+                p(class="text-info" style="font-size:20px") Deadline:       
+                    p(class='deadline')
+                p(class="text-info" style="font-size:20px") Brief:
+                    p(class='brief' )
+                p(class="text-info" style="font-size:20px") Images:
+                div(style="font-weight:bold;padding:10%" class="text-info images_thumb") 
+                    div(style="clear:both")
+                    div(class="images_thumbs 0")
+                    div(style="clear:both")
+                
+            div(class='buddle 1 alert-danger') 
+                div
+                    p(class='title' )
+                p(class="text-info") Deadline:       
+                    p(class='deadline')
+                p(class="text-info") Brief:
+                    p(class='brief')
+                p(class="text-info") Images:
+                div(style="font-weight:bold;padding:10%" class="text-info images_thumb") 
+                    div(style="clear:both")
+                    div(class="images_thumbs 1")
+                    div(style="clear:both")
+            div(class='buddle 2 alert-info') 
+                div
+                    p(class='title')
+                p(class="text-info") Deadline:       
+                    p(class='deadline')
+                p(class="text-info") Brief:
+                    p(class='brief')
+                p(class="text-info") Images:
+                div(style="font-weight:bold;padding:10%" class="text-info images_thumb") 
+                    div(style="clear:both")
+                    div(class="images_thumbs 2")
+                    div(style="clear:both")
+            div(class='buddle 3 alert-warning') 
+                div
+                    p(class='title')
+                p(class="text-info") Deadline:       
+                    p(class='deadline')
+                p(class="text-info") Brief:
+                    p(class='brief')
+                p(class="text-info") Images:
+                div(style="font-weight:bold;padding:10%" class="text-info images_thumb") 
+                    div(style="clear:both")
+                    div(class="images_thumbs 3")
+                    div(style="clear:both")
+            div(class='buddle 4') 
+                div
+                    p(class='title')
+                p(class="text-info") Deadline:       
+                    p(class='deadline')
+                p(class="text-info") Brief:
+                    p(class='brief')
+                p(class="text-info") Images:
+                div(style="font-weight:bold;padding:10%" class="text-info images_thumb") 
+                    div(style="clear:both")
+                    div(class="images_thumbs 4")
+                    div(style="clear:both")
+            div(class='buddle 5') 
+            div(class='buddle 6') 
+                  
+
              
     div(class="modal fade " style="display:none" id="my")
         div(class="modal-dialog modal-lg")
             div(class="modal-content")
-                div(class="modal-header")
+                div(class="modal-header my")
                     button(type='button' class='close' data-dismiss='modal')
                         span(aria-hidden="true") &times;
                         span(class="sr-only") Close
                     h2(class="modal-title")
-                div(class="modal-body")
+                div(class="modal-body my")
                     p(style="font-weight:bold") Time:
                         strong(class="time" style="font-weight:normal")
                     p(style="font-weight:bold") From:
@@ -51,9 +87,19 @@ block content
                 div(class="modal-footer")
                     a(href="#" class="btn btn-success") Sign here
                     a(href="#" class="btn" data-dismiss="modal") Close
-    //- p
-    //-     a(data-toggle='modal' data-target='#my' class='btn btn-primary') laucher
 
+    div(class="modal fade " style="display:none" id="pic")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content")
+                div(class="modal-header pic")
+                    button(type='button' class='close' data-dismiss='modal')
+                        span(aria-hidden="true") &times;
+                        span(class="sr-only") Close
+                    h2(class="modal-title") View Image
+                div(class="modal-body pic")
+                div(class="modal-footer")
+                    a(href="#" class="btn" data-dismiss="modal") Close                    
+    script(src="/socket.io/socket.io.js")
     include layout/foot
     script.
         $(function()
@@ -74,31 +120,52 @@ block content
                     }
                 })
            })
+
         function render(value){
         var length=value.length
+        var template='<div style="width:30%;float:left;margin:1%"><img src="replace" class="img-responsive img-thumbnail"/></div>'
         for (var i = 0;i < value.length;i++){
-                $('.buddle.'+i).find('.title').html(value[i]['title'])
-                var mydate=new Date(value[i]['etime'])
-                var strdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
-                $('.buddle.'+i).find('.deadline').html("Deadline:"+strdate)
-                $('.buddle.'+i).find('.brief').html(value[i]['brief'])
-                $('.buddle.'+i).on('click',(function(value){
-                        return function(){
-                            show(value)
-                        }
-                    })(value[i])
-                    )
+            $('.buddle.'+i).show()
+            $('.buddle.'+i).find('.title').html(value[i]['title'])
+            var mydate=new Date(value[i]['etime'])
+            var strdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+            $('.buddle.'+i).find('.deadline').html(strdate)
+            $('.buddle.'+i).find('.brief').html(value[i]['brief'])
+            if (value[i]['content']['images']!=undefined)
+            for (var j = 0;j < value[i]['content']['images'].length;j++){
+                    var gg=template.replace('replace',value[i]['content']['images'][j])
+                    var ns=$('.images_thumbs.'+i).append(gg)
+                    ns.on('click',(function(value){
+                            return function(){
+                                showpic(value)
+                            }
+                        })(value[i]['content']['images'][j]))
+                }
+            $('.buddle.'+i).on('dblclick',(function(value){
+                    return function(){
+                        show(value)
+                    }
+                })(value[i])
+                )
             }
-
+        for (var i = value.length;i <= 4; i++)
+            {
+                $('.buddle.'+i).hide()
+            }
+        }
         function show(value){
             var mydate=new Date(value['stime'])
             var startdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
             mydate=new Date(value['etime'])
             var enddate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
-            $('.modal-header h2').html(value['title'])
-            $('.modal-body .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
-            $('.modal-body .from').html(value['username'])
-            $('.modal-body .main').html(value['content']['content'])
+            $('.modal-header.my h2').html(value['title'])
+            $('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
+            $('.modal-body.my .from').html('    '+value['username'])
+            $('.modal-body.my .main').html(value['content']['content'])
             $('#my').modal('show')
         }
+
+        function showpic(value){
+            $('.modal-body.pic').html('<img src="'+value+'"/>')
+            $('#pic').modal('show')
         }

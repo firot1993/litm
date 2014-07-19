@@ -71,15 +71,12 @@ io.on('connection',function(socket){
 
 	socket.on('login',function(username){
 		console.log(username)
-		// socket.set('username',username,function(err){
-		// 	if(err){throw err}
-	
-		// })
 		socket.username=username
 		socket.emit('serverMessage',3,'Currently logged in as '+username)
 		socket.broadcast.emit('serverMeassage',3,'User '+username+' logged in')
 	})
 	socket.emit('login')
+	console.log('triggered')
 })
 
 

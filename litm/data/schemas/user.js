@@ -6,7 +6,6 @@ var UserSchema = new mongoose.Schema({
 	email:String,
 	pic:String,
 	friends:[String],
-	Message:[{Message:String,form:String,time:Date,readed:Boolean}],
 	MyQuest:[mongoose.Schema.Types.ObjectId],
 	MyHelp:[mongoose.Schema.Types.ObjectId],
 	grade:Number,

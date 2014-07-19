@@ -1,33 +1,31 @@
 extends layout/layout
 block content
-    div(class="loginarea ")
-        div(class="container row")
+    div(class="well loginarea")
+        div(class="container row ")
             div(class="col-md-8")
-                h3 Register
+                h3 My Profile
                 br
                 br
-                div(id="wrong" visable="false" class="alert alert-danger")
-                    p 
                 form(class="form-horizontal " role="form" id="registerForm")
                     div(class="form-group row")
                         label(class="col-md-2 control-label") Username:
                         div(class="col-md-6 control-group input-append")
-                            input(type="text" class="form-control" data-required="true" 
-                                data-validate="username" data-description="text" data-describedby="textdes")
+                            input(type="text" class="form-control"  disabled
+                                data-validate="username" data-description="text" data-describedby="textdes" id="username" value=session.user.username)
                         span(class="col-md-4" id="textdes")
                     br
                     div(class="form-group row")
                         label(class="col-md-2 control-label") password:
                         div(class="col-md-6 control-group input-append")
-                            input(type="password" class="form-control" data-required="true"
-                            data-validate="password" data-description="password" data-describedby="passworddes")
+                            input(type="password" class="form-control" 
+                            data-validate="password" data-description="password" data-describedby="passworddes" id="password")
                         span(class="col-md-4" id="passworddes")
                     br
                     div(class="form-group row")
                         label(class="col-md-2 control-label") email:
                         div(class="col-md-6 control-group input-append")
-                            input(type="email" class="form-control" data-required="true"
-                            data-validate="email" data-description="email" data-describedby="emaildes" )
+                            input(type="email" class="form-control" 
+                            data-validate="email" data-description="email" disabled data-describedby="emaildes" id="email" value=session.user.email)
                         span(class="col-md-4" id="emaildes")
                     br
                     br
@@ -38,8 +36,8 @@ block content
                     br
                     br
                     div(class="btn-group")
-                        button(type="submit" class="btn btn-default" id="register") Register it!
-                        button(type="reset" class="btn btn-default" ) Reset
+                        button(type="submit" class="btn btn-Primary" id="register") Edit
+                        button(type="reset" class="btn btn-default" ) Corfirm
             div(class="col-md-4")
     include layout/foot
     script(src="/js/fileinput.min.js")
@@ -47,12 +45,13 @@ block content
     script(src="/js/main.js")
     script.
         $(function(){
-            $('#wrong').hide()
+            var piclist='/pic/'+$('#username').attr('value')+'/1/head.png'
             $('.active').removeClass('active')
             $("#file").fileinput({
             'showUpload':false,
             'previewFileType':'image',
-            'showCaption':true
+            'showCaption':true,
+            'initialPreview':"<img src='"+piclist+"' class='file-preview-image' alt='Desert' title='Desert'>"
             })
             $("#registerForm").validate(
                 {
@@ -120,6 +119,7 @@ block content
             });
             function send(){
                 file=$('.file-preview-image')
+                console.log(file.attr('src'))
                 if (file.attr('src')==undefined) return false
                 $.ajax({
                         url:"/users",
@@ -132,19 +132,12 @@ block content
                                   file:file.attr('src')
                             },
                         success:function(data,status,xhr){
-                                console.log(data)
-                                if (data=='ok'){
-                                        alert("succeed!")
-                                        location.href='/'
-                                    }
-                                else{
-                                    $('#wrong').show()
-                                    $('#wrong p').html(data)
-                                }
+                                    alert("succeed!")
+                                    location.href='/'
                                 }
                     })
                 }
-            $('.file-input.file-input-new').addClass('col-md-7')
+            $('.file-input').addClass('col-md-7')
             $('.file-caption-name').css('font-size','10px')
             $('.file-caption-name').closest('.div').closest('span').hide() 
         })
