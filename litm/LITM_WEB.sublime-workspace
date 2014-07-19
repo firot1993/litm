@@ -644,7 +644,13 @@
 	},
 	"file_history":
 	[
+		"/Z/Code/litm/litm/views/myQuest.jade",
+		"/Z/Code/litm/.gitignore",
 		"/Z/Code/litm/litm/app.js",
+		"/C/Users/pzx/Desktop/app.js",
+		"/Z/Code/litm/litm/views/newQuest.jade",
+		"/Z/Code/litm/litm/views/profile.jade",
+		"/Z/Code/litm/litm/views/user_login.jade",
 		"/Z/Code/litm/litm/node_modules/express/Readme.md",
 		"/Z/Code/Nodejs/httpserver/server.js",
 		"/Z/Code/Nodejs/httpserver/client.js",
@@ -653,17 +659,13 @@
 		"/Z/Code/Nodejs/requestHandler.js",
 		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
 		"/Z/Code/litm/litm/routes/user.js",
-		"/Z/Code/litm/litm/views/myQuest.jade",
 		"/Z/Code/litm/litm/views/layout/layout.jade",
 		"/Z/Code/litm/litm/views/layout/foot.jade",
 		"/Z/Code/litm/litm/views/main.jade",
-		"/Z/Code/litm/litm/views/profile.jade",
 		"/Z/Code/litm/litm/routes/imageprocess.js",
 		"/Z/Code/litm/litm/views/register.jade",
-		"/Z/Code/litm/litm/views/user_login.jade",
 		"/Z/Code/litm/litm/data/schemas/user.js",
 		"/Z/Code/litm/litm/public/css/main.css",
-		"/Z/Code/litm/litm/views/newQuest.jade",
 		"/Z/Code/litm/litm/views/imforation.jade",
 		"/Z/Code/litm/litm/routes/middleware/logger_in.js",
 		"/Z/Code/litm/litm/routes/quest.js",
@@ -769,9 +771,7 @@
 		"/C/Users/pzx/Desktop/RigidbodyComp.h",
 		"/C/Users/pzx/Desktop/Classes/game/ai/StateTypes.h",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/StateTypes.h",
-		"/C/Users/pzx/Desktop/Classes/game/ComponentTypes.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/MessageTypes.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/EntityTypes.h"
+		"/C/Users/pzx/Desktop/Classes/game/ComponentTypes.h"
 	],
 	"find":
 	{
