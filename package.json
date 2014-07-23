@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "litm",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,5 +8,23 @@
   "dependencies": {
     "express": "3.4.8",
     "jade": "*"
-  }
+  },
+  "description": "* [Nodejs](http://www.nodejs.org/)\r   * [Mongodb](http://www.mongodb.org/)\r   * [A runable computer](http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=computer)",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firot1993/litm.git"
+  },
+  "keywords": [
+    "litm"
+  ],
+  "author": "rrroen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firot1993/litm/issues"
+  },
+  "homepage": "https://github.com/firot1993/litm",
+  "engines": {
+    "node": "0.10.25"
 }
