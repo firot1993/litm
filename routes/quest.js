@@ -1,5 +1,5 @@
 var User         = require('../data/models/user')
-var Quest        = require('../data/models/Quest')
+var Quest        = require('../data/models/quest')
 var Information  = require('../data/models/information')
 var LoggedIn     = require('./middleware/logger_in')
 var fs           = require('fs')

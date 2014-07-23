@@ -200,3 +200,104 @@ Username: 2014-07-23T08:13:22+00:00 heroku[slug-compiler]: Slug compilation star
 2014-07-23T08:43:48.768158+00:00 heroku[web.1]: Process exited with status 1
 2014-07-23T08:44:03.098602+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=f459b61a-cf2e-43a7-859a-d5f2d3571edd fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
 2014-07-23T08:44:09.282668+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=1e4eb879-675c-42b5-b213-264c94903777 fwd="54.237.152.106" dyno= connect= service= status=503 bytes=
+2014-07-23T08:34:13.492663+00:00 app[web.1]:     at Module.require (module.js:364:17)
+2014-07-23T08:34:13.503747+00:00 app[web.1]: 
+2014-07-23T08:34:13.488658+00:00 app[web.1]: module.js:340
+2014-07-23T08:34:13.519252+00:00 app[web.1]: npm ERR! Exit status 8
+2014-07-23T08:34:13.519477+00:00 app[web.1]: npm ERR! 
+2014-07-23T08:34:13.521247+00:00 app[web.1]: npm ERR! not with npm itself.
+2014-07-23T08:34:13.520695+00:00 app[web.1]: npm ERR! This is most likely a problem with the application-name package,
+2014-07-23T08:34:13.522281+00:00 app[web.1]: npm ERR!     node app.js
+2014-07-23T08:34:13.518976+00:00 app[web.1]: npm ERR! application-name@0.0.1 start: `node app.js`
+2014-07-23T08:34:13.522463+00:00 app[web.1]: npm ERR! You can get their info via:
+2014-07-23T08:34:13.522080+00:00 app[web.1]: npm ERR! Tell the author that this fails on your system:
+2014-07-23T08:34:13.522801+00:00 app[web.1]: npm ERR! There is likely additional logging output above.
+2014-07-23T08:34:13.523264+00:00 app[web.1]: npm ERR! System Linux 3.8.11-ec2
+2014-07-23T08:34:13.519650+00:00 app[web.1]: npm ERR! Failed at the application-name@0.0.1 start script.
+2014-07-23T08:34:13.522636+00:00 app[web.1]: npm ERR!     npm owner ls application-name
+2014-07-23T08:34:13.523493+00:00 app[web.1]: npm ERR! command "/app/vendor/node/bin/node" "/app/vendor/node/bin/npm" "start"
+2014-07-23T08:34:13.523712+00:00 app[web.1]: npm ERR! cwd /app
+2014-07-23T08:34:13.523924+00:00 app[web.1]: npm ERR! node -v v0.10.29
+2014-07-23T08:34:13.524155+00:00 app[web.1]: npm ERR! npm -v 1.4.14
+2014-07-23T08:34:13.526093+00:00 app[web.1]: npm ERR! 
+2014-07-23T08:34:13.526283+00:00 app[web.1]: npm ERR! Additional logging details can be found in:
+2014-07-23T08:34:13.526721+00:00 app[web.1]: npm ERR! not ok code 0
+2014-07-23T08:34:13.524379+00:00 app[web.1]: npm ERR! code ELIFECYCLE
+2014-07-23T08:34:13.526437+00:00 app[web.1]: npm ERR!     /app/npm-debug.log
+2014-07-23T08:34:14.919581+00:00 heroku[web.1]: State changed from starting to crashed
+2014-07-23T08:34:14.877376+00:00 heroku[web.1]: Process exited with status 1
+2014-07-23T08:34:10.741992+00:00 heroku[web.1]: Starting process with command `npm start`
+2014-07-23T08:34:19.056102+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=d1efcc80-9525-467e-a08b-1c11b7b5f873 fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
+2014-07-23T08:35:27+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:35:29+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
+2014-07-23T08:36:15+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:36:16+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
+2014-07-23T08:36:39+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:36:41+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
+2014-07-23T08:39:06+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:39:10+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
+2014-07-23T08:40:45.569689+00:00 heroku[api]: Starting process with command `node` by firot1993@gmail.com
+2014-07-23T08:40:48.375137+00:00 heroku[run.2367]: State changed from starting to up
+2014-07-23T08:40:48.507272+00:00 heroku[run.2367]: Starting process with command `node`
+2014-07-23T08:40:48.454969+00:00 heroku[run.2367]: Awaiting client
+2014-07-23T08:40:55.992994+00:00 heroku[run.2367]: State changed from up to complete
+2014-07-23T08:40:54.594095+00:00 heroku[run.2367]: Client connection closed. Sending SIGHUP to all processes
+2014-07-23T08:40:55.978743+00:00 heroku[run.2367]: Process exited with status 129
+2014-07-23T08:42:17+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:42:18+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
+2014-07-23T08:43:25+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:43:43+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-07-23T08:43:44.201197+00:00 heroku[web.1]: State changed from crashed to starting
+2014-07-23T08:43:44.239303+00:00 heroku[web.1]: State changed from starting to down
+2014-07-23T08:43:44.236191+00:00 heroku[web.1]: State changed from crashed to down
+2014-07-23T08:43:43.675778+00:00 heroku[api]: Deploy 1ccb197 by firot1993@gmail.com
+2014-07-23T08:43:43.675847+00:00 heroku[api]: Release v5 created by firot1993@gmail.com
+2014-07-23T08:43:47.287308+00:00 app[web.1]: > litm@0.0.1 start /app
+2014-07-23T08:43:47.287290+00:00 app[web.1]: 
+2014-07-23T08:43:47.287311+00:00 app[web.1]: 
+2014-07-23T08:43:47.287309+00:00 app[web.1]: > node app.js
+2014-07-23T08:43:47.632296+00:00 app[web.1]: npm ERR! litm@0.0.1 start: `node app.js`
+2014-07-23T08:43:47.632500+00:00 app[web.1]: npm ERR! Exit status 8
+2014-07-23T08:43:47.632653+00:00 app[web.1]: npm ERR! 
+2014-07-23T08:43:47.617639+00:00 app[web.1]: module.js:340
+2014-07-23T08:43:47.632725+00:00 app[web.1]: npm ERR! Failed at the litm@0.0.1 start script.
+2014-07-23T08:43:47.632880+00:00 app[web.1]: npm ERR! This is most likely a problem with the litm package,
+2014-07-23T08:43:47.633350+00:00 app[web.1]: npm ERR! not with npm itself.
+2014-07-23T08:43:47.619621+00:00 app[web.1]:     at Function.Module._resolveFilename (module.js:338:15)
+2014-07-23T08:43:47.633433+00:00 app[web.1]: npm ERR! Tell the author that this fails on your system:
+2014-07-23T08:43:47.619626+00:00 app[web.1]:     at Object.<anonymous> (/app/data/models/user.js:2:16)
+2014-07-23T08:43:47.619631+00:00 app[web.1]:     at Function.Module._load (module.js:312:12)
+2014-07-23T08:43:47.626662+00:00 app[web.1]: 
+2014-07-23T08:43:47.619628+00:00 app[web.1]:     at Object.Module._extensions..js (module.js:474:10)
+2014-07-23T08:43:47.617911+00:00 app[web.1]:     throw err;
+2014-07-23T08:43:47.617916+00:00 app[web.1]:           ^
+2014-07-23T08:43:47.633522+00:00 app[web.1]: npm ERR!     node app.js
+2014-07-23T08:43:47.619623+00:00 app[web.1]:     at Module.require (module.js:364:17)
+2014-07-23T08:43:47.633655+00:00 app[web.1]: npm ERR! You can get their info via:
+2014-07-23T08:43:47.633761+00:00 app[web.1]: npm ERR! There is likely additional logging output above.
+2014-07-23T08:43:47.617352+00:00 app[web.1]: 
+2014-07-23T08:43:47.619622+00:00 app[web.1]:     at Function.Module._load (module.js:280:25)
+2014-07-23T08:43:47.619618+00:00 app[web.1]: Error: Cannot find module '../schemas/User'
+2014-07-23T08:43:47.619625+00:00 app[web.1]:     at require (module.js:380:17)
+2014-07-23T08:43:47.619630+00:00 app[web.1]:     at Module.load (module.js:356:32)
+2014-07-23T08:43:47.619627+00:00 app[web.1]:     at Module._compile (module.js:456:26)
+2014-07-23T08:43:47.619632+00:00 app[web.1]:     at Module.require (module.js:364:17)
+2014-07-23T08:43:47.634046+00:00 app[web.1]: npm ERR! System Linux 3.8.11-ec2
+2014-07-23T08:43:47.634305+00:00 app[web.1]: npm ERR! cwd /app
+2014-07-23T08:43:47.635071+00:00 app[web.1]: npm ERR! code ELIFECYCLE
+2014-07-23T08:43:47.634578+00:00 app[web.1]: npm ERR! node -v v0.10.25
+2014-07-23T08:43:47.638358+00:00 app[web.1]: npm ERR! Additional logging details can be found in:
+2014-07-23T08:43:47.638472+00:00 app[web.1]: npm ERR!     /app/npm-debug.log
+2014-07-23T08:43:47.638672+00:00 app[web.1]: npm ERR! not ok code 0
+2014-07-23T08:43:47.633676+00:00 app[web.1]: npm ERR!     npm owner ls litm
+2014-07-23T08:43:47.638268+00:00 app[web.1]: npm ERR! 
+2014-07-23T08:43:47.634278+00:00 app[web.1]: npm ERR! command "/app/vendor/node/bin/node" "/app/vendor/node/bin/npm" "start"
+2014-07-23T08:43:47.634824+00:00 app[web.1]: npm ERR! npm -v 1.3.24
+2014-07-23T08:43:46.055517+00:00 heroku[web.1]: Starting process with command `npm start`
+2014-07-23T08:43:48.768158+00:00 heroku[web.1]: Process exited with status 1
+2014-07-23T08:44:03.098602+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=f459b61a-cf2e-43a7-859a-d5f2d3571edd fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
+2014-07-23T08:44:09.282668+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=1e4eb879-675c-42b5-b213-264c94903777 fwd="54.237.152.106" dyno= connect= service= status=503 bytes=
+2014-07-23T08:47:07+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:47:29+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-07-23T08:47:29.188077+00:00 heroku[api]: Deploy 9058ae1 by firot1993@gmail.com
+2014-07-23T08:47:29.188138+00:00 heroku[api]: Release v6 created by firot1993@gmail.com

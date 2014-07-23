@@ -520,10 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "data/models/user.js",
+			"file": "app.js",
 			"settings":
 			{
-				"buffer_size": 141,
+				"buffer_size": 2024,
 				"line_ending": "Windows"
 			}
 		}
@@ -652,9 +652,21 @@
 	},
 	"file_history":
 	[
-		"/C/Program Files (x86)/Heroku/ruby-1.9.3/lib/ruby/gems/1.9.1/gems/foreman-0.74.0/lib/foreman/engine.rb",
+		"/Z/Code/litm/routes/user.js",
+		"/Z/Code/litm/routes/index.js",
+		"/Z/Code/litm/routes/quest.js",
+		"/Z/Code/litm/routes/session.js",
+		"/Z/Code/litm/routes/imageprocess.js",
+		"/Z/Code/litm/routes/middleware/restrict_user_to_self.js",
+		"/Z/Code/litm/routes/middleware/not_logger_in.js",
+		"/Z/Code/litm/routes/middleware/logger_in.js",
 		"/Z/Code/litm/package.json",
+		"/Z/Code/litm/data/models/quest.js",
+		"/Z/Code/litm/data/models/information.js",
 		"/Z/Code/litm/data/schemas/user.js",
+		"/Z/Code/litm/data/models/user.js",
+		"/Z/Code/litm/routes/middleware/load_user.js",
+		"/C/Program Files (x86)/Heroku/ruby-1.9.3/lib/ruby/gems/1.9.1/gems/foreman-0.74.0/lib/foreman/engine.rb",
 		"/C/Users/pzx/.ssh/id_rsa.pub",
 		"/C/Program Files (x86)/Heroku/ruby-1.9.3/lib/ruby/gems/1.9.1/gems/foreman-0.74.0/lib/foreman/engine/cli.rb",
 		"/Z/Code/litm/Procfile",
@@ -767,19 +779,7 @@
 		"/C/Users/pzx/.ssh/known_hosts",
 		"/C/Users/pzx/.ssh/id_rsa",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/CanonTrap/CanonTrap.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/1.py",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/CanonTrap/CanonTrap.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/cannonstab/cannonstab.h",
-		"/C/Users/pzx/Desktop/1.py",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/cannonstab/cannonstab.cpp",
-		"/Z/Code/python/imageprocessing/import.py",
-		"/C/Users/pzx/Desktop/cc.h",
-		"/C/Users/pzx/Desktop/ggg.h",
-		"/Z/Code/pybox2d/examples/settings.py",
-		"/C/Users/pzx/Desktop/Jiahua.cpp",
-		"/Z/Code/pybox2d/examples/framework.py",
-		"/C/Users/pzx/Desktop/ttt.cpp",
-		"/C/Users/pzx/Desktop/ttt.h"
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/1.py"
 	],
 	"find":
 	{
@@ -994,18 +994,18 @@
 			[
 				{
 					"buffer": 0,
-					"file": "data/models/user.js",
+					"file": "app.js",
 					"settings":
 					{
-						"buffer_size": 141,
+						"buffer_size": 2024,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								76,
-								76
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1059,7 +1059,8 @@
 								"bh_single_quote_close"
 							],
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
