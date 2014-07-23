@@ -1,15 +1,3 @@
-2014-07-23T08:34:13.503747+00:00 app[web.1]: 
-2014-07-23T08:34:13.488658+00:00 app[web.1]: module.js:340
-2014-07-23T08:34:13.519252+00:00 app[web.1]: npm ERR! Exit status 8
-2014-07-23T08:34:13.519477+00:00 app[web.1]: npm ERR! 
-2014-07-23T08:34:13.521247+00:00 app[web.1]: npm ERR! not with npm itself.
-2014-07-23T08:34:13.520695+00:00 app[web.1]: npm ERR! This is most likely a problem with the application-name package,
-2014-07-23T08:34:13.522281+00:00 app[web.1]: npm ERR!     node app.js
-2014-07-23T08:34:13.518976+00:00 app[web.1]: npm ERR! application-name@0.0.1 start: `node app.js`
-2014-07-23T08:34:13.522463+00:00 app[web.1]: npm ERR! You can get their info via:
-2014-07-23T08:34:13.522080+00:00 app[web.1]: npm ERR! Tell the author that this fails on your system:
-2014-07-23T08:34:13.522801+00:00 app[web.1]: npm ERR! There is likely additional logging output above.
-2014-07-23T08:34:13.523264+00:00 app[web.1]: npm ERR! System Linux 3.8.11-ec2
 2014-07-23T08:34:13.519650+00:00 app[web.1]: npm ERR! Failed at the application-name@0.0.1 start script.
 2014-07-23T08:34:13.522636+00:00 app[web.1]: npm ERR!     npm owner ls application-name
 2014-07-23T08:34:13.523493+00:00 app[web.1]: npm ERR! command "/app/vendor/node/bin/node" "/app/vendor/node/bin/npm" "start"
@@ -27,7 +15,8 @@
 2014-07-23T08:34:19.056102+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=d1efcc80-9525-467e-a08b-1c11b7b5f873 fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
 2014-07-23T08:35:27+00:00 heroku[slug-compiler]: Slug compilation started
 2014-07-23T08:35:29+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
-2014-07-23T08:36:15+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T08:36:15+00:00 heroku[slug-compiler]: Slug compilati
+on started
 2014-07-23T08:36:16+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
 2014-07-23T08:36:39+00:00 heroku[slug-compiler]: Slug compilation started
 2014-07-23T08:36:41+00:00 heroku[slug-compiler]: Slug compilation failed: failed to compile Node.js app
@@ -99,3 +88,15 @@
 2014-07-23T08:47:29.188077+00:00 heroku[api]: Deploy 9058ae1 by firot1993@gmail.com
 2014-07-23T08:47:29.188138+00:00 heroku[api]: Release v6 created by firot1993@gmail.com
 2014-07-23T08:47:57.973633+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=2a608d09-64d0-4ce7-b795-84c0eb6ea528 fwd="54.237.152.106" dyno= connect= service= status=503 bytes=
+2014-07-23T09:20:38.910330+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=16bb641b-d3c4-4467-863b-82e5625aaa61 fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
+2014-07-23T09:25:02+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T09:25:22.899086+00:00 heroku[api]: Release v7 created by firot1993@gmail.com
+2014-07-23T09:25:22.899019+00:00 heroku[api]: Deploy 4b49583 by firot1993@gmail.com
+2014-07-23T09:25:22+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-07-23T09:25:29.758775+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=c8827719-60b5-43b1-aeec-6e6baa2b6893 fwd="54.237.152.106" dyno= connect= service= status=503 bytes=
+2014-07-23T09:26:00+00:00 heroku[slug-compiler]: Slug compilation started
+2014-07-23T09:26:22+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-07-23T09:26:21.975907+00:00 heroku[api]: Deploy 28ff833 by firot1993@gmail.com
+2014-07-23T09:26:21.976015+00:00 heroku[api]: Release v8 created by firot1993@gmail.com
+2014-07-23T09:26:27.564621+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=66f84ea9-0ec3-4fff-85b9-7af25db36abf fwd="121.33.190.179" dyno= connect= service= status=503 bytes=
+2014-07-23T09:26:39.125034+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path="/" host=enigmatic-ravine-2605.herokuapp.com request_id=ab215b09-2cca-4681-86e8-52c4c66b8a52 fwd="54.237.152.106" dyno= connect= service= status=503 bytes=
