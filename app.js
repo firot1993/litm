@@ -17,10 +17,11 @@ var path    = require('path')
 var app = express()
 	,server = require('http').Server(app)
 	,io     = require('socket.io')(server)
-server.listen(3001)
 
+
+server.listen(process.env.PORT || 3000)
 // all environments
-app.set('port', process.env.PORT || 3000)
+
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 app.use(express.favicon())
