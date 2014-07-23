@@ -17,7 +17,7 @@ var path    = require('path')
 var app = express()
 	,server = require('http').Server(app)
 	,io     = require('socket.io')(server)
-server.listen(80)
+server.listen(3001)
 
 // all environments
 app.set('port', process.env.PORT || 3000)
