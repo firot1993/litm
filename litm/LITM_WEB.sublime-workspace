@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"user",
+				"username"
+			],
+			[
+				"gly",
+				"glyphicon-plus"
+			],
+			[
+				"glyp",
+				"glyphicon-plus"
+			],
+			[
+				"Qu",
+				"Quest"
+			],
+			[
 				"pass",
 				"password"
 			],
@@ -62,10 +78,6 @@
 			[
 				"load",
 				"loadUser"
-			],
-			[
-				"user",
-				"userdata"
 			],
 			[
 				"border",
@@ -502,18 +514,6 @@
 			[
 				"int",
 				"intptr"
-			],
-			[
-				"sta",
-				"state"
-			],
-			[
-				"nw",
-				"nowState"
-			],
-			[
-				"stated",
-				"stateDFA"
 			]
 		]
 	},
@@ -644,44 +644,64 @@
 	},
 	"file_history":
 	[
-		"/Z/Code/litm/litm/views/myQuest.jade",
-		"/Z/Code/litm/.gitignore",
+		"/Z/Code/litm/litm/public/js/main.js",
 		"/Z/Code/litm/litm/app.js",
-		"/C/Users/pzx/Desktop/app.js",
+		"/Z/Code/litm/litm/routes/quest.js",
+		"/Z/Code/litm/litm/views/myQuest.jade",
+		"/Z/Code/litm/litm/data/models/Quest.js",
+		"/Z/Code/litm/litm/data/schemas/Quest.js",
+		"/Z/Code/litm/litm/node_modules/mongoose/lib/query.js",
+		"/Z/Code/litm/litm/node_modules/mongoose/lib/querystream.js",
+		"/Z/Code/litm/litm/node_modules/mongoose/lib/queryhelpers.js",
+		"/Z/Code/litm/litm/data/schemas/information.js",
+		"/Z/Code/litm/litm/data/models/information.js",
+		"/Z/Code/litm/litm/views/register.jade",
+		"/Z/Code/litm/litm/views/findQuest.jade",
 		"/Z/Code/litm/litm/views/newQuest.jade",
+		"/Z/Code/litm/litm/views/jump.jade",
+		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
+		"/Z/Code/litm/litm/views/layout/layout.jade",
+		"/Z/Code/litm/litm/views/main.jade",
+		"/C/Users/pzx/Documents/cocos/CocosJSGame/src/MenuLayer.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/src/Background.js",
+		"/C/Users/pzx/Documents/cocos/CocosJSGame/project.json",
+		"/C/Users/pzx/AppData/Local/Temp/Rar$DIa0.038/app.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/src/AboutLayer.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/src/config/EnemyType.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/src/config/GameConfig.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/src/config/Level.js",
+		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/1_1.tmx",
+		"/Z/goagent-goagent-b2ee09a/local/goagent-gtk.py",
+		"/C/Users/pzx/Documents/cocos/CocosJSGame/main.js",
+		"/Z/cocos2dx/cocos2d-js-v3.0-rc1/samples/js-moonwarriors/main.js",
+		"/C/Users/pzx/Desktop/AttackSpikeAIComp.cpp",
+		"/C/Users/pzx/Desktop/AttackSpikeAIComp.h",
+		"/C/Users/pzx/Desktop/DarkSpikeTrapAIComp.cpp",
+		"/Z/Code/litm/litm/public/javascripts/main.js",
+		"/Z/Code/litm/litm - 副本/public/javascripts/main.js",
 		"/Z/Code/litm/litm/views/profile.jade",
 		"/Z/Code/litm/litm/views/user_login.jade",
+		"/Z/Code/litm/.gitignore",
+		"/C/Users/pzx/Desktop/app.js",
 		"/Z/Code/litm/litm/node_modules/express/Readme.md",
 		"/Z/Code/Nodejs/httpserver/server.js",
 		"/Z/Code/Nodejs/httpserver/client.js",
 		"/Z/Code/Nodejs/index.js",
 		"/Z/Code/Nodejs/app.js",
 		"/Z/Code/Nodejs/requestHandler.js",
-		"/Z/Code/litm/litm/views/layout/navbar_btn_login.jade",
 		"/Z/Code/litm/litm/routes/user.js",
-		"/Z/Code/litm/litm/views/layout/layout.jade",
 		"/Z/Code/litm/litm/views/layout/foot.jade",
-		"/Z/Code/litm/litm/views/main.jade",
 		"/Z/Code/litm/litm/routes/imageprocess.js",
-		"/Z/Code/litm/litm/views/register.jade",
 		"/Z/Code/litm/litm/data/schemas/user.js",
 		"/Z/Code/litm/litm/public/css/main.css",
 		"/Z/Code/litm/litm/views/imforation.jade",
 		"/Z/Code/litm/litm/routes/middleware/logger_in.js",
-		"/Z/Code/litm/litm/routes/quest.js",
-		"/Z/Code/litm/litm/public/js/main.js",
-		"/Z/Code/litm/litm/views/jump.jade",
-		"/Z/Code/litm/litm/views/findQuest.jade",
-		"/Z/Code/litm/litm/data/schemas/information.js",
-		"/Z/Code/litm/litm/data/models/information.js",
 		"/Z/Code/litm/litm/routes/middleware/load_user.js",
 		"/Z/Code/litm/litm/routes/middleware/not_logger_in.js",
 		"/Z/Code/litm/litm/routes/middleware/restrict_user_to_self.js",
 		"/Z/Code/litm/litm/routes/index.js",
 		"/Z/Code/litm/litm/routes/session.js",
-		"/Z/Code/litm/litm/data/schemas/Quest.js",
 		"/Z/Code/litm/litm/data/models/user.js",
-		"/Z/Code/litm/litm/data/models/Quest.js",
 		"/Z/Code/Nodejs/express/app/views/2048.jade",
 		"/Z/Code/Nodejs/express/app/views/layout.jade",
 		"/Z/Code/Nodejs/express/app/views/index.jade",
@@ -696,7 +716,6 @@
 		"/Z/Code/litm/litm/1.html",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/Map.cpp",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/GameWorld.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Resources/art/1_1.tmx",
 		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/trap/createTrap.py",
 		"/Z/Code/HTML/jiahua2.html",
 		"/Z/Code/HTML/mission3.js",
@@ -752,26 +771,7 @@
 		"/Z/Code/litm/litm/public/js/fileinput.js",
 		"/Z/Code/litm/litm/public/js/fileinput.min.js",
 		"/Z/Code/litm/litm/public/fonts/glyphicons-halflings-regular.svg",
-		"/Z/Code/litm/litm/public/js/bootstrap-datetimepicker.js",
-		"/Z/Code/litm/litm/public/js/bootstrap-datepicker.js",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Classes/game/EntityFactory.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/EntityFactory.cpp",
-		"/C/Users/pzx/Desktop/GMAE/1/EntityFactory.cpp",
-		"/C/Users/pzx/Desktop/GMAE/1/FixedTrapAIComp.cpp",
-		"/C/Users/pzx/Desktop/Class/game/EntityFactory.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Classes/game/Map.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/Classes/game/component/QuerySurroundingComp.cpp",
-		"/C/Users/pzx/Desktop/Class/game/EntityFactory.h",
-		"/C/Users/pzx/Desktop/GMAE/1/RigidbodyComp.h",
-		"/C/Users/pzx/Desktop/GMAE/1/FixedTrapAIComp.h",
-		"/C/Users/pzx/Desktop/Classes/core/RigidbodyComp.h",
-		"/C/Users/pzx/Desktop/Classes/game/system/RigidbodySystem.h",
-		"/C/Users/pzx/Desktop/Classes/core/RigidbodyComp.cpp",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/core/RigidbodyComp.h",
-		"/C/Users/pzx/Desktop/RigidbodyComp.h",
-		"/C/Users/pzx/Desktop/Classes/game/ai/StateTypes.h",
-		"/Z/cocos2d-x-2.2.3/projects/shadow_bottle/proj.win32/Classes/game/ai/StateTypes.h",
-		"/C/Users/pzx/Desktop/Classes/game/ComponentTypes.h"
+		"/Z/Code/litm/litm/public/js/bootstrap-datetimepicker.js"
 	],
 	"find":
 	{
@@ -790,6 +790,17 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"find",
+			"findby",
+			"findBy",
+			"find",
+			"findbyid",
+			"method",
+			"log",
+			"console.log",
+			"state",
+			"quest",
+			"}",
 			"br",
 			";",
 			"User",
@@ -906,18 +917,7 @@
 			"newmtl",
 			"texID",
 			"m_meshList",
-			"getIndexList",
-			"texID",
-			"getindexlist",
-			"load",
-			"time",
-			"fwSettings",
-			"E:/projects/QtProjects/PhyscicsEditorV2/Resources",
-			"E:/projects/QtProjects/PhyscicsEditorV2/Resources/",
-			"icecream",
-			"=",
-			")",
-			"}"
+			"getIndexList"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -925,6 +925,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"question",
 			"Information",
 			"text-muted",
 			"text-info",
@@ -1145,6 +1146,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 240.0,
+	"side_bar_width": 228.0,
 	"status_bar_visible": true
 }

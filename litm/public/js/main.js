@@ -33,12 +33,12 @@ function parsesummernote(value,title){
             })
         }
     }
-    console.log(value)
     return value
 }
 var parsePng=/"[0-9]+.png"/g
 var parsePng2=/("[0-9]+.png")/
 var parsePng3=/([0-9]+.png)/
+
 function playpage(data,page,perpage,appendwith,styleclass){
     var length       = data.length
     var contentLimit = []
@@ -46,20 +46,20 @@ function playpage(data,page,perpage,appendwith,styleclass){
         var nowObject  = data[index]
         var content    = nowObject['content']
         var title      = nowObject['title']
-        var username   = nowObject['from']
+        var from       = nowObject['from']
         var brief      = nowObject['brief']
         var etime      = nowObject['etime']
         var stime      = nowObject['stime']
-        var id         = nowObject['_id']
-        content        = f_parseContent(content,title,username)
+        var _id         = nowObject['_id']
+        content        = f_parseContent(content,title,from)
         contentLimit.push({
             'content':content,
             'title':title,
-            'username':username,
+            'from':from,
             'brief':brief,
             'etime':etime,
             'stime':stime,
-            'id':id
+            '_id':_id
         })
     }
     return contentLimit;
@@ -73,7 +73,6 @@ function f_parseContent(content,title,username){
         content   = content.replace(image[1],'"/pic/'+username+'/'+title+'/'+image2[1]+'" '+'class="good"')
         images[i] = images[i].replace(image[1],'/pic/'+username+'/'+title+'/'+image2[1])
     }
-    console.log(images)
     return {'content':content,'images':images}
 }
 
@@ -93,4 +92,44 @@ function getQuest(id,next){
                 next(data)
             }
     })
+}
+function parseDate(mydate){
+    return (mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+}
+var Translate = function()
+{
+    var p_dict={'N':'info','S':'info','C':'warning','F':'success','D':'danger'}
+    var w_dict={'N':'Begining','S':'Signed','C':'Confirmed','F':'Succeed','D':'Failed'}
+    return {
+        parseState:function(p){
+            if (p_dict[p] != undefined)
+                return p_dict[p]
+            else
+                return p
+        },
+        translateState:function(p){
+            if (w_dict[p] != undefined)
+                return w_dict[p]
+            else
+                return p
+        }
+    }
+}
+
+function showdes(value,type){
+    var mydate=new Date(value['stime'])
+    var startdate=parseDate(mydate)
+    mydate=new Date(value['etime'])
+    var enddate=parseDate(mydate)
+    $('.modal-header.my h2').html(value['title'])
+    $('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
+    $('.modal-body.my .from').html('    '+value['from'])
+    if (type == undefined ) $('.modal-body.my .main').html(value['content']['content'])
+        else $('.modal-body.my .main').html(value['content'])
+    $('#my').modal('show')
+}
+
+function showpic(value){
+    $('.modal-body.pic').html('<img src="'+value+'"/>')
+    $('#pic').modal('show')
 }

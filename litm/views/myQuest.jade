@@ -1,10 +1,108 @@
 extends layout/layout
 block content
+    div(class="well loginarea " style="background:rgba(255,255,255,0.6)")
+        div(class="container row ")
+            div(class="col-md-9")
+                h3 My Question
+                div(class='well question' style="background:rgba(255,255,255,0.6);border:none")
+                br
+                br
+                div(style="border-bottom:2px solid rgba(167, 160, 160, 0.48)")
+                br
+                br
+                h3 My Mission
+                div(class='well mission' style="background:rgba(255,255,255,0.6);border:none")
+            div(class="col-md-3")
 
+    div(class="modal fade " style="display:none" id="my")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content")
+                div(class="modal-header my")
+                    button(type='button' class='close' data-dismiss='modal')
+                        span(aria-hidden="true") &times;
+                        span(class="sr-only") Close
+                    h2(class="modal-title")
+                div(class="modal-body my")
+                    p(style="font-weight:bold") Time:
+                        strong(class="time" style="font-weight:normal")
+                    p(style="font-weight:bold") From:
+                        strong(class="from" style="font-weight:normal")
+                    p(style="font-weight:bold") Descirption:
+                        div(class="main")
+                div(class="modal-footer")
+                    a(href="#" class="btn btn-success") Sign here
+                    a(href="#" class="btn" data-dismiss="modal") Close
     include layout/foot
+    script(src="/js/main.js")
     script.
-         $(function(){
+        var state = Translate()
+        function rendermq(data){
+            for (var i = 0 ; i < data.length ; i ++ ){
+                $('.well.question').append('<div class="mq'+i+' alert" role="alert"></div>')
+                $('.mq'+i).addClass('alert-'+state.parseState(data[i].state))
+                $('.mq'+i).append('<div><span class="glyphicon glyphicon-plus gmq'+i+' "style="float:right;color:rgba(0,0,0,0.5)"/>'+data[i].title+'</div>')
+                $('.mq'+i).append('')
+                $('.mq'+i).append('<div class="well" style="background:white;margin:2% 2%"></div>')
+                $('.mq'+i+' div:gt(0)').append('<p><strong>Title:   </strong>'+data[i].title+'</p>')
+                $('.mq'+i+' div:gt(0)').append('<p><strong>Brief:   </strong>'+data[i].brief+'</p>')
+                $('.mq'+i+' div:gt(0)').append('<p><strong>Etime:   </strong>'+parseDate(new Date(data[i].etime))+'</p>')
+                $('.mq'+i+' div:gt(0)').append('<p><strong>Status:   </strong>'+state.translateState(data[i].state)+'</p>')
+                $('.mq'+i+' div:gt(0)').append('<div class="btn-group"><button class="btn btn-primary bSM'+i+'">Show more</button><button class="btn btn-default bGU'+i+'">Give up</button></div>')
+                $('.mq'+i+' .well').hide()
+                $('.bSM'+i).click((function(value){
+                    return function(){
+                        showdes(value,1)
+                     }
+                    })(data[i]))
+                $('.bGU'+i).click((function(value){
+                        return function() {$.ajax({
+                                url:'/giveup',
+                                type:'post',
+                                data:{
+                                    id:value
+                                },
+                                success:function(data,status,xhr){
+                                    if (data == 'ok')
+                                        location.reload(true)
+                                }
+                            })
+                        }
+                    })(data[i]._id))
+                $('.glyphicon.glyphicon-plus').css('cursor','pointer')
+                $('.glyphicon.glyphicon-plus.gmq'+i).click((function(x){
+                        return function(){
+                            if ($('.mq'+x+' .well').is(':visible')){ 
+                                $('.glyphicon.glyphicon-minus.gmq' + x).removeClass('glyphicon-minus')
+                                                                     .addClass('glyphicon-plus')
+                                $('.mq'+x+' .well').hide()
+                            }
+                            else{
+                                $('.glyphicon.glyphicon-plus.gmq' + x).removeClass('glyphicon-plus')
+                                                                     .addClass('glyphicon-minus')
+                                $('.mq'+x+' .well').show()
+                            }
+                        }
+                    })(i))
+            }
+        }
+        function rendermm(data){
+            for (var i = 0 ; i < data.length ; i ++ ){
+                $('.well.mission').append('<div class="mq'+i+' well">'+data[i].title+'</div>')
+            }
+        }
+        $(function(){
             $('.active').removeClass('active')
-            
-             })
+            $.ajax({url:'/findmq',
+                    type:'get',
+                    success:function(data,status,xhr){
+                        rendermq(data)
+                    }
+                })
+            $.ajax({url:'/findmm',
+                    type:'get',
+                    success:function(data,status,xhr){
+                        rendermm(data)
+                    }
+                })
+            })
    

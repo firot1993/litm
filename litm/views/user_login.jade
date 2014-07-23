@@ -1,28 +1,28 @@
 extends layout/layout
 block content
     div(class="loginarea")
-        div(class="row")
+        div(class="container row")
            div(class="col-md-8")
-                h3 Register
+                h3 Log in
                 br
                 div(id="wrong" visable="false" class="alert alert-danger")
                     p wrong password or username
                 br
                 form(class="form-horizontal" role="form" id="registerForm")
-                    div(class="form-group")
+                    div(class="form-group row")
                         label(class="col-sm-2 control-label") Username：
                         div(class="col-sm-6")
                             input(type="text" class="form-control" data-required="true" 
                                 data-validate="username" data-description="text" data-describedby="textdes")
                         span(class="col-md-4" id="textdes")
-
-                    div(class="form-group")
+                    br
+                    div(class="form-group row")
                         label(class="col-sm-2 control-label") Password：
                         div(class="col-sm-6")
                             input(type="password" class="form-control" data-required="true"
                             data-validate="password" data-description="password" data-describedby="passworddes")
                         span(class="col-md-4" id="passworddes")
-
+                    br
                     button(type="submit" class="btn btn-default" ) Login in!
             div(class="col-md-4")
     include layout/foot

@@ -128,7 +128,7 @@ block content
             $('.buddle.'+i).show()
             $('.buddle.'+i).find('.title').html(value[i]['title'])
             var mydate=new Date(value[i]['etime'])
-            var strdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
+            var strdate=parseDate(mydate)
             $('.buddle.'+i).find('.deadline').html(strdate)
             $('.buddle.'+i).find('.brief').html(value[i]['brief'])
             if (value[i]['content']['images']!=undefined)
@@ -143,7 +143,7 @@ block content
                 }
             $('.buddle.'+i).on('dblclick',(function(value){
                     return function(){
-                        show(value)
+                        showdes(value)
                     }
                 })(value[i])
                 )
@@ -152,20 +152,4 @@ block content
             {
                 $('.buddle.'+i).hide()
             }
-        }
-        function show(value){
-            var mydate=new Date(value['stime'])
-            var startdate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
-            mydate=new Date(value['etime'])
-            var enddate=(mydate.getMonth()+1)+'/'+(mydate.getDate()-1)+'/'+mydate.getFullYear()
-            $('.modal-header.my h2').html(value['title'])
-            $('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
-            $('.modal-body.my .from').html('    '+value['username'])
-            $('.modal-body.my .main').html(value['content']['content'])
-            $('#my').modal('show')
-        }
-
-        function showpic(value){
-            $('.modal-body.pic').html('<img src="'+value+'"/>')
-            $('#pic').modal('show')
         }

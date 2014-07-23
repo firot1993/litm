@@ -4,6 +4,7 @@ var Information  = require('../data/models/information')
 var LoggedIn     = require('./middleware/logger_in')
 var fs           = require('fs')
 var imageprocess = require('./imageprocess')
+var mongoose     = require('mongoose')
 module.exports=function(app){
 	//newQuest
 	app.post('/newQuest',LoggedIn,function(req,res,next){
@@ -137,11 +138,23 @@ module.exports=function(app){
 		res.render('findQuest.jade',{session:req.session})
 	})
 	app.post('/find',function(req,res,next){
-		var page=req.params.page
 		Quest.find().where('state').in(['N']).exec(function(err,quests){
-			res.send(quests,200)
+			res.send(quests)
 		})
 	})
+	//find myquest
+	app.get('/findmq',LoggedIn,function(req,res,next){
+		Quest.find().where('from').in([req.session.user.username]).exec(function(err,quests){
+			res.send(quests)
+		})
+	})
+	//find my mission
+	app.get('/findmm',LoggedIn,function(req,res,next){
+		Quest.find().where('got').in([req.session.user.username]).exec(function(err,quests){
+			res.send(quests)
+		})
+	})
+
 
 	//new quest
 	app.get('/Quest',LoggedIn,function(req,res,next){
@@ -154,7 +167,7 @@ module.exports=function(app){
 
 	//sign and confirmed quest
 	app.post('/signQuest',LoggedIn,function(req,res,next){
-		Quest.findone({_id:req.body.id},function(quest,err){
+		Quest.findById(req.body.id,function(quest,err){
 			if (err)
 				res.send('error')
 			else{
@@ -170,8 +183,8 @@ module.exports=function(app){
 		})
 	})
 	app.post('/confirmQuest',LoggedIn,function(req,res,next){
-		Quest.find({_id:req.body.id},function(quest,err){
-			if (quest.form == req.seesion.user.username){
+		Quest.findById(req.body.id,function(quest,err){
+			if (quest.form == req.session.user.username){
 				var l_signed = [req.body.signed] 
 				Quest.update({_id:quest.id},{got:l_signed,state:'C'},function(err){
 					if (err)
@@ -182,7 +195,22 @@ module.exports=function(app){
 			}
 		})
 	})
-
+	//give up a question
+	app.post('/giveup',LoggedIn,function(req,res,next){
+		Quest.findById(req.body.id,function(err,quest){
+			console.log(quest)
+			if (err || quest.from != req.session.user.username ){
+				res.send('error')
+			}
+			else
+				Quest.update({_id:quest._id},{state:'D'},function(err){
+					if (err)
+						res.send('error123')
+					else
+						res.send('ok')
+				})
+		})
+	})
 
 
 }
