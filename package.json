@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/firot1993/litm",
   "engines": {
-    "node": "0.10.25",
-    "npm":"1.3.24"
-  }
+    "node": "0.10.25"
+      }
 }
