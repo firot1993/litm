@@ -1,55 +1,125 @@
 extends layout/layout
 block content
     div(class="container" style="padding-top: 2%;position:relative" id='container') 
-        img(class='map img-responsive img-thumbnail' src='/pic/crime.png' style="background-color: #222;border: 3px solid #FFF;float:right")
+        div(class="Filter" id="Fliter") F or click this for filter
+        div(id='map'  class='map ' style="background-color: #222;border: 4px solid #FFF;float:right")
+    include layout/description 
     include layout/foot
     script.
         var contractTrace = []
+        var mapdown = false
+        var oldPos  = undefined
+        var parseBackgroundP = /([\-0-9.]+)px ([\-0-9.]+)px/
         $(function(){
             $('.active').removeClass('active')
             $('#Home').addClass('active')
             var contracts = new Contract()
-            contracts.init(render)
+            contracts.init(1,10,render)
             function render(){
                  setTimeout(function(){
                         renderHtml(contracts.pop())
                         if (contracts.length() != 0)
-                            setTimeout(render ,1000)
-                    },1000);     
+                            setTimeout(render ,500)
+                    },500);     
             }
+            $('#map').click(function(){return false})
+
+            $('#map').mousedown(function(){
+                console.log(contractTrace)
+                mapdown = true
+                oldPos = undefined
+                oldX =undefined
+                oldY =undefined
+                return false
+            })
+            $('#map').mouseup(function(){
+                mapdown = false
+                oldPos = undefined
+                oldX = undefined
+                oldY = undefined
+                return false;
+            })
+            $('#map').mousemove(function(pos){
+                if (mapdown ){
+                        if (oldPos == undefined)
+                            oldPos =pos
+                        else{
+                            var leftmove = pos.pageX - oldPos.pageX
+                            var topmove  = pos.pageY - oldPos.pageY
+                            var backgroundposition = parseBackgroundP.exec($('#map').css('backgroundPosition'))
+                            var newX = parseFloat(backgroundposition[1]) + leftmove
+                            var newY = parseFloat(backgroundposition[2]) + topmove
+                            newX = Math.min(newX,-10)
+                            newX = Math.max(-340,newX)
+                            newY = Math.min(newY,-10)
+                            newY = Math.max(-300,newY)
+                            var newP = newX+'px '+newY+'px'         
+                            $('#map').css({backgroundPosition:newP})
+                            oldPos=pos
+                            for (var x = 0 ; x < contractTrace.length ;x++) {
+                                var node = contractTrace[x]
+                                node.x = node.fx +newX
+                                node.y = node.fy +newY
+                                node.node.css({left:node.x,top:node.y})
+                                if (node.x <0 || node.x >1200 ||node.y<0 ||node.y>690)
+                                    node.node.hide()
+                                    else
+                                        node.node.show()
+                            }
+                        }
+                    }
+                })
+
         })
         function renderHtml(data){
-            $template=$("<div class='contract'><div class='buddle'><div class='circle'></div></div></div>")
-            $template.append('<div class="authorandtitle"><strong style="color:white;">'+ data.from+':</strong>'+'<p style="color:white;">'+data.title+'</p></div>')
-            $template.click(function(){
-                alert(data.title)
-                })
+
+            $template=$('<div class="contract" data-toggle="popover" data-placement="right" '+
+                'data-content="'+data.brief+'">'+
+                '<div class="buddle"><div class="circle"></div></div></div>')
+            $template.append('<div class="authorandtitle"><strong style="color:white;">'+ 
+                data.from+':</strong>'+'<p style="color:white;">'+
+                data.title+'</p></div>')
+
+            //start popover
+            $template.popover('toggle')
+            //register modal 
+            $template.dblclick((function(value){
+                    return function(){
+                        showdes(value,$('#description'))
+                    }
+                })(data))
+
             $template.css('opacity','0.1')
             var x = Math.random()*$('#container').width()
             var y = Math.random()*$('#container').height()
-
+                  
             //make sure two contract will not be so close
             var flag = false
             while (flag == false) {
                 flag = true
                 for (var i = 0 ; i < contractTrace.length ; i++ ){
-                    if (Math.abs(contractTrace[i].x - x) <=50 || Math.abs(contractTrace[i].y - y) <=50){
+                    if (Math.abs(contractTrace[i].x - x) <=50 
+                        || Math.abs(contractTrace[i].y - y) <=50){
                         flag=false
                         break
                     }
                 }    
-                if (x < 50 || x > $('#container').width-50) flag=false
-                if (y < 50 || y > $('#container').height-100) flag=false
+                if (x < 50 || x > $('#container').width()-50) flag=false
+                if (y < 50 || y > $('#container').height()-50) flag=false
                      
-                if (flag) contractTrace.push({x:x,y:y}) 
+                if (flag) {
+                    var backgroundposition = parseBackgroundP.exec($('#map').css('backgroundPosition'))
+                    contractTrace.push({x:x,y:y,node:$template,fx:x-parseFloat(backgroundposition[1]),fy:y-parseFloat(backgroundposition[2])}) 
+                    }
                 else{
                        x = Math.random()*$('#container').width()
                        y = Math.random()*$('#container').height()
                     }
-            }
+            }   
+           
 
             $template.css({'left':x+'px','top':y+'px'})
-            $template.animate({opacity:'1'},2000)
+            $template.animate({opacity:'1'},200)
             var zz=$('#container').append($template)
         }
        

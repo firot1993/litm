@@ -66,28 +66,7 @@ block content
                     div(style="clear:both")
             div(class='buddle 5') 
             div(class='buddle 6') 
-                  
-
-             
-    div(class="modal fade " style="display:none" id="my")
-        div(class="modal-dialog modal-lg")
-            div(class="modal-content")
-                div(class="modal-header my")
-                    button(type='button' class='close' data-dismiss='modal')
-                        span(aria-hidden="true") &times;
-                        span(class="sr-only") Close
-                    h2(class="modal-title")
-                div(class="modal-body my")
-                    p(style="font-weight:bold") Time:
-                        strong(class="time" style="font-weight:normal")
-                    p(style="font-weight:bold") From:
-                        strong(class="from" style="font-weight:normal")
-                    p(style="font-weight:bold") Descirption:
-                        div(class="main")
-                div(class="modal-footer")
-                    a(href="#" class="btn btn-success") Sign here
-                    a(href="#" class="btn" data-dismiss="modal") Close
-
+    include layout/description             
     div(class="modal fade " style="display:none" id="pic")
         div(class="modal-dialog modal-lg")
             div(class="modal-content")
@@ -143,7 +122,7 @@ block content
                 }
             $('.buddle.'+i).on('dblclick',(function(value){
                     return function(){
-                        showdes(value,$('#my'))
+                        showdes(value,$('#description'))
                     }
                 })(value[i])
                 )

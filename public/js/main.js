@@ -39,7 +39,7 @@ var parsePng=/"[0-9]+.png"/g
 var parsePng2=/("[0-9]+.png")/
 var parsePng3=/([0-9]+.png)/
 
-function playpage(data,page,perpage,appendwith,styleclass){
+function playpage(data,page,perpage){
     var length       = data.length
     var contentLimit = []
     for (var index = (page - 1) * perpage; index < Math.min(page * perpage,length); index++){
@@ -73,7 +73,7 @@ function f_parseContent(content,title,username){
         content   = content.replace(image[1],'"/pic/'+username+'/'+title+'/'+image2[1]+'" '+'class="good"')
         images[i] = images[i].replace(image[1],'/pic/'+username+'/'+title+'/'+image2[1])
     }
-    return {'content':content,'images':images}
+    return content
 }
 
 function getUser(username,next){
@@ -125,7 +125,7 @@ function showdes(value,node){
     node.find('.modal-header.my h2').html(value['title'])
     node.find('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
     node.find('.modal-body.my .from').html('    '+value['from'])
-    node.find('.modal-body.my .main').html(value['content']['content'])
+    node.find('.modal-body.my .main').html(value['content'])
     node.modal('show')
 }
 
@@ -135,15 +135,16 @@ function showpic(value){
 }
 
 
+
 var Contract = function (data) {
     var data = data || []
     var that = {}
-    that.init = function (callback) {
+    that.init = function (page,perpage,callback) {
         $.ajax({
             url:'/find',
             type:'post',
             success:function(p){
-                data = p
+                data = playpage(p,page,perpage)
                 callback()
             }
         })

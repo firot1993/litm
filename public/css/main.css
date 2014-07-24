@@ -1,5 +1,18 @@
 body {
-  padding-top: 50px;
+    padding-top: 50px;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+}
+.map {
+    background-image: url('/pic/crime.png');
+    background-repeat: no-repeat;
+    background-size: 1550px 1000px;
+    width:1200px;
+    height: 690px;
+    background-position:-175px -155px;
 }
 .starter-template {
   padding: 40px 15px;
@@ -98,21 +111,10 @@ body {
     color:black;
     padding:2% 5%;
 }
-/*.main{
-    padding: 10px 10px;
-} 
-
-.information
-{
-     margin:1em 0em 3em;
-     padding: 30px 30px;
-     background-color: rgba(204, 204, 204, 0.15);
-     border-radius: 20px;
-
+.Filter{
+    position: absolute;
+    right:50px;
+    top:50px;
+    color: #aaa;
+    font-size: 15px;
 }
-
-.informationmain
-{
-    padding: 30px 30px;
-}
-*/
