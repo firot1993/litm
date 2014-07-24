@@ -48,7 +48,7 @@ require('./routes/quest')(app)
 
 // mongoose
 var mongoose = require('mongoose')
-mongoose.connect(<% MONGOLAB_URI %>)
+mongoose.connect(process.env.MONGOLAB_URI)
 var db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'connection error:'))
