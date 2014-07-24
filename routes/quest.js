@@ -161,8 +161,12 @@ module.exports=function(app){
 		res.render('newQuest.jade',{session:req.session})
 	})
 	app.post('/writefile',LoggedIn,function(req,res,next){
-		imageprocess.writepic(req.body.picture,req.body.filename,req.session.user.username,req.body.title)
-		res.send('ok',200)
+		imageprocess.writepic(req.body.picture,req.body.filename,req.session.user.username,req.body.title,function(err){
+			if (err)
+				res.send('error')
+			else
+				res.send('ok')
+		})
 	})
 
 	//sign and confirmed quest

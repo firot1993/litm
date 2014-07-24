@@ -19,7 +19,8 @@ exports.writepic=function(file,filename,username,type)
             if (!fs.existsSync(path))
                  fs.mkdirSync(path);
             path=path+'/'
-            if (type==1) filename2='head.png'
+            var filename2 = filename 
+            if (type==1) filename2='head.png' 
             fs.rename(filename,path+filename2,function(err){
              if (err)
                  throw err

@@ -13,13 +13,13 @@ function validEmail(email){
     }
     return re
 }
+
 function parsesummernote(value,title){
     var images = value.match(parseSummerNote)
     if (images != null)
     for (var i = 0 ; i < images.length; i++)
     {
         image = parseSummerNote2.exec(images[i]);
-        if (parseHtml.test(image)){
         value=value.replace(image[1],i+".png")
         $.ajax({url:"/writefile",
                 type:'post',
@@ -29,9 +29,9 @@ function parsesummernote(value,title){
                         picture:image[1]
                     },
                 success:function(data,status,xhr){
+                    console.log(data)
                         }
             })
-        }
     }
     return value
 }
@@ -98,7 +98,8 @@ function parseDate(mydate){
 }
 var Translate = function()
 {
-    var p_dict={'N':'info','S':'info','C':'warning','F':'success','D':'danger'}
+    var p_dict={}
+    // var p_dict={'N':'info','S':'info','C':'warning','F':'success','D':'danger'}
     var w_dict={'N':'Begining','S':'Signed','C':'Confirmed','F':'Succeed','D':'Failed'}
     return {
         parseState:function(p){
@@ -110,26 +111,55 @@ var Translate = function()
         translateState:function(p){
             if (w_dict[p] != undefined)
                 return w_dict[p]
-            else
+            elseo11
                 return p
         }
     }
 }
 
-function showdes(value,type){
+function showdes(value,node){
     var mydate=new Date(value['stime'])
     var startdate=parseDate(mydate)
     mydate=new Date(value['etime'])
     var enddate=parseDate(mydate)
-    $('.modal-header.my h2').html(value['title'])
-    $('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
-    $('.modal-body.my .from').html('    '+value['from'])
-    if (type == undefined ) $('.modal-body.my .main').html(value['content']['content'])
-        else $('.modal-body.my .main').html(value['content'])
-    $('#my').modal('show')
+    node.find('.modal-header.my h2').html(value['title'])
+    node.find('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
+    node.find('.modal-body.my .from').html('    '+value['from'])
+    node.find('.modal-body.my .main').html(value['content']['content'])
+    node.modal('show')
 }
 
 function showpic(value){
     $('.modal-body.pic').html('<img src="'+value+'"/>')
     $('#pic').modal('show')
+}
+
+
+var Contract = function (data) {
+    var data = data || []
+    var that = {}
+    that.init = function (callback) {
+        $.ajax({
+            url:'/find',
+            type:'post',
+            success:function(p){
+                data = p
+                callback()
+            }
+        })
+    }
+    that.pop = function(){
+        if (data instanceof Array) 
+            return data.pop() 
+        else 
+            return false
+    }
+    that.length = function(){
+        if (data instanceof Array) 
+            return data.length
+        else
+            return false
+        
+    }
+    return that
 }

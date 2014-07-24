@@ -1,7 +1,6 @@
 body {
   padding-top: 50px;
 }
-
 .starter-template {
   padding: 40px 15px;
 }
@@ -9,8 +8,12 @@ body {
     margin: auto;
     padding: 40px 20%;
 }
-.quests:{
+.quests {
     margin: auto;
+}
+.contract
+{
+    position: absolute;
 }
 
 .loginarea {
@@ -27,17 +30,31 @@ body {
 {
     text-align: left;
 }
-
+.circle{
+    border:2px solid black;
+    width: 30px;;
+    height: 30px;
+    border-radius: 15px;
+}
+.authorandtitle {
+    /*float:left;*/
+    position: relative;
+    top:-30px;
+    right:-70px;
+}
 .buddle
 {
+    float:left;
     position:relative;
-    padding:30px;
-    margin:1em 0em 3em;
-    max-width:100%;
+    margin:10px;
+    padding-left:10px;
+    padding-top:5px;
+    width:50px;
+    height:40px;
     line-height:1.2;
     color:#fff;
-    background-color: rgba(204, 204, 204, 0.3);
-    border-radius: 25px;
+    background-color: rgba(204, 204, 204,1);
+    border-radius: 5px;
     word-break:break-all;
 }
 .buddle:after{
@@ -50,11 +67,11 @@ body {
     display: block;
     border-style: solid;
     border-width: 15px;
-    border-color: rgba(204, 204, 204, 0.3) transparent transparent transparent;
+    border-color: rgba(204, 204, 204, 1) transparent transparent transparent;
     position:absolute;
-    z-index:-1;
+    z-index:0;
     bottom:-25px;
-    left:20px; 
+    left:10px; 
 }
 
 
