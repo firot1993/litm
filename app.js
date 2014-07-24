@@ -48,7 +48,7 @@ require('./routes/quest')(app)
 
 // mongoose
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://rrroen:fireinhole@ds043467.mongolab.com:43467/litmdatabase')
+mongoose.connect(<% MONGOLAB_URI %>)
 var db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'connection error:'))
