@@ -6,7 +6,8 @@ block content
     include layout/description 
     include layout/foot
     include layout/fliter
-    include layout/createnew
+    if (session && session.user)
+        include layout/createnew
     script(src='/js/summernote.min.js')
     script(src="/js/jquery-validate.min.js")
     script.

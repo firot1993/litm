@@ -139,9 +139,9 @@ module.exports=function(app){
 
 
 	//find quest
-	app.get('/find',function(req,res,next){
-		res.render('findQuest.jade',{session:req.session})
-	})
+	// app.get('/find',function(req,res,next){
+	// 	res.render('findQuest.jade',{session:req.session})
+	// })
 
 	app.post('/find',function(req,res,next){
 		Quest.find().where('state').in(['N']).exec(function(err,quests){
@@ -180,9 +180,9 @@ module.exports=function(app){
 
 
 	//new quest
-	app.get('/Quest',LoggedIn,function(req,res,next){
-		res.render('newQuest.jade',{session:req.session})
-	})
+	// app.get('/Quest',LoggedIn,function(req,res,next){
+	// 	res.render('newQuest.jade',{session:req.session})
+	// })
 	app.post('/writefile',LoggedIn,function(req,res,next){
 		imageprocess.writepic(req.body.picture,req.body.filename,req.session.user.username,req.body.title,function(err){
 			if (err)

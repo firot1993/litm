@@ -53,8 +53,8 @@ function playpage(data,page,perpage){
         var _id        = nowObject['_id']
         var staticpos_x  = nowObject['staticpos_x']
         var staticpos_y  = nowObject['staticpos_y']
-        var fixedpos_x   = nowObject['fixedpos_y']
-        var fixedpos_y   = nowObject['fixedpos_x']
+        var fixedpos_x   = nowObject['fixedpos_x']
+        var fixedpos_y   = nowObject['fixedpos_y']
 
         content        = f_parseContent(content,title,from)
         contentLimit.push({
