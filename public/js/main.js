@@ -50,7 +50,12 @@ function playpage(data,page,perpage){
         var brief      = nowObject['brief']
         var etime      = nowObject['etime']
         var stime      = nowObject['stime']
-        var _id         = nowObject['_id']
+        var _id        = nowObject['_id']
+        var staticpos_x  = nowObject['staticpos_x']
+        var staticpos_y  = nowObject['staticpos_y']
+        var fixedpos_x   = nowObject['fixedpos_y']
+        var fixedpos_y   = nowObject['fixedpos_x']
+
         content        = f_parseContent(content,title,from)
         contentLimit.push({
             'content':content,
@@ -59,7 +64,9 @@ function playpage(data,page,perpage){
             'brief':brief,
             'etime':etime,
             'stime':stime,
-            '_id':_id
+            '_id':_id,
+            'staticpos':{x:staticpos_x,y:staticpos_y},
+            'fixedpos':{x:fixedpos_x,y:fixedpos_y}
         })
     }
     return contentLimit;
@@ -118,6 +125,7 @@ var Translate = function()
 }
 
 function showdes(value,node){
+    console.log(value)
     var mydate=new Date(value['stime'])
     var startdate=parseDate(mydate)
     mydate=new Date(value['etime'])
@@ -127,6 +135,19 @@ function showdes(value,node){
     node.find('.modal-body.my .from').html('    '+value['from'])
     node.find('.modal-body.my .main').html(value['content'])
     node.modal('show')
+    //req.body.id signQuest
+    node.find('.btn.btn-success').click(function(){
+        $.ajax({
+            url:'/signQuest',
+            type:'post',
+            data:{
+                id:value._id
+            },
+            success:function(data){
+                alert(data)
+            }
+        })
+    })
 }
 
 function showpic(value){
@@ -139,10 +160,13 @@ function showpic(value){
 var Contract = function (data) {
     var data = data || []
     var that = {}
-    that.init = function (page,perpage,callback) {
+    that.init = function (page,perpage,friendonly,callback) {
         $.ajax({
             url:'/find',
             type:'post',
+            data:{
+                friendonly:friendonly
+            },
             success:function(p){
                 data = playpage(p,page,perpage)
                 callback()

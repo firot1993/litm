@@ -1,20 +1,60 @@
 extends layout/layout
 block content
-    div(class="container" style="padding-top: 2%;position:relative" id='container') 
-        div(class="Filter" id="Fliter") F or click this for filter
-        div(id='map'  class='map ' style="background-color: #222;border: 4px solid #FFF;float:right")
+    div(class="container" style="padding-top: 2%;position:relative;" id='container') 
+        div(class="Fliter" id="Fliter") F or click this for fliter
+        div(id='map'  class='map ' style="background-color: #222;border: 1px solid #FFF;float:right;box-shadow: 5px 10px 20px rgba(222, 25, 25, 0.39);")
     include layout/description 
     include layout/foot
+    include layout/fliter
+    include layout/createnew
+    script(src='/js/summernote.min.js')
+    script(src="/js/jquery-validate.min.js")
     script.
-        var contractTrace = []
-        var mapdown = false
-        var oldPos  = undefined
-        var parseBackgroundP = /([\-0-9.]+)px ([\-0-9.]+)px/
+
+        /////////////////////////////////////////////////////
+
+        //set the localStorage
+
+        ////////////////////////////////////////////////////
+
+        if (window.localStorage.friendonly == undefined || window.localStorage.friendonly == "undefined")
+            window.localStorage.friendonly = false
+        if (window.localStorage.maxnumber == undefined)
+            window.localStorage.maxnumber = 10
+
+
+
+
+        /////////////////////////////////////////////////////
+
+        //set global variable
+
+        /////////////////////////////////////////////////////
+
+
+
+        var g_contractTrace = []
+        var g_mapdown = false
+        var g_oldPos  = undefined
+        var g_parseBackgroundP = /([\-0-9.]+)px ([\-0-9.]+)px/
+        var g_triggerDelay = true
+        var g_staticpos 
+        var g_fixedpos  
+
+
+        /////////////////////////////////////////////////////
+
+        //init and render the page
+        
+        /////////////////////////////////////////////////////
+
+
+        
         $(function(){
             $('.active').removeClass('active')
             $('#Home').addClass('active')
             var contracts = new Contract()
-            contracts.init(1,10,render)
+            contracts.init(1,window.localStorage.maxnumber,window.localStorage.friendonly,render)
             function render(){
                  setTimeout(function(){
                         renderHtml(contracts.pop())
@@ -22,31 +62,65 @@ block content
                             setTimeout(render ,500)
                     },500);     
             }
-            $('#map').click(function(){return false})
 
-            $('#map').mousedown(function(){
-                console.log(contractTrace)
-                mapdown = true
-                oldPos = undefined
-                oldX =undefined
-                oldY =undefined
-                return false
+            //init the map logic
+
+            $('#map').click(function(){return false})
+            $(document).bind('contextmenu',function(e){
+                return false;
+                })
+        
+            $('#map').mousedown(function(key){
+                if (key.which == 1){
+                    g_mapdown = true
+                    g_oldPos = undefined
+                    oldX =undefined
+                    oldY =undefined
+                    return false
+                }else
+                {
+                //create the contract
+                    var cfx = {
+                        x: $('#map').offset().left - $('#container').offset().left,
+                        y: $('#map').offset().top  - $('#container').offset().top
+                    }
+                    var cpos = $('#map').offset()
+                    var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
+                    console.log(backgroundposition)
+                    g_staticpos = {x:key.pageX - cpos.left + cfx.x, y:key.pageY - cpos.top + cfx.y}
+                    g_fixedpos  = {
+                                        x:g_staticpos.x - parseFloat(backgroundposition[1]),
+                                        y:g_staticpos.y - parseFloat(backgroundposition[2])
+                                    }
+                    $template = $('<button class="mapmenu">Create+</button>')
+                    $template.css({left:g_staticpos.x-10,top:g_staticpos.y-10})
+                 
+                    $('#container').append($template)
+                    $('.mapmenu').mouseout(function(){
+                            $('.mapmenu').remove()
+                        })
+                    $('.mapmenu').click(function(){
+                            $('#createnew').modal('show')
+                        })
+
+
+                }
             })
             $('#map').mouseup(function(){
-                mapdown = false
-                oldPos = undefined
+                g_mapdown = false
+                g_oldPos = undefined
                 oldX = undefined
                 oldY = undefined
                 return false;
             })
             $('#map').mousemove(function(pos){
-                if (mapdown ){
-                        if (oldPos == undefined)
-                            oldPos =pos
+                if (g_mapdown ){
+                        if (g_oldPos == undefined)
+                            g_oldPos =pos
                         else{
-                            var leftmove = pos.pageX - oldPos.pageX
-                            var topmove  = pos.pageY - oldPos.pageY
-                            var backgroundposition = parseBackgroundP.exec($('#map').css('backgroundPosition'))
+                            var leftmove = pos.pageX - g_oldPos.pageX
+                            var topmove  = pos.pageY - g_oldPos.pageY
+                            var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
                             var newX = parseFloat(backgroundposition[1]) + leftmove
                             var newY = parseFloat(backgroundposition[2]) + topmove
                             newX = Math.min(newX,-10)
@@ -55,13 +129,13 @@ block content
                             newY = Math.max(-300,newY)
                             var newP = newX+'px '+newY+'px'         
                             $('#map').css({backgroundPosition:newP})
-                            oldPos=pos
-                            for (var x = 0 ; x < contractTrace.length ;x++) {
-                                var node = contractTrace[x]
+                            g_oldPos=pos
+                            for (var x = 0 ; x < g_contractTrace.length ;x++) {
+                                var node = g_contractTrace[x]
                                 node.x = node.fx +newX
                                 node.y = node.fy +newY
                                 node.node.css({left:node.x,top:node.y})
-                                if (node.x <0 || node.x >1200 ||node.y<0 ||node.y>690)
+                                if (node.x <-20 || node.x >1200 ||node.y<0 ||node.y>690)
                                     node.node.hide()
                                     else
                                         node.node.show()
@@ -69,10 +143,51 @@ block content
                         }
                     }
                 })
+            //init the fliter logic
+            $(document).keypress(function(p){
+                    if (g_triggerDelay)
+                    if (p.witch == 102 || p.key == 'f' || p.witch ==70 || p.key == 'F' || p.keyCode == 102 ){
+                            $('#fliter').modal('toggle')
+                            g_triggerDelay = false
+                            setTimeout(function(){g_triggerDelay=true},500)
+                        }
+                })
+
+            $('#fliter').find('.checkbox').attr('checked',window.localStorage.friendonly)
+            $('#fliter').find('.value').attr('value',window.localStorage.maxnumber)
+            $('#fliter').find('.glyphicon.glyphicon-minus').css({cursor:'pointer'})
+            $('#fliter').find('.glyphicon.glyphicon-plus').css({cursor:'pointer'})
+            $('#fliter').find('.checkbox').click(function(){
+                    window.localStorage.friendonly = $('#fliter').find('.checkbox').prop('checked') 
+                })
+            $('#fliter').find('.glyphicon.glyphicon-minus').click(function(){
+                    var x = parseInt($('#fliter').find('.value').attr('value'))-1
+                    $('#fliter').find('.value').attr('value',x)
+                    window.localStorage.maxnumber = parseInt($('#fliter').find('.value').attr('value'))
+                })
+             $('#fliter').find('.glyphicon.glyphicon-plus').click(function(){
+                    var x = parseInt($('#fliter').find('.value').attr('value'))+1
+                    $('#fliter').find('.value').attr('value',x)
+                    window.localStorage.maxnumber = parseInt($('#fliter').find('.value').attr('value'))
+
+                })
+
+
 
         })
-        function renderHtml(data){
 
+
+
+        /////////////////////////////////////////////////////
+        
+        //render function
+       
+        /////////////////////////////////////////////////////
+
+
+
+        function renderHtml(data){
+            console.log(data)
             $template=$('<div class="contract" data-toggle="popover" data-placement="right" '+
                 'data-content="'+data.brief+'">'+
                 '<div class="buddle"><div class="circle"></div></div></div>')
@@ -81,7 +196,7 @@ block content
                 data.title+'</p></div>')
 
             //start popover
-            $template.popover('toggle')
+            $template.popover({trigger: 'hover'})
             //register modal 
             $template.dblclick((function(value){
                     return function(){
@@ -89,37 +204,181 @@ block content
                     }
                 })(data))
 
-            $template.css('opacity','0.1')
-            var x = Math.random()*$('#container').width()
-            var y = Math.random()*$('#container').height()
+            //- $template.css('opacity','0.1')
+            //- var x = Math.random()*$('#container').width()
+            //- var y = Math.random()*$('#container').height()
                   
-            //make sure two contract will not be so close
-            var flag = false
-            while (flag == false) {
-                flag = true
-                for (var i = 0 ; i < contractTrace.length ; i++ ){
-                    if (Math.abs(contractTrace[i].x - x) <=50 
-                        || Math.abs(contractTrace[i].y - y) <=50){
-                        flag=false
-                        break
-                    }
-                }    
-                if (x < 50 || x > $('#container').width()-50) flag=false
-                if (y < 50 || y > $('#container').height()-50) flag=false
+            //- //make sure two contract will not be so close
+            //- var flag = false
+            //- while (flag == false) {
+            //-     flag = true
+            //-     for (var i = 0 ; i < g_contractTrace.length ; i++ ){
+            //-         if (Math.abs(g_contractTrace[i].x - x) <=50 
+            //-             || Math.abs(g_contractTrace[i].y - y) <=50){
+            //-             flag=false
+            //-             break
+            //-         }
+            //-     }    
+            //-     if (x < 50 || x > $('#container').width()-50) flag=false
+            //-     if (y < 50 || y > $('#container').height()-50) flag=false
                      
-                if (flag) {
-                    var backgroundposition = parseBackgroundP.exec($('#map').css('backgroundPosition'))
-                    contractTrace.push({x:x,y:y,node:$template,fx:x-parseFloat(backgroundposition[1]),fy:y-parseFloat(backgroundposition[2])}) 
-                    }
-                else{
-                       x = Math.random()*$('#container').width()
-                       y = Math.random()*$('#container').height()
-                    }
-            }   
+            //-     if (flag) {
+            //-         var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
+            //-         g_contractTrace.push({x:x,y:y,node:$template,fx:x-parseFloat(backgroundposition[1]),
+            //-             fy:y-parseFloat(backgroundposition[2])}) 
+            //-         }
+            //-     else{
+            //-            x = Math.random()*$('#container').width()
+            //-            y = Math.random()*$('#container').height()
+            //-         }
+            //- }   
            
-
-            $template.css({'left':x+'px','top':y+'px'})
-            $template.animate({opacity:'1'},200)
-            var zz=$('#container').append($template)
+            g_contractTrace.push({x:data.staticpos.x,y:data.staticpos.y,node:$template,
+                fx:data.fixedpos.x,fy:data.fixedpos.y})
+            $template.css({left:data.staticpos.x,top:data.staticpos.y})
+            $template.animate({opacity:'1'},500)
+            $('#container').append($template)
         }
        
+
+
+
+
+        /////////////////////////////////////////////////////
+        
+        //post new quest
+       
+        /////////////////////////////////////////////////////
+
+
+        $(function(){
+            $('.active').removeClass('active')
+            $('#Post').addClass('active')
+            $('#summernote').summernote()
+            $('.note-editable').css({'height':'200px','background':'white'})
+            $('.input-group.date').datepicker({
+                 todayBtn: "linked",
+                 forceParse: false,
+                 autoclose: true,
+                todayHighlight: true
+                });
+            var mydate=new Date()
+            var deadline=new Date()
+            var value=(mydate.getMonth()+1)+'/'+mydate.getDate()+'/'+mydate.getFullYear()
+            $('#datetime').attr('value',value)
+            $("#postForm").validate(
+                {
+                    onKeyup : true,
+                    sendForm : false,
+                    valid:function(form){
+                        send()
+                    },
+                    invalid: function(form, validator) {  
+                        return false;
+                    },
+                    eachValidField : function() {
+
+                        $(this).closest('div').removeClass('has-error').addClass('has-success');
+                    },
+                    eachInvalidField : function() {
+
+                        $(this).closest('div').removeClass('has-success').addClass('has-error');
+                    },
+                    description : {
+                    text : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    password : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    email : {
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    },
+                    date:{
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">uuuu</span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">must after today</span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                    },
+                    brief:{
+                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px"></span></div>',
+                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px"></span></div></div>',
+                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                    }
+                }
+            })
+
+            $.validateExtend({
+                username : {
+                    required : true,
+                    conditional : function(value) {
+
+                        return value.length>=5
+                    },
+                    pattern : /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9_\u4e00-\u9fa5]+$/
+                },
+                email:{
+                    required:true,
+                    conditional:function(value){
+                        return validEmail(value)
+                    },
+                    pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
+                },
+                password:{
+                    required:true,
+                    conditional:function(value){
+                        return value.length>=8
+                    },
+                    pattern: /^[a-zA-Z0-9._]+$/
+                },
+                date:{
+                    required:true,
+                    conditional:function(value){
+                        var parsetime=/([0-9]+)\/([0-9]+)\/([0-9]+)/
+                        var array=parsetime.exec(value)
+                        deadline=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
+                        return deadline>mydate
+                    },
+                    pattern:/^[0-9\/]+$/
+                },
+                brief:{
+                    required:true,
+                    conditional:function(value){
+                        return value.length>=5
+                    },
+                    pattern:/[^<>\/\\]+/
+                }
+            });
+
+            function send(){
+                var title=$('#text').val()
+                var brief=$('#brief').val()
+                var sHtml=parsesummernote($('#summernote').code(),title)
+                $.ajax({url:"/newQuest",
+                        type:'post',
+                        data:{
+                            title:title,
+                            file:sHtml,
+                            brief:brief,
+                            deadline:deadline,
+                            staticpos:g_staticpos,
+                            fixedpos:g_fixedpos
+                        },
+                        success:function(date,status,xhr){
+                            alert('succeed!')
+                            location.href='/'
+                        }
+                    })
+                }
+        })
+

@@ -7,7 +7,11 @@ var QuestSchema=new mongoose.Schema({
 	etime:Date,
 	title:String,
 	content:String,
-    brief:String
+    brief:String,
+    staticpos_x:Number,
+    staticpos_y:Number,
+    fixedpos_x:Number,
+    fixedpos_y:Number
 })
 
 module.exports=QuestSchema;

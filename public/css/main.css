@@ -54,6 +54,7 @@ body {
     position: relative;
     top:-30px;
     right:-70px;
+    width:40px;
 }
 .buddle
 {
@@ -111,10 +112,47 @@ body {
     color:black;
     padding:2% 5%;
 }
-.Filter{
+.Fliter{
     position: absolute;
     right:50px;
     top:50px;
     color: #aaa;
     font-size: 15px;
 }
+
+.time
+{
+    font-size:15px;
+    font-weight: normal;
+    color:white;
+}
+
+.from
+{
+    font-style:italic;
+    font-weight: normal;
+    font-size: 15px;
+    cursor:pointer;
+    color:white;
+}
+
+.main
+{
+    font-style:arial;
+    font-size:15px;
+    font-weight: normal;
+    color:white;
+}
+
+.modal-title
+{
+    color:white;
+}
+.mapmenu
+{
+    padding:5px 10px;
+    position:absolute;
+    color:white;
+    background: rgba(0,0,0,0.6);
+}
+

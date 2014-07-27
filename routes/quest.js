@@ -16,8 +16,13 @@ module.exports=function(app){
 			content:req.body.file,
 			stime:t,
 			brief:req.body.brief,
-			etime:req.body.deadline
-		})		
+			etime:req.body.deadline,
+			fixedpos_x:req.body.fixedpos.x,
+			fixedpos_y:req.body.fixedpos.y,
+			staticpos_x:req.body.staticpos.x,
+			staticpos_y:req.body.staticpos.y,
+		})
+		console.log(_Quest)		
 		Quest.create(_Quest,function(err){
 			if (err)throw err
 		})
@@ -137,11 +142,29 @@ module.exports=function(app){
 	app.get('/find',function(req,res,next){
 		res.render('findQuest.jade',{session:req.session})
 	})
+
 	app.post('/find',function(req,res,next){
 		Quest.find().where('state').in(['N']).exec(function(err,quests){
-			res.send(quests)
+			var flag = req.body.friendonly == 'true'
+			if (req.session) flag=((req.session.user!=undefined)&& flag)
+			if (flag==true){
+					User.findOne({username:req.session.user.username},function(err,user){
+					var friends = user.friends
+					var friendsquest = (function(quests){
+								var ans = []
+								for (var x = 0 ; x < quests.length ; x++)
+									if (quests[x].from in friends)
+										ans.push(quests[x])
+								return ans
+						}(quests))
+					console.log(friendsquest)
+					res.send(friendsquest)
+				})
+			}
+			else res.send(quests)
 		})
 	})
+
 	//find myquest
 	app.get('/findmq',LoggedIn,function(req,res,next){
 		Quest.find().where('from').in([req.session.user.username]).exec(function(err,quests){
@@ -171,12 +194,16 @@ module.exports=function(app){
 
 	//sign and confirmed quest
 	app.post('/signQuest',LoggedIn,function(req,res,next){
-		Quest.findById(req.body.id,function(quest,err){
+		Quest.findById(req.body.id,function(err,quest){
+			if (req.session.user.username == quest.from){
+				res.send("You can't sign your own quest")
+			}
+			else
 			if (err)
 				res.send('error')
 			else{
 				var l_signed = quest.got
-				l_signed.append(req.seesion.user.username)
+				l_signed.push(req.session.user.username)
 				Quest.update({_id:quest.id},{got:l_signed},function(err){
 					if (err)
 						res.send('error')

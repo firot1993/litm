@@ -1,0 +1,42 @@
+div(class="modal fade " style="display:none" id="createnew")
+    div(class="modal-dialog modal-lg" )
+        div(class="modal-content" style="background:rgba(0,0,0,0.8);box-shadow: 0px 5px 15px rgba(227, 51, 51, 0.61);")
+            div(class="modal-header my" style="border:none")
+                button(type='button' class='close' data-dismiss='modal')
+                    span(aria-hidden="true") &times;
+                    span(class="sr-only") Close
+                h1(class="modal-title" style="font-style:italic") I LOVE YOU --- POST YOUR CONTRACT
+            div(class="modal-body my row" style="border:none")
+                 form(class="form-horizontal col-sm-10" role="form" id="postForm")
+                    div(class="form-group")
+                        h5(class="col-sm-2 control-label" style="color:white") TITLE:
+                        div(class="col-sm-4")
+                                input(id="text" type="text" class="form-control" data-required="true" 
+                            data-validate="username" data-description="text" data-describedby="textdes")
+                        span(class="col-md-4" id="textdes")
+                    div(class="form-group")
+                        h5(class="col-sm-2 control-label" style="color:white") DEADLINE:
+                        div(class="col-sm-8")
+                            div(class="col-sm-5 input-group date" )
+                                input(class="form-control" type="text" readonly="" id="datetime" data-required="true"
+                                    data-validate="date" data-description="date" data-describedby="datedes"     
+                                    ) 
+                                span(class="input-group-addon")
+                                    i(class="glyphicon glyphicon-calendar")
+                             span(class="col-sm-4" id="datedes")
+                    div(class="form-group")
+                        h5(class="col-sm-2 control-label" style="color:white") BRIEF:
+                        div(class="col-sm-4")
+                                textarea(id="brief" type="text" class="form-control" data-required="true" 
+                            data-validate="brief" data-description="brief" data-describedby="Briefdes")
+                        span(class="col-md-4" id="Briefdes")
+                    div(class='form-group')
+                        h5(class="col-sm-2 control-label" style="color:white") DESCRIPTION:
+                        div(class="col-sm-10")
+                            textarea(class="input-block-level" id="summernote" name="content"  )
+                    div(class='form-group')
+                        label(class="col-sm-2 control-label") 
+                        button(type="submit" class="btn btn-Primary" id="submit") Post it!
+                    br
+                    br
+          
