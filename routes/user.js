@@ -9,10 +9,11 @@ var imageprocess=require('./imageprocess')
 
 module.exports=function(app){
 	//for rigister
-	app.get('/users/new',notLoggedIn,function(req,res){
-		res.locals.session = req.session
-		res.render('register',{title:"New User"})
-	})
+	// app.get('/users/new',notLoggedIn,function(req,res){
+	// 	res.locals.session = req.session
+	// 	res.render('register',{title:"New User"})
+	// })
+
 	app.post('/users',function(req,res,next){
 		var filename=req.body.pic
 		var parse=/(\w+).\w+/

@@ -40,6 +40,7 @@ var parsePng2=/("[0-9]+.png")/
 var parsePng3=/([0-9]+.png)/
 
 function playpage(data,page,perpage){
+    console.log(data)
     var length       = data.length
     var contentLimit = []
     for (var index = (page - 1) * perpage; index < Math.min(page * perpage,length); index++){
@@ -55,6 +56,7 @@ function playpage(data,page,perpage){
         var staticpos_y  = nowObject['staticpos_y']
         var fixedpos_x   = nowObject['fixedpos_x']
         var fixedpos_y   = nowObject['fixedpos_y']
+        var status       = nowObject['state']
 
         content        = f_parseContent(content,title,from)
         contentLimit.push({
@@ -66,7 +68,8 @@ function playpage(data,page,perpage){
             'stime':stime,
             '_id':_id,
             'staticpos':{x:staticpos_x,y:staticpos_y},
-            'fixedpos':{x:fixedpos_x,y:fixedpos_y}
+            'fixedpos':{x:fixedpos_x,y:fixedpos_y},
+            'status':status
         })
     }
     return contentLimit;
@@ -118,7 +121,7 @@ var Translate = function()
         translateState:function(p){
             if (w_dict[p] != undefined)
                 return w_dict[p]
-            elseo11
+            else
                 return p
         }
     }

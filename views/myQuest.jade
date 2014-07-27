@@ -1,18 +1,30 @@
 extends layout/layout
 block content
-    div(class="well loginarea " style="background:rgba(255,255,255,0.6)")
+    div(class="well " style="border:none;background:rgba(0,0,0,0.6);width:80%;margin:5% auto;padding:10px;box-shadow: 5px 10px 20px rgba(222, 222, 222, 0.5)")
         div(class="container row ")
-            div(class="col-md-9")
-                h3 My Question
-                div(class='well question' style="background:rgba(255,255,255,0.6);border:none")
+            div(class="col-sm-8")
+                h3(style="color:white") My Question
+                div(class='well question' style="background:rgba(0,0,0,0);border:none")
                 br
                 br
                 div(style="border-bottom:2px solid rgba(167, 160, 160, 0.48)")
                 br
                 br
-                h3 My Mission
-                div(class='well mission' style="background:rgba(255,255,255,0.6);border:none")
-            div(class="col-md-3")
+                h3(style="color:white") My Mission
+                div(class='well mission' style="background:rgba(0,0,0,0);border:none")
+            div(class="col-sm-1")
+            div(class="col-sm-3 well" style="padding:0 20px;background:rgba(0,0,0,0);border:none")
+                h3(style="color:white" ) Profile
+                img(src="/pic/killlakill/1/head.png" class="img-responsive" id="headimg" style="margin:40px 20px")
+                h4(style="color:white") Id
+                    span(id='userid')
+                br
+                h4(style="color:white") Quest Finished:
+                    span(id='questfinished')
+                br
+                h4(style="color:white") Quest Post    :
+                    span(id='questpost')
+
 
     div(class="modal fade " style="display:none" id="my")
         div(class="modal-dialog modal-lg")
@@ -39,14 +51,15 @@ block content
         function render(data,type){
             for (var i = 0 ; i < data.length ; i ++ ){
                 $('.well.question').append('<div class="mq'+i+' alert" role="alert"></div>')
-                $('.'+type+i).addClass('alert-'+state.parseState(data[i].state))
-                $('.'+type+i).append('<div><span class="glyphicon glyphicon-plus g'+type+i+' "style="float:right;color:rgba(0,0,0,0.5)"/>'+data[i].title+'</div>')
+                //- $('.'+type+i).addClass('alert-'+state.parseState(data[i].state))
+                $('.'+type+i).append('<div style="color:white;padding:10px;font-size:15px;box-shadow: 5px 5px 5px rgba(227, 51, 51, 0.35)"><span class="glyphicon glyphicon-plus g'+
+                    type+i+' "style="float:right;color:white"/>'+data[i].title+'</div>')
                 $('.'+type+i).append('')
                 $('.'+type+i).append('<div class="well" style="background:white;margin:2% 2%"></div>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Title:   </strong>'+data[i].title+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Brief:   </strong>'+data[i].brief+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Etime:   </strong>'+parseDate(new Date(data[i].etime))+'</p>')
-                $('.'+type+i+' div:gt(0)').append('<p><strong>Status:   </strong>'+state.translateState(data[i].state)+'</p>')
+                $('.'+type+i+' div:gt(0)').append('<p><strong>Status:   </strong>'+state.translateState(data[i].status)+'</p>')
                 if (type=='mq'){
                     $('.'+type+i+' div:gt(0)').append('<div class="btn-group"><button class="btn btn-primary bSM'+i+'">Show more</button><button class="btn btn-default bGU'+i+'">Give up</button></div>')
                     $('.bSM'+i).click((function(value){

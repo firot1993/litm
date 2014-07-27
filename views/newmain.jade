@@ -2,14 +2,17 @@ extends layout/layout
 block content
     div(class="container" style="padding-top: 2%;position:relative;" id='container') 
         div(class="Fliter" id="Fliter") F or click this for fliter
-        div(id='map'  class='map ' style="background-color: #222;border: 1px solid #FFF;float:right;box-shadow: 5px 10px 20px rgba(222, 25, 25, 0.39);")
+        div(id='map'  class='map ' style="background-color: #222;float:right;box-shadow: 5px 10px 20px rgba(222, 222, 222, 0.5);")
     include layout/description 
-    include layout/foot
-    include layout/fliter
     if (session && session.user)
         include layout/createnew
-    script(src='/js/summernote.min.js')
+    if (session == undefined || session.user == undefined)
+        include layout/register
+    include layout/foot
+    include layout/fliter
     script(src="/js/jquery-validate.min.js")
+    script(src="/js/fileinput.min.js")
+    script(src='/js/summernote.min.js')
     script.
 
         /////////////////////////////////////////////////////
@@ -64,6 +67,10 @@ block content
                     },500);     
             }
 
+            $('#registerbutton').click(function(){
+                console.log(123)
+                $('#register').modal('show')
+                })
             //init the map logic
 
             $('#map').click(function(){return false})
@@ -245,141 +252,256 @@ block content
 
 
 
-        /////////////////////////////////////////////////////
-        
-        //post new quest
-       
-        /////////////////////////////////////////////////////
+
+    if (session && session.user)
+        script.
 
 
-        $(function(){
-            $('.active').removeClass('active')
-            $('#Post').addClass('active')
-            $('#summernote').summernote()
-            $('.note-editable').css({'height':'200px','background':'white'})
-            $('.input-group.date').datepicker({
-                 todayBtn: "linked",
-                 forceParse: false,
-                 autoclose: true,
-                todayHighlight: true
-                });
-            var mydate=new Date()
-            var deadline=new Date()
-            var value=(mydate.getMonth()+1)+'/'+mydate.getDate()+'/'+mydate.getFullYear()
-            $('#datetime').attr('value',value)
-            $("#postForm").validate(
-                {
-                    onKeyup : true,
-                    sendForm : false,
-                    valid:function(form){
-                        send()
-                    },
-                    invalid: function(form, validator) {  
-                        return false;
-                    },
-                    eachValidField : function() {
+            /////////////////////////////////////////////////////
+            
+            //post new quest
+           
+            /////////////////////////////////////////////////////
+            $(function(){
+                $('#summernote').summernote()
+                $('.note-editable').css({'height':'200px','background':'white'})
+                $('.input-group.date').datepicker({
+                     todayBtn: "linked",
+                     forceParse: false,
+                     autoclose: true,
+                    todayHighlight: true
+                    });
+                var mydate=new Date()
+                var deadline=new Date()
+                var value=(mydate.getMonth()+1)+'/'+mydate.getDate()+'/'+mydate.getFullYear()
+                $('#datetime').attr('value',value)
+                $("#postForm").validate(
+                    {
+                        onKeyup : true,
+                        sendForm : false,
+                        valid:function(form){
+                            send()
+                        },
+                        invalid: function(form, validator) {  
+                            return false;
+                        },
+                        eachValidField : function() {
 
-                        $(this).closest('div').removeClass('has-error').addClass('has-success');
-                    },
-                    eachInvalidField : function() {
+                            $(this).closest('div').removeClass('has-error').addClass('has-success');
+                        },
+                        eachInvalidField : function() {
 
-                        $(this).closest('div').removeClass('has-success').addClass('has-error');
+                            $(this).closest('div').removeClass('has-success').addClass('has-error');
+                        },
+                        description : {
+                        text : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        password : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        email : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        date:{
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">uuuu</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">must after today</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                        },
+                        brief:{
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px"></span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px"></span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                        }
+                    }
+                })
+
+                $.validateExtend({
+                    username : {
+                        required : true,
+                        conditional : function(value) {
+
+                            return value.length>=5
+                        },
+                        pattern : /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9_\u4e00-\u9fa5]+$/
                     },
-                    description : {
-                    text : {
-                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
-                        pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
-                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
-                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    email:{
+                        required:true,
+                        conditional:function(value){
+                            return validEmail(value)
+                        },
+                        pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
                     },
-                    password : {
-                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
-                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
-                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
-                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
-                    },
-                    email : {
-                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
-                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
-                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
-                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                    password:{
+                        required:true,
+                        conditional:function(value){
+                            return value.length>=8
+                        },
+                        pattern: /^[a-zA-Z0-9._]+$/
                     },
                     date:{
-                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
-                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">uuuu</span></div>',
-                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">must after today</span></div></div>',
-                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                        required:true,
+                        conditional:function(value){
+                            var parsetime=/([0-9]+)\/([0-9]+)\/([0-9]+)/
+                            var array=parsetime.exec(value)
+                            deadline=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
+                            return deadline>mydate
+                        },
+                        pattern:/^[0-9\/]+$/
                     },
                     brief:{
-                        required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
-                        pattern : '<div class="has-error"><span class="help-block"style="font-size:10px"></span></div>',
-                        conditional :'<div class="has-error"><span class="help-block"style="font-size:10px"></span></div></div>',
-                        valid : '<div class="has-success"><span class="help-black"style="font-size:10px"></span></div>'
+                        required:true,
+                        conditional:function(value){
+                            return value.length>=5
+                        },
+                        pattern:/[^<>\/\\]+/
                     }
-                }
+                });
+
+                function send(){
+                    var title=$('#text').val()
+                    var brief=$('#brief').val()
+                    var sHtml=parsesummernote($('#summernote').code(),title)
+                    $.ajax({url:"/newQuest",
+                            type:'post',
+                            data:{
+                                title:title,
+                                file:sHtml,
+                                brief:brief,
+                                deadline:deadline,
+                                staticpos:g_staticpos,
+                                fixedpos:g_fixedpos
+                            },
+                            success:function(date,status,xhr){
+                                alert('succeed!')
+                                location.href='/'
+                            }
+                        })
+                    }
             })
 
-            $.validateExtend({
-                username : {
-                    required : true,
-                    conditional : function(value) {
+ 
 
-                        return value.length>=5
-                    },
-                    pattern : /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9_\u4e00-\u9fa5]+$/
-                },
-                email:{
-                    required:true,
-                    conditional:function(value){
-                        return validEmail(value)
-                    },
-                    pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
-                },
-                password:{
-                    required:true,
-                    conditional:function(value){
-                        return value.length>=8
-                    },
-                    pattern: /^[a-zA-Z0-9._]+$/
-                },
-                date:{
-                    required:true,
-                    conditional:function(value){
-                        var parsetime=/([0-9]+)\/([0-9]+)\/([0-9]+)/
-                        var array=parsetime.exec(value)
-                        deadline=new Date(array[3],parseInt(array[1])-1,parseInt(array[2])+1)
-                        return deadline>mydate
-                    },
-                    pattern:/^[0-9\/]+$/
-                },
-                brief:{
-                    required:true,
-                    conditional:function(value){
-                        return value.length>=5
-                    },
-                    pattern:/[^<>\/\\]+/
-                }
-            });
 
-            function send(){
-                var title=$('#text').val()
-                var brief=$('#brief').val()
-                var sHtml=parsesummernote($('#summernote').code(),title)
-                $.ajax({url:"/newQuest",
-                        type:'post',
-                        data:{
-                            title:title,
-                            file:sHtml,
-                            brief:brief,
-                            deadline:deadline,
-                            staticpos:g_staticpos,
-                            fixedpos:g_fixedpos
+    if (session == undefined || session.user == undefined)
+        script.
+
+            /////////////////////////////////////////////////////
+
+            //process register
+
+            /////////////////////////////////////////////////////
+
+            $(function(){
+                $('#wrong').hide()
+                $("#file").fileinput({
+                'showUpload':false,
+                'previewFileType':'image',
+                'showCaption':true
+                })
+                $("#registerForm").validate(
+                    {
+                        onKeyup : true,
+                        sendForm : false,
+                        valid:function(form){
+                            send()
                         },
-                        success:function(date,status,xhr){
-                            alert('succeed!')
-                            location.href='/'
+                        invalid: function(form, validator) {  
+                            return false;
+                        },
+                        eachValidField : function() {
+
+                            $(this).closest('div').removeClass('has-error').addClass('has-success');
+                        },
+                        eachInvalidField : function() {
+
+                            $(this).closest('div').removeClass('has-success').addClass('has-error');
+                        },
+                        description : {
+                        text : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        password : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        email : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
                         }
-                    })
-                }
-        })
+                    }
+                })
+
+                $.validateExtend({
+                    username : {
+                        required : true,
+                        conditional : function(value) {
+
+                            return value.length>=5
+                        },
+                        pattern : /^[a-zA-Z]+[a-zA-Z0-9_\s]+$/
+                    },
+                    email:{
+                        required:true,
+                        conditional:function(value){
+                            return validEmail(value)
+                        },
+                        pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
+                    },
+                    password:{
+                        required:true,
+                        conditional:function(value){
+                            return value.length>=8
+                        },
+                        pattern: /^[a-zA-Z0-9._]+$/
+                    }
+                });
+                function send(){
+                    file=$('.file-preview-image')
+                    if (file.attr('src')==undefined) return false
+                    $.ajax({
+                            url:"/users",
+                            type:'post',
+                            data:{
+                                      username:$('input[type=text]').val(),
+                                      password:$('input[type=password]').val(),
+                                      email:$('input[type=email]').val(),
+                                      pic:file.attr('alt'),
+                                      file:file.attr('src')
+                                },
+                            success:function(data,status,xhr){
+                                    console.log(data)
+                                    if (data=='ok'){
+                                            alert("succeed!")
+                                            location.href='/'
+                                        }
+                                    else{
+                                        $('#wrong').show()
+                                        $('#wrong p').html(data)
+                                    }
+                                    }
+                        })
+                    }
+                $('.file-input.file-input-new').addClass('col-md-7')
+                $('.file-caption-name').css('font-size','10px')
+                $('.file-caption-name').closest('.div').closest('span').hide() 
+            })
 
