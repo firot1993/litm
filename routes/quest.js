@@ -5,6 +5,8 @@ var LoggedIn     = require('./middleware/logger_in')
 var fs           = require('fs')
 var imageprocess = require('./imageprocess')
 var mongoose     = require('mongoose')
+
+var usermanage   = require('./user')
 module.exports=function(app){
 	//newQuest
 	app.post('/newQuest',LoggedIn,function(req,res,next){
@@ -144,9 +146,19 @@ module.exports=function(app){
 	// })
 
 	app.post('/find',function(req,res,next){
-		Quest.find().where('state').in(['N']).exec(function(err,quests){
+		Quest.find().where('state').in(['N','S']).exec(function(err,quests){
 			var flag = req.body.friendonly == 'true'
 			if (req.session) flag=((req.session.user!=undefined)&& flag)
+			console.log(quests)
+			if (req.session && req.session.user) {
+				var nosignbyme = []
+				for (var x = 0 ; x < quests.length; x++){
+					if (quests[x].got.toString().indexOf(req.session.user.username) <0 ) 
+						nosignbyme.push(quests[x])
+				}	
+				console.log(req.session.user.username)
+				quests = nosignbyme
+			}
 			if (flag==true){
 					User.findOne({username:req.session.user.username},function(err,user){
 					var friends = user.friends
@@ -167,14 +179,26 @@ module.exports=function(app){
 
 	//find myquest
 	app.get('/findmq',LoggedIn,function(req,res,next){
-		Quest.find().where('from').in([req.session.user.username]).exec(function(err,quests){
+		Quest.find().where('from').in([req.session.user.username])
+			.where('state').in(['N','S','C','F'])
+			.exec(function(err,quests){
 			res.send(quests)
 		})
 	})
 	//find my mission
-	app.get('/findmm',LoggedIn,function(req,res,next){
+	app.get('/findmm/:value',LoggedIn,function(req,res,next){
 		Quest.find().where('got').in([req.session.user.username]).exec(function(err,quests){
-			res.send(quests)
+			var nquests = []
+			if (req.params.value == 1){
+				for (var x = 0 ; x < quests.length ; x++)
+					if (quests[x].got.length ==1 && quests[x].state == 'C' ) 
+						nquests.push(quests[x])
+			}else{ 
+				for (var x = 0 ; x < quests.length ; x++)
+					if (quests[x].got.length >=1 && quests[x].state == 'S' ) 
+						nquests.push(quests[x])
+			}
+			res.send(nquests)
 		})
 	})
 
@@ -204,24 +228,70 @@ module.exports=function(app){
 			else{
 				var l_signed = quest.got
 				l_signed.push(req.session.user.username)
-				Quest.update({_id:quest.id},{got:l_signed},function(err){
+				Quest.update({_id:quest.id},{got:l_signed,state:'S'},function(err){
 					if (err)
 						res.send('error')
 					else 
-						res.send('ok')
+						User.findOne({username:req.session.user.username},function(err,user){
+							if (err)
+								res.send('error')
+							else
+								var got = user.MySign
+								got.push(quest.id)
+								User.update({username:req.session.user.username},{MySign:got},function(err){
+									if (err)
+										res.send('error')
+									else 
+										res.send('ok')
+								})
+
+						})	
 				})
 			}
 		})
 	})
+	
 	app.post('/confirmQuest',LoggedIn,function(req,res,next){
-		Quest.findById(req.body.id,function(quest,err){
+		Quest.findById(req.body.id,function(err,quest){
 			if (quest.form == req.session.user.username){
 				var l_signed = [req.body.signed] 
-				Quest.update({_id:quest.id},{got:l_signed,state:'C'},function(err){
+				User.find().where('username').in(l_signed).exec(function(err,users){
+					for (var i = 0 ; i < users.length ; i++){
+						var username = users[i].username
+						var MySign   = users[i].MySign
+						for (var j = 0; j < MySign.length ; j++ ){
+							if (MySign[j] == quest._id){
+								var tmp = MySign[j]
+								MySign[MySign.length-1] = tmp
+								MySign[j] =MySign[MySign.length-1]
+								MySign[MySign.length-1] =tmp
+							}
+						}
+						User.update({username:username},{Mysign:MySign},function(err){
+							console.log('edit Mysign of '+username)
+						})
+					}
+				})
+				Quest.update({_id:quest._id},{got:l_signed,state:'C'},function(err){
 					if (err)
 						res.send('error')
 					else
-						res.send('ok')
+						User.findOne({username:req.session.user.username},function(err,user){
+							if (err)
+								res.send('error')
+							else{
+								var MyHelp = user.MyHelp
+								MyHelp.push(quest._id)
+								User.update({username:req.session.user.username},function(err,user){
+									if (err)
+										res.send('error')
+									else
+										res.send('ok')
+								})
+							}
+
+						})
+
 				})
 			}
 		})
@@ -236,10 +306,29 @@ module.exports=function(app){
 			else
 				Quest.update({_id:quest._id},{state:'D'},function(err){
 					if (err)
-						res.send('error123')
-					else
-						res.send('ok')
+						res.send('error')
+					else{ 
+							usermanage.removeSignedAndComfirmed(quest)
+							res.send('ok')
+						}
 				})
+		})
+	})
+	//finish a question
+	app.post('/finish',LoggedIn,function(req,res,next){
+		Quest.findById(req.body.id,function(err,quest){
+			if (quest.from != req.session.user.username){
+				console.log('access denied')
+			}else{
+				Quest.update({_id:quest._id},{state:'F'},function(err){
+					if (err)
+						res.send('error')
+					else{
+						usermanage.finish(quest)
+						res.send('ok')
+					}
+				})
+			}
 		})
 	})
 

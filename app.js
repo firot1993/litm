@@ -42,7 +42,8 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index)
-user(app)
+user.handle(app)
+user.reset(app)
 require('./routes/session')(app)
 require('./routes/quest')(app)
 

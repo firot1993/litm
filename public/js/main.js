@@ -57,6 +57,7 @@ function playpage(data,page,perpage){
         var fixedpos_x   = nowObject['fixedpos_x']
         var fixedpos_y   = nowObject['fixedpos_y']
         var status       = nowObject['state']
+        var got          = f_parsePeople(nowObject['got'])
 
         content        = f_parseContent(content,title,from)
         contentLimit.push({
@@ -69,10 +70,19 @@ function playpage(data,page,perpage){
             '_id':_id,
             'staticpos':{x:staticpos_x,y:staticpos_y},
             'fixedpos':{x:fixedpos_x,y:fixedpos_y},
-            'status':status
+            'status':status,
+            'got':got
         })
     }
     return contentLimit;
+}
+
+function f_parsePeople(data){
+    var p=""
+    for (var i = 0 ; i < data.length ; i++){
+        p+='<a href="#">'+data[i]+'</a>'
+    }
+    return p
 }
 function f_parseContent(content,title,username){
     var images = content.match(parsePng)
@@ -129,10 +139,12 @@ var Translate = function()
 
 function showdes(value,node){
     console.log(value)
+    console.log(node)
     var mydate=new Date(value['stime'])
     var startdate=parseDate(mydate)
     mydate=new Date(value['etime'])
     var enddate=parseDate(mydate)
+    console.log( node.find('.modal-header.my h2'))
     node.find('.modal-header.my h2').html(value['title'])
     node.find('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
     node.find('.modal-body.my .from').html('    '+value['from'])
@@ -191,3 +203,36 @@ var Contract = function (data) {
     }
     return that
 }
+
+
+
+//add focus event to other element
+
+var hasAttr = function(el, name){
+  var attr = el.getAttribute && el.getAttribute(name);
+  return attr ? attr.specified : false
+}
+var addEvent = function(obj,type,callback){
+  if ( obj.addEventListener ) {
+    obj.addEventListener( type, callback, false );
+  } else if ( obj.attachEvent ) {
+    obj.attachEvent( "on" + type, callback );
+  }
+}
+var rfocus = function(el,fn){
+  if(!hasAttr(el,"tabindex"))
+    el.tabIndex = 10;
+  addEvent(el,"focus",function(e){
+    fn.call(el,(e || window.event));
+  });
+}
+
+var rblur = function(el,fn){
+  if(!hasAttr(el,"tabindex"))
+    el.tabIndex = 10;
+  addEvent(el,"blur",function(e){
+    fn.call(el,(e || window.event));
+  });
+}
+
+// process repeatWarning

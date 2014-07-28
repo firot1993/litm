@@ -99,8 +99,8 @@ block content
                 $.ajax({url:"/session",
                         type:'post',
                         data:{
-                                  username:$('input[type=text]').val(),
-                                  password:$('input[type=password]').val(),
+                                  username:$('#loginusername').val(),
+                                  password:$('#loginpassword').val(),
                             },
                         success:function(data,status,xhr){
                                     if (data=='ok')

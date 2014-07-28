@@ -12,47 +12,69 @@ block content
                 br
                 h3(style="color:white") My Mission
                 div(class='well mission' style="background:rgba(0,0,0,0);border:none")
+                br
+                br
+                div(style="border-bottom:2px solid rgba(167, 160, 160, 0.48)")
+                br
+                br
+                h3(style="color:white") My Signing
+                div(class='well signing' style="background:rgba(0,0,0,0);border:none")
             div(class="col-sm-1")
             div(class="col-sm-3 well" style="padding:0 20px;background:rgba(0,0,0,0);border:none")
                 h3(style="color:white" ) Profile
-                img(src="/pic/killlakill/1/head.png" class="img-responsive" id="headimg" style="margin:40px 20px")
-                h4(style="color:white") Id
-                    span(id='userid')
+                img(src="" class="img-responsive"  style="margin:40px 20px" id="profile_img")
+                h4(style="color:white") Id:
+                    span(id='userid' style="margin-left:20px")
                 br
                 h4(style="color:white") Quest Finished:
-                    span(id='questfinished')
+                    span(id='questfinished' style="margin-left:20px")
                 br
-                h4(style="color:white") Quest Post    :
-                    span(id='questpost')
+                h4(style="color:white") Quest Post :
+                    span(id='questpost' style="margin-left:20px")
 
 
     div(class="modal fade " style="display:none" id="my")
         div(class="modal-dialog modal-lg")
-            div(class="modal-content")
-                div(class="modal-header my")
+            div(class="modal-content" style="background:rgba(0,0,0,0.8);box-shadow: 0px 5px 15px rgba(227, 51, 51, 0.61);")
+                div(class="modal-header my" style="border:none")
                     button(type='button' class='close' data-dismiss='modal')
                         span(aria-hidden="true") &times;
-                        span(class="sr-only") Close
+                        span(class="sr-only" style="color:white") Close
                     h2(class="modal-title")
-                div(class="modal-body my")
-                    p(style="font-weight:bold") Time:
+                div(class="modal-body my" style="border:none")
+                    p(style="font-weight:bold;color:white") Time:
                         strong(class="time" style="font-weight:normal")
-                    p(style="font-weight:bold") From:
+                    p(style="font-weight:bold;color:white") From:
                         strong(class="from" style="font-weight:normal")
-                    p(style="font-weight:bold") Descirption:
+                    p(style="font-weight:bold;color:white") Descirption:
                         div(class="main")
-                div(class="modal-footer")
-                    a(href="#" class="btn btn-success") Sign here
-                    a(href="#" class="btn" data-dismiss="modal") Close
+    //- Warning
+    include layout/sendmessage  
+    include layout/repeatWarning               
     include layout/foot
     script(src="/js/main.js")
     script.
         var state = Translate()
+        function renderprofile(data){
+            console.log(data)
+            $('#profile_img').attr('src',data.pic)
+            $('#userid').html(data.username)
+            $('#questfinished').html(data.FinishedQuest.length)
+            $('#questpost').html(data.MyQuest.length)
+        }
         function render(data,type){
             for (var i = 0 ; i < data.length ; i ++ ){
-                $('.well.question').append('<div class="mq'+i+' alert" role="alert"></div>')
-                //- $('.'+type+i).addClass('alert-'+state.parseState(data[i].state))
-                $('.'+type+i).append('<div style="color:white;padding:10px;font-size:15px;box-shadow: 5px 5px 5px rgba(227, 51, 51, 0.35)"><span class="glyphicon glyphicon-plus g'+
+                if (type == 'mq'){
+                     $('.well.question').append('<div class="mq'+i+' alert" role="alert"></div>')
+                }else if (type == 'mm1'){
+                         $('.well.mission').append('<div class="mm1'+i+' alert" role="alert"></div>')
+                }else{
+                         $('.well.signing').append('<div class="mm2'+i+' alert" role="alert"></div>')
+                }
+
+                $('.'+type+i).append('<div style="color:white;padding:10px;font-size:15px;'+
+                    'box-shadow: 5px 5px 5px rgba(227, 51, 51, 0.35)">'+
+                    '<span class="glyphicon glyphicon-plus g'+
                     type+i+' "style="float:right;color:white"/>'+data[i].title+'</div>')
                 $('.'+type+i).append('')
                 $('.'+type+i).append('<div class="well" style="background:white;margin:2% 2%"></div>')
@@ -60,28 +82,115 @@ block content
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Brief:   </strong>'+data[i].brief+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Etime:   </strong>'+parseDate(new Date(data[i].etime))+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Status:   </strong>'+state.translateState(data[i].status)+'</p>')
+                $('.'+type+i+' div:gt(0)').append('<p><strong>Sign by:   </strong>'+data[i].got+'</p>')
                 if (type=='mq'){
-                    $('.'+type+i+' div:gt(0)').append('<div class="btn-group"><button class="btn btn-primary bSM'+i+'">Show more</button><button class="btn btn-default bGU'+i+'">Give up</button></div>')
+                    $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
+                        '<button class="btn btn-primary bSM'+i+'">'+
+                        'Show more</button><button class="btn btn-default bGU'+i+'">Give up</button></div>')
                     $('.bSM'+i).click((function(value){
                        return function(){
                         showdes(value,$('#my'))
                      }
                     })(data[i]))
-                   $('.bGU'+i).click((function(value){
-                        return function() {$.ajax({
-                                url:'/giveup',
+                    $('.bGU'+i).click((function(value){
+                        return function() {
+                        $('#repeatWarning').modal('show')
+                        $('#repeatWarning').find('.btn.btn-success').click(function(){
+                                $.ajax({
+                                        url:'/giveup',
+                                        type:'post',
+                                        data:{
+                                            id:value
+                                        },
+                                        success:function(data,status,xhr){
+                                            if (data == 'ok')
+                                                location.reload(true)
+                                        }
+                                    })
+                                })
+                        }
+                    })(data[i]._id))
+                }else
+                if (type=='mm1'){
+                    $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
+                        '<button class="btn btn-primary Finish'+i+'">'+
+                        'Finish </button><button class="btn btn-default b1GU'+i+'">Give up</button></div>')
+                    $('.bSM'+i).click((function(value){
+                       return function(){
+                            $.ajax({
+                                    url:'/finish',
+                                    type:'post',
+                                    data:{
+                                        id:value
+                                    },
+                                    success:function(data,status,xhr){
+                                        if (data == 'ok')
+                                            location.reload(true)
+                                    }
+                                })
+                     }
+                    })(data[i]._id))
+                    $('.b1GU'+i).click((function(value){
+                        return function() {
+                        $('#repeatWarning').modal('show')
+                        $('#repeatWarning').find('.btn.btn-success').click(function(){
+                                $.ajax({
+                                        url:'/giveup',
+                                        type:'post',
+                                        data:{
+                                            id:value
+                                        },
+                                        success:function(data,status,xhr){
+                                            if (data == 'ok')
+                                                location.reload(true)
+                                        }
+                                    })
+                                })
+                        }
+                    })(data[i]._id))
+                }else
+                if (type=='mm2'){   
+                    $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
+                        '<button class="btn btn-primary bSeM'+i+'">'+
+                        'Send Message</button><button class="btn btn-default b2GU'+i+'">Give up</button></div>')
+                    $('.bSeM'+i).click((function(value){
+                       return function(){
+                       $('#sendmessage').modal('show')
+                       $('#sendmessage').find('.btn.btn-Primary').click(function(){
+                            $.ajax({
+                                url:'/sendmessage',
                                 type:'post',
                                 data:{
-                                    id:value
+                                    quest:value
                                 },
                                 success:function(data,status,xhr){
                                     if (data == 'ok')
                                         location.reload(true)
                                 }
                             })
+                        })
+                     }
+                    })(data[i]._id))
+                    $('.bG2U'+i).click((function(value){
+                        return function() {
+                        $('#repeatWarning').modal('show')
+                        $('#repeatWarning').find('.btn.btn-success').click(function(){
+                                $.ajax({
+                                        url:'/giveup',
+                                        type:'post',
+                                        data:{
+                                            id:value
+                                        },
+                                        success:function(data,status,xhr){
+                                            if (data == 'ok')
+                                                location.reload(true)
+                                        }
+                                    })
+                                })
                         }
                     })(data[i]._id))
                 }
+
                 $('.'+type+i+' .well').hide()
                 $('.glyphicon.glyphicon-plus').css('cursor','pointer')
                 $('.glyphicon.glyphicon-plus.g'+type+i).click((function(x){
@@ -111,16 +220,29 @@ block content
                     type:'get',
                     success:function(data,status,xhr){
                         data=playpage(data,1,5,$('.buddle').css('width'))
-                        console.log(data)
                         render(data,'mq')
                     }
                 })
-            $.ajax({url:'/findmm',
+            $.ajax({url:'/findmm/1',
                     type:'get',
                     success:function(data,status,xhr){
                         data=playpage(data,1,5,$('.buddle').css('width'))
-                        render(data,'mm')
+                        render(data,'mm1')
                     }
+                })
+            $.ajax({url:'/findmm/2',
+                    type:'get',
+                    success:function(data,status,xhr){
+                        data=playpage(data,1,5,$('.buddle').css('width'))
+                        render(data,'mm2')
+                    }
+                })
+            $.ajax({
+                    url:'/myprofile',
+                    type:'get',
+                    success:function(data,status,xhr){
+                        renderprofile(data)
+                    }                
                 })
             })
    

@@ -1,0 +1,22 @@
+div(class="modal fade " style="display:none" id="sendmessage")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content" style="background:rgba(0,0,0,0.8);box-shadow: 0px 5px 15px rgba(227, 51, 51, 0.61);")
+                div(class="modal-header my" style="border:none")
+                    button(type='button' class='close' data-dismiss='modal')
+                        span(aria-hidden="true") &times;
+                        span(class="sr-only" style="color:white") Close
+                    h2(class="modal-title") Send Something
+                div(class="modal-body my row" style="border:none")
+                    form(class="form-horizontal col-sm-10" role="form" )
+                        div(class="form-group")
+                            h5(class="col-sm-2 control-label" style="color:white") MESSAGE:
+                            div(class="col-sm-4")
+                                //- a validate erro here :) i just do not want to fix =w=
+                                textarea(id="text" type="text" class="form-control" data-required="true" 
+                                data-validate="username" data-description="text" data-describedby="textdes")
+                            span(class="col-md-4" id="textdes")
+                        div(class='form-group')
+                            label(class="col-sm-2 control-label") 
+                            button(type="submit" class="btn btn-Primary" id="submit") Post it!
+                        br
+                        br

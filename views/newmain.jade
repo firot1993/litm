@@ -7,6 +7,7 @@ block content
     if (session && session.user)
         include layout/createnew
     if (session == undefined || session.user == undefined)
+        include layout/login
         include layout/register
     include layout/foot
     include layout/fliter
@@ -44,6 +45,7 @@ block content
         var g_triggerDelay = true
         var g_staticpos 
         var g_fixedpos  
+        var g_triggerF = false
 
 
         /////////////////////////////////////////////////////
@@ -55,6 +57,8 @@ block content
 
         
         $(function(){
+            $('#wrongregister').hide()
+            $('#wronglogin').hide()
             $('.active').removeClass('active')
             $('#Home').addClass('active')
             var contracts = new Contract()
@@ -68,12 +72,18 @@ block content
             }
 
             $('#registerbutton').click(function(){
-                console.log(123)
                 $('#register').modal('show')
                 })
+            $('#loginbutton').click(function(){
+                $('#login').modal('show')
+                })
             //init the map logic
-
-            $('#map').click(function(){return false})
+            rfocus($('#map')[0],function(){
+                    g_triggerF = true                
+                })
+            rblur($('#map')[0],function(){
+                    g_triggerF = false               
+                })
             $(document).bind('contextmenu',function(e){
                 return false;
                 })
@@ -84,7 +94,6 @@ block content
                     g_oldPos = undefined
                     oldX =undefined
                     oldY =undefined
-                    return false
                 }else
                 {
                 //create the contract
@@ -119,7 +128,6 @@ block content
                 g_oldPos = undefined
                 oldX = undefined
                 oldY = undefined
-                return false;
             })
             $('#map').mousemove(function(pos){
                 if (g_mapdown ){
@@ -152,8 +160,15 @@ block content
                     }
                 })
             //init the fliter logic
+            //- $('#map').focus(function(){
+            //-     console.log(123)
+            //-         g_triggerF=true
+            //-     })
+            //- $('#map').blur(function(){
+            //-         g_triggerF=false
+            //-     })
             $(document).keypress(function(p){
-                    if (g_triggerDelay)
+                    if (g_triggerDelay && g_triggerF)
                     if (p.witch == 102 || p.key == 'f' || p.witch ==70 || p.key == 'F' || p.keyCode == 102 ){
                             $('#fliter').modal('toggle')
                             g_triggerDelay = false
@@ -404,7 +419,6 @@ block content
             /////////////////////////////////////////////////////
 
             $(function(){
-                $('#wrong').hide()
                 $("#file").fileinput({
                 'showUpload':false,
                 'previewFileType':'image',
@@ -481,21 +495,20 @@ block content
                             url:"/users",
                             type:'post',
                             data:{
-                                      username:$('input[type=text]').val(),
-                                      password:$('input[type=password]').val(),
-                                      email:$('input[type=email]').val(),
+                                      username:$('#registerusername').val(),
+                                      password:$('#registerpassword').val(),
+                                      email:$('#registeremail').val(),
                                       pic:file.attr('alt'),
                                       file:file.attr('src')
                                 },
                             success:function(data,status,xhr){
                                     console.log(data)
                                     if (data=='ok'){
-                                            alert("succeed!")
                                             location.href='/'
                                         }
                                     else{
-                                        $('#wrong').show()
-                                        $('#wrong p').html(data)
+                                        $('#wrongregister').show()
+                                        $('#wrongregister p').html(data)
                                     }
                                     }
                         })
@@ -504,4 +517,94 @@ block content
                 $('.file-caption-name').css('font-size','10px')
                 $('.file-caption-name').closest('.div').closest('span').hide() 
             })
+
+            /////////////////////////////////////////////////////
+
+            //process login
+
+            /////////////////////////////////////////////////////
+
+            $(function(){
+                $("#loginFrom").validate(
+                    {
+                        onKeyup : true,
+                        sendForm : false,
+                        valid:function(form){
+                            send()
+                        },
+                        invalid: function(form, validator) {  
+                            return false;
+                        },
+                        eachValidField : function() {
+
+                            $(this).closest('div').removeClass('has-error').addClass('has-success');
+                        },
+                        eachInvalidField : function() {
+
+                            $(this).closest('div').removeClass('has-success').addClass('has-error');
+                        },
+                        description : {
+                        text : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block" style="font-size:10px">start with alphabet and in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer then 5</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        password : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">in alphabet and number</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">longer than 8</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        },
+                        email : {
+                            required : '<div class="has-error"><span class="help-block"style="font-size:10px">Required</span></div>',
+                            pattern : '<div class="has-error"><span class="help-block"style="font-size:10px">no vaild email</span></div>',
+                            conditional :'<div class="has-error"><span class="help-block"style="font-size:10px">support qq,163,gmail</span></div></div>',
+                            valid : '<div class="has-success"><span class="help-black"style="font-size:10px">Valid</span></div>'
+                        }
+                    }
+                })
+
+                $.validateExtend({
+                    username : {
+                        required : true,
+                        conditional : function(value) {
+
+                            return value.length>=5
+                        },
+                        pattern : /^[a-zA-Z]+[a-zA-Z0-9_]+$/
+                    },
+                    email:{
+                        required:true,
+                        conditional:function(value){
+                            return validEmail(value)
+                        },
+                        pattern:/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.com$/
+                    },
+                    password:{
+                        required:true,
+                        conditional:function(value){
+                            return value.length>=8
+                        },
+                        pattern: /^[a-zA-Z0-9._]+$/
+                    }
+                });
+                function send(){
+                    $.ajax({url:"/session",
+                            type:'post',
+                            data:{
+                                      username:$('#loginusername').val(),
+                                      password:$('#loginpassword').val(),
+                                },
+                            success:function(data,status,xhr){
+                                        if (data=='ok')
+                                            location.href='/'
+                                        else{
+                                            $('#wronglogin').show()
+                                        }
+                                    }
+                        })
+                    }
+            })
+
 

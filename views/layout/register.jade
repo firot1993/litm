@@ -9,27 +9,27 @@ div(class="modal fade " style="display:none" id="register")
             div(class="modal-body my row" style="border:none")
                 div(class="container row")
                     div(class="col-md-8")
-                        div(id="wrong" visable="false" class="alert alert-danger")
+                        div(id="wrongregister" visable="false" class="alert alert-danger")
                             p 
                         form(class="form-horizontal " role="form" id="registerForm")
                             div(class="form-group row")
                                 h5(class="col-md-2 control-label" style="color:white") Username:
                                 div(class="col-md-6 control-group input-append")
-                                    input(type="text" class="form-control" data-required="true" 
+                                    input(type="text" class="form-control" data-required="true" id="registerusername"
                                         data-validate="username" data-description="text" data-describedby="textdes")
                                 span(class="col-md-4" id="textdes")
                             br
                             div(class="form-group row")
                                 h5(class="col-md-2 control-label" style="color:white") password:
                                 div(class="col-md-6 control-group input-append")
-                                    input(type="password" class="form-control" data-required="true"
+                                    input(type="password" class="form-control" data-required="true" id="registerpassword"
                                     data-validate="password" data-description="password" data-describedby="passworddes")
                                 span(class="col-md-4" id="passworddes")
                             br
                             div(class="form-group row")
                                 h5(class="col-md-2 control-label" style="color:white") email:
                                 div(class="col-md-6 control-group input-append")
-                                    input(type="email" class="form-control" data-required="true"
+                                    input(type="email" class="form-control" data-required="true" id="registeremail"
                                     data-validate="email" data-description="email" data-describedby="emaildes" )
                                 span(class="col-md-4" id="emaildes")
                             br
