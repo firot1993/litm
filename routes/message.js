@@ -60,6 +60,22 @@ exports.index = function(app) {
         })
     })
 
+    //normal message
+    app.post('/sendnormalmessage',LoggedIn,function(req,res,next){
+        var from = req.session.user.username
+        var to   = req.body.to
+        var message = req.body.message
+        if (from == to) 
+            res.send('error! you cannot send message to youself')
+        else{
+            usermanage.sendmessage(to,from,message,3,function(err){
+                if (err)
+                    res.send('error')
+                else
+                    res.send('ok')
+            })
+        }
+    })
 }
 
 function remove(arr,index){

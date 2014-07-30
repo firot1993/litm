@@ -2,7 +2,7 @@ extends layout/layout
 block content
     div(class="well " style="border:none;background:rgba(0,0,0,0.6);width:80%;margin:5% auto;padding:10px;box-shadow: 5px 10px 20px rgba(222, 222, 222, 0.5)")
         div(class="container row ")
-            div(class="col-sm-8")
+            div(class="col-sm-7")
                 h3(style="color:white") My Question
                 div(class='well question' style="background:rgba(0,0,0,0);border:none")
                 br
@@ -83,8 +83,10 @@ block content
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Brief:   </strong>'+data[i].brief+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Etime:   </strong>'+parseDate(new Date(data[i].etime))+'</p>')
                 $('.'+type+i+' div:gt(0)').append('<p><strong>Status:   </strong>'+state.translateState(data[i].status)+'</p>')
-                $('.'+type+i+' div:gt(0)').append('<p><strong>Sign by:   </strong>'+data[i].got+'</p>')
-                if (type=='mq'){
+                $('.'+type+i+' div:gt(0)').append('<p class="gotp'+i+'"><strong>Sign by:   </strong></p>')
+                var person = new Person(data[i].got)
+                person.appendat( $('.'+type+i+' div:gt(0)').find('.gotp'+i))
+                if (type=='mm1'){
                     $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
                         '<button class="btn btn-primary bSM'+i+'">'+
                         'Show more</button><button class="btn btn-default bGU'+i+'">Give up</button></div>')
@@ -113,7 +115,7 @@ block content
                     })(data[i]._id))
                 }else
                 //process my sign
-                if (type=='mm1'){
+                if (type=='mq'){
                     $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
                         '<button class="btn btn-primary b1SM'+i+'">'+'Show more</button>'+
                         '<button class="btn btn-default Finish'+i+'">'+

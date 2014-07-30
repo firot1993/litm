@@ -148,7 +148,9 @@ function showdes(value,node){
     console.log( node.find('.modal-header.my h2'))
     node.find('.modal-header.my h2').html(value['title'])
     node.find('.modal-body.my .time').html('    <strong>'+startdate+'</strong>   To   <strong>'+enddate+'<strong/> ')
-    node.find('.modal-body.my .from').html('    '+value['from'])
+    // node.find('.modal-body.my .from').html('    '+value['from'])
+    var person = new Person(value['from'])
+    person.appendat(node.find('.modal-body.my .from'))
     node.find('.modal-body.my .main').html(value['content'])
     node.modal('show')
     //req.body.id signQuest
@@ -161,6 +163,7 @@ function showdes(value,node){
             },
             success:function(data){
                 alert(data)
+                location.reload(true)
             }
         })
     })
@@ -205,6 +208,42 @@ var Contract = function (data) {
     return that
 }
 
+var Person = function (username) {
+    var data = username
+    var checkcode = Math.floor(Math.random()*200)
+    var that = {}
+    that.appendat = function(node){
+        if (data){
+            node.append('<a style="margin:10px" class="P'+checkcode+'">'+data+'</a>')
+            node.find('.P'+checkcode).bind('contextmenu',function(e){return false})
+            node.find('.P'+checkcode).css({'cursor':'default'})
+            $template = $('<span class="glyphicon glyphicon-envelope" style="color:rgba(222, 222, 19, 0.7);font-size:15px"></span>')
+            node.append($template)
+            node.find('.glyphicon.glyphicon-envelope').css({'cursor':'pointer'})
+            node.find('.glyphicon.glyphicon-envelope').click(function(){
+                if ($('#sendemssage')){
+                    $('#sendmessage').modal('show')
+                    $('#sendmessage').find('.btn.btn-Primary').click(function(){
+                            $.ajax({
+                                url:'/sendnormalmessage',
+                                type:'post',
+                                data:{
+                                    to:data,
+                                    message:$('#sendmessage').find('textarea[type=text]').val()
+                                },
+                                success:function(data,status,xhr){
+                                    if (data == 'ok')
+                                        location.reload(true)
+                                }
+                            })
+                        })
+                     }
+                    })
+                }else
+                    console.log('no sendmessage module in this page')
+            }
+    return that 
+}
 
 
 //add focus event to other element

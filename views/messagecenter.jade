@@ -28,7 +28,7 @@ block content
         function render(data){
             for (var x = 1 ; x<= data.length ; x++){
                     var $template = $(
-                       '<div class="well" style="padding:5%">'+
+                       '<div class="well" style="margin:5%;padding:5%;box-shadow: 0px 5px 15px rgba(222, 222, 222, 0.5);" >'+
                         '</div>')
                     var nowdata = data[data.length-x]
                     var fun= (function(value){
@@ -54,11 +54,21 @@ block content
                         "<button type='button' class='close cl"+x+"'>"+
                         "<span aria-hidden='true'> &times; </span>"+
                         "<span class='sr-only' > Close </span></button>" )
-                    $('#content').find('.message'+x).append('<h4>From:<span style="font-size:15px;margin-left:20px">'+nowdata.from+'</span></h3>')
-                    if (nowdata.type == 1 ) nowdata.relatedData = 'A quest had canceled'
-                    if (nowdata.type == 2)  nowdata.relatedData = 'A quest had finished'
+                    $('#content').find('.message'+x).append('<h4 class="gg'+x+'">From:</h4>')
+                    var person = new Person(nowdata.from)
+                    person.appendat($('#content').find('.gg'+x))
+                    if (nowdata.type == 1 ) nowdata.relatedData = 'SAD ,A quest sign by you had canceled'
+                    if (nowdata.type == 2)  nowdata.relatedData = 'Congruation!!!A quest had finished by you'
                     if (nowdata.type == 5)  nowdata.relatedData = nowdata.from+' signed your one of quest...<a class="sa'+x+'">»</a>'
+                    if (nowdata.type == 6)  nowdata.relatedData = nowdata.from+' accpet your one of sign...<a class="sa'+x+'">»</a>' 
                     $('#content').find('.message'+x).append('<p style="padding:20px">'+nowdata.relatedData+'</p>')
+                    //- $('.person').css({'cursor':'pointer'})
+                    //- $('.person').bind('contextmenu',function(e){
+                    //-     return false;
+                    //-     })
+                    //- $(document).bind('contextmenu',function(e){
+                    //-     return false;
+                    //-     })
                     $('.cl'+x).click((function(index){
                         return function(){
                                 $('#repeatWarning').modal('show')
@@ -77,7 +87,7 @@ block content
                                 })
                             }
                         })(data.length-x))
-                    if (nowdata.type ==1 || nowdata.type ==2 || nowdata.type ==5) {
+                    if (nowdata.type ==1 || nowdata.type ==2 || nowdata.type ==5 || nowdata.type ==6) {
                             $('#content').find('.message'+x).append('<button class="btn btn-primary bSM'+x+'">Show more</button>')
                             $('.sa'+x).css({'cursor':'pointer'})
                             $('.sa'+x).click(fun)
@@ -85,7 +95,7 @@ block content
                         }
                     if (nowdata.type ==5 ){
                             $('#content').find('.message'+x).append('<button class="btn btn-default bCM'+x+'">Confirm</button>')
-                            $('#content').click((function(value){
+                            $('.bCM'+x).click((function(value,user){
                                     return function(){
                                         $('#repeatWarning').modal('show')
                                         $('#repeatWarning').find('.btn.btn-success').click(function(){
@@ -93,7 +103,8 @@ block content
                                             url:'/confirmQuest',
                                             type:'post',
                                             data:{
-                                                id:value
+                                                id:value,
+                                                user:user
                                             },
                                             success:function(data,xhr,status){
                                                 alert(data)
@@ -102,8 +113,9 @@ block content
                                         })    
                                     })
                                 }
-                            })(nowdata.relatedQuest))
-                        }
+                            })(nowdata.relatedQuest,nowdata.from))
+                       }
+
                 }
         }
         $(function(){

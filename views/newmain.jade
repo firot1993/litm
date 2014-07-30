@@ -11,6 +11,7 @@ block content
         include layout/register
     include layout/foot
     include layout/fliter
+    include layout/sendmessage  
     script(src="/js/jquery-validate.min.js")
     script(src="/js/fileinput.min.js")
     script(src='/js/summernote.min.js')
@@ -259,9 +260,9 @@ block content
             g_contractTrace.push({x:data.staticpos.x,y:data.staticpos.y,node:$template,
                 fx:data.fixedpos.x,fy:data.fixedpos.y})
             var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
-            console.log(backgroundposition)
-            console.log(data.fixedpos.x+backgroundposition[1])
-            console.log(data.fixedpos.y+backgroundposition[2])
+            //- console.log(backgroundposition)
+            //- console.log(data.fixedpos.x+backgroundposition[1])
+            //- console.log(data.fixedpos.y+backgroundposition[2])
 
             $template.css({left:data.fixedpos.x+parseFloat(backgroundposition[1]),
                 top:data.fixedpos.y+parseFloat(backgroundposition[2])})

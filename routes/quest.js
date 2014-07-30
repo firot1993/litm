@@ -182,8 +182,8 @@ module.exports=function(app){
 
 	//find myquest
 	app.get('/findmq',LoggedIn,function(req,res,next){
-		Quest.find().where('from').in([req.session.user.username])
-			.where('state').in(['N','S','C','F'])
+		Quest.find()
+			.where('_id').in(req.session.user.MyQuest)
 			.exec(function(err,quests){
 			res.send(quests)
 		})
@@ -266,8 +266,9 @@ module.exports=function(app){
 	
 	app.post('/confirmQuest',LoggedIn,function(req,res,next){
 		Quest.findById(req.body.id,function(err,quest){
-			if (quest.form == req.session.user.username){
-				var l_signed = [req.body.signed] 
+			console.log(quest.from == req.session.user.username)
+			if (quest.from == req.session.user.username){
+				var l_signed = quest.got
 				User.find().where('username').in(l_signed).exec(function(err,users){
 					for (var i = 0 ; i < users.length ; i++){
 						var username = users[i].username
@@ -280,32 +281,40 @@ module.exports=function(app){
 								MySign[MySign.length-1] =tmp
 							}
 						}
-						User.update({username:username},{Mysign:MySign},function(err){
-							console.log('edit Mysign of '+username)
-						})
+						User.update({username:username},{Mysign:MySign},function(err){})
 					}
 				})
-				Quest.update({_id:quest._id},{got:l_signed,state:'C'},function(err){
+				var newG = [req.body.user]
+				Quest.update({_id:quest._id},{got:newG,state:'C'},function(err){
 					if (err)
 						res.send('error')
 					else
-						User.findOne({username:req.session.user.username},function(err,user){
+						User.findOne({username:req.body.user},function(err,user){
 							if (err)
 								res.send('error')
 							else{
 								var MyHelp = user.MyHelp
 								MyHelp.push(quest._id)
-								User.update({username:req.session.user.username},{MyHelp:MyHelp},function(err,user){
+								User.update({username:user.username},{MyHelp:MyHelp},function(err){
 									if (err)
 										res.send('error')
-									else
-										res.send('ok')
+									else{
+										usermanage.sendmessage(user.username,quest.from,quest.id,6,
+										function(err){
+												if (err) 
+													res.send('error')
+												else
+													res.send('ok')
+											})
+										}
 								})
 							}
 
 						})
 
 				})
+			}else{
+				res.send('access denied')
 			}
 		})
 	})
@@ -348,7 +357,7 @@ module.exports=function(app){
 		})
 	})
 
-	//send message
+	//send message by quest
 	app.post('/sendmessage',LoggedIn,function(req,res,next){
 		var quest    = req.body.quest
 		var username = req.session.user.username

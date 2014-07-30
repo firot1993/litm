@@ -153,17 +153,23 @@ exports.sendRemoveMessage = function (username,quest,next){
 }
 
 exports.finish = function(quest){
+	console.log(quest)
 	var from = quest.from
 	var got  = quest.got[0]
 	User.findOne({username:from},function(err,user){
 		// var l_message = user.Messages
+		console.log(user)
 		var l_finish  = user.FinishedQuest
 		var l_MyQuest = user.MyQuest
 		l_finish.push(quest._id)
 		var index = l_MyQuest.indexOf(quest._id)
 		if (index > -1 )
 			l_MyQuest = release(l_MyQuest,index)
-		User.update({username:from},{FinishedQuest:l_finish,MyQuest:l_quest},function(err){})
+		console.log(l_MyQuest)
+		console.log(from)
+		User.update({username:from},{FinishedQuest:l_finish,MyQuest:l_MyQuest},function(err){
+			console.log(err)
+		})
 	})
 	User.findOne({username:got},function(err,user){
 		// var l_message = user.Messages
@@ -185,24 +191,30 @@ exports.sendmessage = function(username , from , data , type ,next){
 	//        3_  a normal message from your friend     data  = message  
 	//        4_  a normal message from signedone       data  = message
 	//        5_  a sigh                                data  = quests._id
+	//        6_  a comfirmed                           data  = quests._id
 	User.findOne({username:username},function(err,user){
-		var l_message = user.Messages
-		_message = new Message({from:from,to:username,type:type})
-		if (type <=2 || type ==5 ) _message.relatedQuest = data 
-			else	
-				_message.relatedData = data
-		Message.create(_message,function(err,message){
-			if (!err) {
-				l_message.push(message._id)
-				User.update({username:username},{Messages:l_message},function(err){
-				if (next)
+		if (err)
+			next(err)
+		
+		else{
+			var l_message = user.Messages
+			_message = new Message({from:from,to:username,type:type})
+			if (type <=2 || type ==5 ||type ==6 ) _message.relatedQuest = data 
+				else	
+					_message.relatedData = data
+			Message.create(_message,function(err,message){
+				if (!err) {
+					l_message.push(message._id)
+					User.update({username:username},{Messages:l_message},function(err){
+					if (next)
+						next(err)
+					})
+				}else{
 					next(err)
-				})
-			}else{
-				next(err)
-				console.log(err)
-			}
-		})
+					console.log(err)
+				}
+			})
+		}
 	})
 }
 //reset user .. this is only for test
