@@ -103,7 +103,6 @@ block content
                     }
                     var cpos = $('#map').offset()
                     var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
-                    console.log(backgroundposition)
                     g_staticpos = {x:key.pageX - cpos.left + cfx.x, y:key.pageY - cpos.top + cfx.y}
                     g_fixedpos  = {
                                         x:g_staticpos.x - parseFloat(backgroundposition[1]),
@@ -143,11 +142,13 @@ block content
                             newX = Math.max(-340,newX)
                             newY = Math.min(newY,-10)
                             newY = Math.max(-300,newY)
-                            var newP = newX+'px '+newY+'px'         
+                            var newP = newX+'px '+newY+'px'
+                            console.log(backgroundposition)         
                             $('#map').css({backgroundPosition:newP})
                             g_oldPos=pos
                             for (var x = 0 ; x < g_contractTrace.length ;x++) {
                                 var node = g_contractTrace[x]
+                                console.log(node)
                                 node.x = node.fx +newX
                                 node.y = node.fy +newY
                                 node.node.css({left:node.x,top:node.y})
@@ -210,7 +211,6 @@ block content
 
 
         function renderHtml(data){
-            console.log(data)
             $template=$('<div class="contract" data-toggle="popover" data-placement="right" '+
                 'data-content="'+data.brief+'">'+
                 '<div class="buddle"><div class="circle"></div></div></div>')
@@ -258,7 +258,13 @@ block content
            
             g_contractTrace.push({x:data.staticpos.x,y:data.staticpos.y,node:$template,
                 fx:data.fixedpos.x,fy:data.fixedpos.y})
-            $template.css({left:data.staticpos.x,top:data.staticpos.y})
+            var backgroundposition = g_parseBackgroundP.exec($('#map').css('backgroundPosition'))
+            console.log(backgroundposition)
+            console.log(data.fixedpos.x+backgroundposition[1])
+            console.log(data.fixedpos.y+backgroundposition[2])
+
+            $template.css({left:data.fixedpos.x+parseFloat(backgroundposition[1]),
+                top:data.fixedpos.y+parseFloat(backgroundposition[2])})
             $template.animate({opacity:'1'},500)
             $('#container').append($template)
         }
@@ -388,6 +394,8 @@ block content
                     var title=$('#text').val()
                     var brief=$('#brief').val()
                     var sHtml=parsesummernote($('#summernote').code(),title)
+                    console.log(g_staticpos)
+                    console.log(g_fixedpos)
                     $.ajax({url:"/newQuest",
                             type:'post',
                             data:{

@@ -1,11 +1,13 @@
-var User=require('../data/models/user')
-var Quest=require('../data/models/quest')
-var notLoggedIn=require('./middleware/not_logger_in')
-var LoggedIn=require('./middleware/logger_in')
-var loadUser=require('./middleware/load_user')
-var restrictUserToSelf=require('./middleware/restrict_user_to_self')
-var fs=require('fs')
-var imageprocess=require('./imageprocess')
+var User               = require('../data/models/user')
+var Quest              = require('../data/models/quest')
+var Message            = require('../data/models/message')
+var notLoggedIn        = require('./middleware/not_logger_in')
+var LoggedIn           = require('./middleware/logger_in')
+var loadUser           = require('./middleware/load_user')
+var restrictUserToSelf = require('./middleware/restrict_user_to_self')
+var fs                 = require('fs')
+var imageprocess       = require('./imageprocess')
+var usermanage         = require('./user')
 
 exports.handle = function(app){
 	//for rigister
@@ -92,44 +94,62 @@ exports.removeSignedAndComfirmed = function(quest,next) {
 		index = l_quest.indexOf(quest._id)
 		if (index > -1)
 			release(l_quest,index)
-		User.update({username:user.username},{MyQuest:l_quest},function(err){})
-	})
-	for (var x = 0 ; x < quest.got.length ;  x++ ) {
-		User.findOne({username:quest.got[x]},function(err,user){
-			var l_sign = user.MySign
-			var l_help = user.MyHelp
-			var index  = l_sign.indexOf(quest._id)
-			if (index > -1) {
-				release(l_sign,index)
-				// var tmp = l_sign[l_sign.length-1]
-				// l_sign[l_sign.length-1] = l_sign[index]
-				// l_sign[index] = tmp
-				// l_sign.pop()
-			}
-			index = l_help.indexOf(quest._id)
-			if (index > -1){
-				release(l_help,index)
-				// var tmp = l_help[l_help.length-1]
-				// l_help[l_help.length-1] = l_help[index]
-				// l_help[index] = tmp
-				// l_help.pop()
-			}
-			User.update({username:user.username},{MyHelp:l_help,MySign:l_sign},function(err){
-				if (x == quest.got.length-1)
-					console.log('removeSignedAndComfirmed end')
-				if (!err)
-					sendRemoveMessage(user.username,quest)
-			})
+		User.update({username:user.username},{MyQuest:l_quest},function(err){
+			if (err)
+				next(err)
 		})
+	})
+	if (quest.got.length == 0) 
+		next()
+	else
+	for (var x = 0 ; x < quest.got.length ;  x++ ) {
+		var k = (function(x){
+			return function(){
+					User.findOne({username:quest.got[x]},function(err,user){
+					console.log(x)
+					var l_sign = user.MySign
+					var l_help = user.MyHelp
+					var index  = l_sign.indexOf(quest._id)
+					if (index > -1) {
+						l_sign = release(l_sign,index)
+					}
+					index = l_help.indexOf(quest._id)
+					if (index > -1){
+						l_help = release(l_help,index)
+					}
+					User.update({username:user.username},{MyHelp:l_help,MySign:l_sign},function(err){
+						if (!err)
+							if (x == quest.got.length - 1){
+								usermanage.sendRemoveMessage(user.username,quest,function(err){
+									if (err)
+										next(err)
+									else
+										next()
+								})
+							}
+							else
+								usermanage.sendRemoveMessage(user.username,quest)
+						else
+							next(err)
+					})
+				})
+			}
+		})(x)
+		k()
 	}
 }
 
-exports.sendRemoveMessage = function (username,quest){
-	User.findOne({username:username},function(err,user){
-		var l_message = user.Messages
-		l_message.push(quest.title+'Canceled, if you have any question , please contract'+quest.from)
-		User.update({username:username},{Messages:l_message},function(err){})
+exports.sendRemoveMessage = function (username,quest,next){
+	usermanage.sendmessage(username,'system',quest._id,1,function(err){
+		if (next)
+			next(err)
 	})
+	// User.findOne({username:username},function(err,user){
+	// 	var l_message = user.Messages
+	// 	l_message.push(quest.title+'Canceled, if you have any question , please contract'+quest.from)
+	// 	User.update({username:username},{Messages:l_message},function(err){})
+	// })
+
 }
 
 exports.finish = function(quest){
@@ -142,25 +162,54 @@ exports.finish = function(quest){
 		l_finish.push(quest._id)
 		var index = l_MyQuest.indexOf(quest._id)
 		if (index > -1 )
-			release(l_MyQuest,index)
+			l_MyQuest = release(l_MyQuest,index)
+		User.update({username:from},{FinishedQuest:l_finish,MyQuest:l_quest},function(err){})
 	})
-	User.findOne({username:got},function(err,user)){
-		var l_message = user.Messages
+	User.findOne({username:got},function(err,user){
+		// var l_message = user.Messages
 		var l_finish  = user.FinishedQuest
 		var l_help    = user.MyHelp
-		l_message.push('Congration,you have finish the '+data.title+'by:'+data.from)
+		// l_message.push('Congration,you have finish the '+data.title+'by:'+data.from)
 		l_help.push(quest._id)	
 		var index = l_help.indexOf(quest._id)
 		if (index >-1)
-			release(l_help,index)
-	}
+			l_help = release(l_help,index)
+		User.update({username:got},{FinishedQuest:l_finish,MyHelp:l_help},function(err){})
+		usermanage.sendmessage(got,'system',quest._id,2)
+	})
 }
 
+exports.sendmessage = function(username , from , data , type ,next){
+	//type :  1_  a quest cancel    ..  				data  = quest._id
+	// 		  2_  a quest accomplish    				data  = quest._id
+	//        3_  a normal message from your friend     data  = message  
+	//        4_  a normal message from signedone       data  = message
+	//        5_  a sigh                                data  = quests._id
+	User.findOne({username:username},function(err,user){
+		var l_message = user.Messages
+		_message = new Message({from:from,to:username,type:type})
+		if (type <=2 || type ==5 ) _message.relatedQuest = data 
+			else	
+				_message.relatedData = data
+		Message.create(_message,function(err,message){
+			if (!err) {
+				l_message.push(message._id)
+				User.update({username:username},{Messages:l_message},function(err){
+				if (next)
+					next(err)
+				})
+			}else{
+				next(err)
+				console.log(err)
+			}
+		})
+	})
+}
 //reset user .. this is only for test
 exports.reset = function(app){
 	app.get('/admin/reset/:name',function(req,res,err){
 		User.findOneAndUpdate({username:req.params.name},{	
-			MyQuest:[],MyHelp:[],MySign:[],FinishedQuest:[],FailedQuest:[],essages:[]},function(err){
+			MyQuest:[],MyHelp:[],MySign:[],FinishedQuest:[],FailedQuest:[],Messages:[]},function(err){
 				if (err)
 					res.send('error',404)
 				else
@@ -169,9 +218,11 @@ exports.reset = function(app){
 	})
 }
 
-function release(array,index){
-	var tmp = array[index]
-	array[index = array[array.length-1]
-	array[array.length-1] = tmp 
-	array.pop()
+
+function release(arr,index){
+	var tmp = arr[index]
+	arr[index] = arr[arr.length-1]
+	arr[arr.length-1] = tmp 
+	arr.pop()
+	return arr
 }

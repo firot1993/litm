@@ -22,7 +22,8 @@ block content
             div(class="col-sm-1")
             div(class="col-sm-3 well" style="padding:0 20px;background:rgba(0,0,0,0);border:none")
                 h3(style="color:white" ) Profile
-                img(src="" class="img-responsive"  style="margin:40px 20px" id="profile_img")
+                div
+                    img(src="" class="img-responsive"  style="margin:40px 20px" id="profile_img")
                 h4(style="color:white") Id:
                     span(id='userid' style="margin-left:20px")
                 br
@@ -56,7 +57,7 @@ block content
     script.
         var state = Translate()
         function renderprofile(data){
-            console.log(data)
+            //- console.log(data)
             $('#profile_img').attr('src',data.pic)
             $('#userid').html(data.username)
             $('#questfinished').html(data.FinishedQuest.length)
@@ -111,11 +112,19 @@ block content
                         }
                     })(data[i]._id))
                 }else
+                //process my sign
                 if (type=='mm1'){
                     $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
-                        '<button class="btn btn-primary Finish'+i+'">'+
+                        '<button class="btn btn-primary b1SM'+i+'">'+'Show more</button>'+
+                        '<button class="btn btn-default Finish'+i+'">'+
                         'Finish </button><button class="btn btn-default b1GU'+i+'">Give up</button></div>')
-                    $('.bSM'+i).click((function(value){
+
+                    $('.b1SM'+i).click((function(value){
+                       return function(){
+                        showdes(value,$('#my'))
+                        }
+                    })(data[i]))
+                    $('.Finish'+i).click((function(value){
                        return function(){
                             $.ajax({
                                     url:'/finish',
@@ -149,10 +158,17 @@ block content
                         }
                     })(data[i]._id))
                 }else
+                //porcess my sign
                 if (type=='mm2'){   
                     $('.'+type+i+' div:gt(0)').append('<div class="btn-group">'+
-                        '<button class="btn btn-primary bSeM'+i+'">'+
-                        'Send Message</button><button class="btn btn-default b2GU'+i+'">Give up</button></div>')
+                        '<button class="btn btn-primary b2SM'+i+'">'+'Show more</button>'+
+                        '<button class="btn btn-default bSeM'+i+'">'+
+                        'Send Message</button></div>')
+                    $('.b2SM'+i).click((function(value){
+                       return function(){
+                        showdes(value,$('#my'))
+                        }
+                     })(data[i]))
                     $('.bSeM'+i).click((function(value){
                        return function(){
                        $('#sendmessage').modal('show')
@@ -161,7 +177,8 @@ block content
                                 url:'/sendmessage',
                                 type:'post',
                                 data:{
-                                    quest:value
+                                    quest:value,
+                                    message:$('#sendmessage').find('textarea[type=text]').val()
                                 },
                                 success:function(data,status,xhr){
                                     if (data == 'ok')
@@ -170,25 +187,7 @@ block content
                             })
                         })
                      }
-                    })(data[i]._id))
-                    $('.bG2U'+i).click((function(value){
-                        return function() {
-                        $('#repeatWarning').modal('show')
-                        $('#repeatWarning').find('.btn.btn-success').click(function(){
-                                $.ajax({
-                                        url:'/giveup',
-                                        type:'post',
-                                        data:{
-                                            id:value
-                                        },
-                                        success:function(data,status,xhr){
-                                            if (data == 'ok')
-                                                location.reload(true)
-                                        }
-                                    })
-                                })
-                        }
-                    })(data[i]._id))
+                    })(data[i]))
                 }
 
                 $('.'+type+i+' .well').hide()

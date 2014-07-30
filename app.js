@@ -8,6 +8,7 @@ var routes  = require('./routes')
 var user    = require('./routes/user')
 var http    = require('http')
 var path    = require('path')
+var message = require('./routes/message')
 
 // var app = express()
 // 		,server = require('http').createServer(app)
@@ -44,6 +45,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index)
 user.handle(app)
 user.reset(app)
+message.index(app)
 require('./routes/session')(app)
 require('./routes/quest')(app)
 

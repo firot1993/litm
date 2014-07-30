@@ -74,6 +74,7 @@ function playpage(data,page,perpage){
             'got':got
         })
     }
+    console.log(contentLimit)
     return contentLimit;
 }
 

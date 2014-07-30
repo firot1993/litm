@@ -1,6 +1,5 @@
 var User         = require('../data/models/user')
 var Quest        = require('../data/models/quest')
-var Information  = require('../data/models/information')
 var LoggedIn     = require('./middleware/logger_in')
 var fs           = require('fs')
 var imageprocess = require('./imageprocess')
@@ -11,6 +10,7 @@ module.exports=function(app){
 	//newQuest
 	app.post('/newQuest',LoggedIn,function(req,res,next){
 		var t=new Date()
+		console.log(req.body)
 		var _Quest=new Quest({
 			from:req.session.user.username,
 			state:"N",
@@ -45,95 +45,98 @@ module.exports=function(app){
 
 	////////////////////////////////////////information down///////////////////////////////////////////////////
 
+	//                     Useless
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//write information
-	app.get('/information',LoggedIn,function(req,res,next){
-		if (req.session.questid ==undefined )
-			res.sender('jump',{
-	            typeofjump:0,
-	            problem:"Access denied",
-	            des:"You will Die in 3 seconds,if no jump automatic,press the button next"
-	            ,brief:"Some wrong happened~"
-			})
-		else
-			res.render('imforation',{session:req.session,typeInformation:1})
-	})
-	app.get('/informationed',LoggedIn,function(req,res,next){
-		res.render('information',{session:req.session,typeInformation:2})
-	})
-	app.post('/information',LoggedIn,function(req,res,next){
-		var l_information = req.body.information
-		if (l_information == undefined){
-			User.findOne({username:req.session.user.username},function(user,err){
-				if (err)
-					res.send('error')
-				else{
-					l_information = user.email
-					if (req.body.type==1)
-						Information.create(new Information({QuestId:req.body.id,information:l_information}),
-							function(err){
-								if (err) res.send('error') 
-									else {
-										 res.send('ok')
-									}
-							})
-					else
-						Information.update({QuestId:req.body.id},{informationed:l_information},
-							function(err){
-								if (err) res.send('error')
-									else
-										 res.send('ok')
-							})
+	// app.get('/information',LoggedIn,function(req,res,next){
+	// 	if (req.session.questid ==undefined )
+	// 		res.sender('jump',{
+	//             typeofjump:0,
+	//             problem:"Access denied",
+	//             des:"You will Die in 3 seconds,if no jump automatic,press the button next"
+	//             ,brief:"Some wrong happened~"
+	// 		})
+	// 	else
+	// 		res.render('imforation',{session:req.session,typeInformation:1})
+	// })
+	// app.get('/informationed',LoggedIn,function(req,res,next){
+	// 	res.render('information',{session:req.session,typeInformation:2})
+	// })
+	// app.post('/information',LoggedIn,function(req,res,next){
+	// 	var l_information = req.body.information
+	// 	if (l_information == undefined){
+	// 		User.findOne({username:req.session.user.username},function(user,err){
+	// 			if (err)
+	// 				res.send('error')
+	// 			else{
+	// 				l_information = user.email
+	// 				if (req.body.type==1)
+	// 					Information.create(new Information({QuestId:req.body.id,information:l_information}),
+	// 						function(err){
+	// 							if (err) res.send('error') 
+	// 								else {
+	// 									 res.send('ok')
+	// 								}
+	// 						})
+	// 				else
+	// 					Information.update({QuestId:req.body.id},{informationed:l_information},
+	// 						function(err){
+	// 							if (err) res.send('error')
+	// 								else
+	// 									 res.send('ok')
+	// 						})
 
-				}
-			})
-		}else {
-				if (req.type==1)
-					Information.create(new Information({QuestId:req.body.id,information:l_information}),
-						function(err){
-							if (err) res.send('error')
-								else
-									 res.send('ok')
-					})
-				else		
-					Information.update({QuestId:req.body.id},{informationed:l_information},
-						function(err){
-							if (err) res.send('error')
-								else
-									 res.send('ok')
-							})
-		}
-	})
-	//got information
-	app.post('/getinformation',LoggedIn,function(req,res,next){
-		Quest.findOne({QuestId:req.body.id},function(quest,err){
-			if (err) res.send('error')
-				else{
-					var l_questUsername = quest.from
-					var l_questedUsername = quest.got[0]
-					var state = quest.state
-					if (state != 'C')
-						res.send('error')
-					else{
-						if (l_questedUsername == req.body.from)
-							Information.findOne({QuestId:quest._id},function(information,err){
-								if (err)
-									res.send('error')
-								else
-									res.send(information.informationed)
-							})
-						else if (l_questUsername == req.body.from){
-							Information.findOne({QuestId:quest._id},function(information,err){
-								if (err)
-									res.send('error')
-								else
-									res.send(information.information)
-							})
-						}
-					}
+	// 			}
+	// 		})
+	// 	}else {
+	// 			if (req.type==1)
+	// 				Information.create(new Information({QuestId:req.body.id,information:l_information}),
+	// 					function(err){
+	// 						if (err) res.send('error')
+	// 							else
+	// 								 res.send('ok')
+	// 				})
+	// 			else		
+	// 				Information.update({QuestId:req.body.id},{informationed:l_information},
+	// 					function(err){
+	// 						if (err) res.send('error')
+	// 							else
+	// 								 res.send('ok')
+	// 						})
+	// 	}
+	// })
+	// //got information
+	// app.post('/getinformation',LoggedIn,function(req,res,next){
+	// 	Quest.findOne({QuestId:req.body.id},function(quest,err){
+	// 		if (err) res.send('error')
+	// 			else{
+	// 				var l_questUsername = quest.from
+	// 				var l_questedUsername = quest.got[0]
+	// 				var state = quest.state
+	// 				if (state != 'C')
+	// 					res.send('error')
+	// 				else{
+	// 					if (l_questedUsername == req.body.from)
+	// 						Information.findOne({QuestId:quest._id},function(information,err){
+	// 							if (err)
+	// 								res.send('error')
+	// 							else
+	// 								res.send(information.informationed)
+	// 						})
+	// 					else if (l_questUsername == req.body.from){
+	// 						Information.findOne({QuestId:quest._id},function(information,err){
+	// 							if (err)
+	// 								res.send('error')
+	// 							else
+	// 								res.send(information.information)
+	// 						})
+	// 					}
+	// 				}
 
-				}
-		})
-	})
+	// 			}
+	// 	})
+	// })
 
 
 
@@ -227,6 +230,9 @@ module.exports=function(app){
 				res.send('error')
 			else{
 				var l_signed = quest.got
+				if (l_signed.toString().indexOf(req.session.user.username) >-1){
+					res.ser('you can not sign one mission many time')
+				}else{
 				l_signed.push(req.session.user.username)
 				Quest.update({_id:quest.id},{got:l_signed,state:'S'},function(err){
 					if (err)
@@ -237,16 +243,23 @@ module.exports=function(app){
 								res.send('error')
 							else
 								var got = user.MySign
-								got.push(quest.id)
+								got.push(quest._id)
 								User.update({username:req.session.user.username},{MySign:got},function(err){
 									if (err)
 										res.send('error')
-									else 
-										res.send('ok')
-								})
-
+									else{ 
+										usermanage.sendmessage(quest.from,req.session.user.username,quest.id,5,
+										function(err){
+												if (err) 
+													res.send('error')
+												else
+													res.send('ok')
+											})
+										}
+							})
 						})	
-				})
+					})
+				}
 			}
 		})
 	})
@@ -282,7 +295,7 @@ module.exports=function(app){
 							else{
 								var MyHelp = user.MyHelp
 								MyHelp.push(quest._id)
-								User.update({username:req.session.user.username},function(err,user){
+								User.update({username:req.session.user.username},{MyHelp:MyHelp},function(err,user){
 									if (err)
 										res.send('error')
 									else
@@ -299,7 +312,6 @@ module.exports=function(app){
 	//give up a question
 	app.post('/giveup',LoggedIn,function(req,res,next){
 		Quest.findById(req.body.id,function(err,quest){
-			console.log(quest)
 			if (err || quest.from != req.session.user.username ){
 				res.send('error')
 			}
@@ -308,8 +320,12 @@ module.exports=function(app){
 					if (err)
 						res.send('error')
 					else{ 
-							usermanage.removeSignedAndComfirmed(quest)
-							res.send('ok')
+							usermanage.removeSignedAndComfirmed(quest,function(err){
+								if (err)
+									res.send('error')
+								else
+									res.send('ok')
+							})
 						}
 				})
 		})
@@ -332,5 +348,40 @@ module.exports=function(app){
 		})
 	})
 
+	//send message
+	app.post('/sendmessage',LoggedIn,function(req,res,next){
+		var quest    = req.body.quest
+		var username = req.session.user.username
+		if (username == quest.from)
+			res.send("you can not send message yourself")
+		else
+		if (quest.got.toString().indexOf(username) <0 )
+			res.send('access denied')
+		// User.findOne({username:quest.from},function(err,user){
+		// 	var l_message = user.Messages
+		// 	l_message.push('<p>'+username+'said:'+req.body.message+'</p>')
+		// 	User.update({username:quest.from},{Messages:l_message},function(err){})
+		// })
+		else
+			{
+				usermanage.sendmessage(quest.from,username,req.body.message,4,
+					function(err){
+							if (err) 
+								res.send('error')
+							else
+								res.send('ok')
+						})
+			}
+	})
+
+	//got quest by Id
+	app.post('/getquestbyid',LoggedIn,function(req,res,next){
+		Quest.findById(req.body._id,function(err,quest){
+			if (err)
+				res.send('error')
+			else
+				res.send(quest)
+		})
+	})
 
 }

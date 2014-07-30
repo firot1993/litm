@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
 	MySign:[mongoose.Schema.Types.ObjectId],
 	FinishedQuest:[mongoose.Schema.Types.ObjectId],
 	FailedQuest:[mongoose.Schema.Types.ObjectId],
-	Messages:[String],
+	Messages:[mongoose.Schema.Types.ObjectId],
 	grade:Number,
 	level:Number,
 	Questfinish:Number,

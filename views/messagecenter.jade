@@ -1,0 +1,122 @@
+extends layout/layout
+block content
+    div(class="well " style="border:none;background:rgba(0,0,0,0.6);width:80%;margin:5% auto;padding:10px;box-shadow: 5px 10px 20px rgba(222, 222, 222, 0.5)")
+        div(class="container row ")
+            div(class="col-sm-8" id='content' style="padding:2%")
+
+    div(class="modal fade " style="display:none" id="my")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content" style="background:rgba(0,0,0,0.8);box-shadow: 0px 5px 15px rgba(227, 51, 51, 0.61);")
+                div(class="modal-header my" style="border:none")
+                    button(type='button' class='close' data-dismiss='modal')
+                        span(aria-hidden="true") &times;
+                        span(class="sr-only" style="color:white") Close
+                    h2(class="modal-title")
+                div(class="modal-body my" style="border:none")
+                    p(style="font-weight:bold;color:white") Time:
+                        strong(class="time" style="font-weight:normal")
+                    p(style="font-weight:bold;color:white") From:
+                        strong(class="from" style="font-weight:normal")
+                    p(style="font-weight:bold;color:white") Descirption:
+                        div(class="main")
+    include layout/sendmessage  
+    include layout/repeatWarning               
+    include layout/foot
+    script(src="/js/main.js")
+    script.
+       
+        function render(data){
+            for (var x = 1 ; x<= data.length ; x++){
+                    var $template = $(
+                       '<div class="well" style="padding:5%">'+
+                        '</div>')
+                    var nowdata = data[data.length-x]
+                    var fun= (function(value){
+                                return function(){
+                                    $.ajax({
+                                            url:'/getquestbyid',
+                                            type:'post',
+                                            data:{
+                                                _id:value
+                                            },
+                                            success:function(data,status,xhr){
+                                                var data2 = []
+                                                data2.push(data)
+                                                data2 = playpage(data2 ,1 ,1)
+                                                showdes(data2[0],$('#my'))
+                                            }
+                                        })
+                                }
+                                })(nowdata.relatedQuest)
+                    $template.addClass('message'+x)
+                    $('#content').append($template)
+                    $('#content').find('.message'+x).append (
+                        "<button type='button' class='close cl"+x+"'>"+
+                        "<span aria-hidden='true'> &times; </span>"+
+                        "<span class='sr-only' > Close </span></button>" )
+                    $('#content').find('.message'+x).append('<h4>From:<span style="font-size:15px;margin-left:20px">'+nowdata.from+'</span></h3>')
+                    if (nowdata.type == 1 ) nowdata.relatedData = 'A quest had canceled'
+                    if (nowdata.type == 2)  nowdata.relatedData = 'A quest had finished'
+                    if (nowdata.type == 5)  nowdata.relatedData = nowdata.from+' signed your one of quest...<a class="sa'+x+'">»</a>'
+                    $('#content').find('.message'+x).append('<p style="padding:20px">'+nowdata.relatedData+'</p>')
+                    $('.cl'+x).click((function(index){
+                        return function(){
+                                $('#repeatWarning').modal('show')
+                                $('#repeatWarning').find('.btn.btn-success').click(function(){
+                                    $.ajax({
+                                        url:'/remove',
+                                        type:'post',
+                                        data:{
+                                            index:index
+                                        },
+                                        success:function(data,xhr,status){
+                                            alert(data)
+                                            location.reload(true)
+                                        }
+                                    })    
+                                })
+                            }
+                        })(data.length-x))
+                    if (nowdata.type ==1 || nowdata.type ==2 || nowdata.type ==5) {
+                            $('#content').find('.message'+x).append('<button class="btn btn-primary bSM'+x+'">Show more</button>')
+                            $('.sa'+x).css({'cursor':'pointer'})
+                            $('.sa'+x).click(fun)
+                            $('.bSM'+x).click(fun)
+                        }
+                    if (nowdata.type ==5 ){
+                            $('#content').find('.message'+x).append('<button class="btn btn-default bCM'+x+'">Confirm</button>')
+                            $('#content').click((function(value){
+                                    return function(){
+                                        $('#repeatWarning').modal('show')
+                                        $('#repeatWarning').find('.btn.btn-success').click(function(){
+                                        $.ajax({
+                                            url:'/confirmQuest',
+                                            type:'post',
+                                            data:{
+                                                id:value
+                                            },
+                                            success:function(data,xhr,status){
+                                                alert(data)
+                                                location.reload(true)
+                                            }
+                                        })    
+                                    })
+                                }
+                            })(nowdata.relatedQuest))
+                        }
+                }
+        }
+        $(function(){
+            $.ajax({
+                    url:'/messagecenter',
+                    type:'post',
+                    success:function(data,status,xhr){
+                        if (data == 'error')
+                        {
+                            alert('some wrong happen!!!')
+                            location.href='/'
+                        }else
+                            render(data) 
+                    }
+                })
+            })
